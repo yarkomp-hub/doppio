@@ -1,0 +1,1669 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DOPPIO Студия архитектурного света</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="DOPPIO, семейное бюро светодизайна из Екатеринбурга: архитектурная подсветка, ландшафтное, уличное и интерьерное освещение. Полный цикл от концепции до пусконаладки.">
+<meta property="og:title" content="DOPPIO Студия архитектурного света">
+<meta property="og:description" content="Создаем световой облик вашего пространства">
+<meta property="og:image" content="assets/home/hero.jpg">
+<link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/bebas-neue.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/caviar-dreams.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ==========================================================================
+   DOPPIO · концепция вёрстки
+   Сайт как журнальная публикация: 12-колоночная сетка с намеренной асимметрией,
+   широкие поля, текст в смещённой колонке 60-70 знаков, фото то в разворот,
+   то врезкой в поле. Светлая «бумага» + тёмные «ночные» развороты для видео.
+   Тема одна, светлая: осознанное решение «печатного издания».
+   Все цвета и шрифты берутся только из токенов ниже.
+   ========================================================================== */
+:root{
+  /* цвет */
+  --paper:#F3F0E7;        /* фон страниц */
+  --milk:#EAE6D8;         /* плашки, заглушки, вторичные блоки */
+  --cocoa:#2A1511;        /* основной текст, ночные развороты */
+  --cocoa-muted:#6B5650;  /* подписи, второстепенный текст */
+  --terracotta:#8C2A12;   /* главный акцент */
+  --terracotta-hover:#6F200C;
+  --blue:#6F9DB6;         /* второй акцент: линии, плашки */
+  --blue-ink:#3D6A83;     /* голубой для текста на светлом */
+  --glow:#E6DFA0;         /* свечение, только на тёмном */
+  --night:#1D100D;        /* фон ночных разворотов */
+  --night-text:#EFE9DC;
+  --night-muted:#B7A79E;
+  --line:rgba(42,21,17,.16);
+  --line-night:rgba(239,233,220,.18);
+  --error:#A3261B;
+
+  /* шрифты */
+  --f-display:"Bebas Neue",sans-serif;
+  --f-text:"Caviar Dreams",sans-serif;
+
+  /* шкала 1.333 */
+  --t-xs:.8125rem;   /* 13 подписи */
+  --t-sm:.875rem;    /* 14 */
+  --t-base:clamp(1rem,.96rem + .2vw,1.1875rem); /* 16-19 текст */
+  --t-lead:clamp(1.15rem,1.05rem + .4vw,1.4rem);
+  --t-h4:clamp(1.2rem,1.1rem + .35vw,1.5rem);
+  --t-h3:clamp(1.5rem,1.3rem + .8vw,2rem);
+  --t-h2:clamp(1.9rem,1.5rem + 1.5vw,3rem);
+  --t-h1:clamp(2.2rem,1.6rem + 2.4vw,4.2rem);
+  --t-quote:clamp(1.45rem,1.2rem + 1vw,2.3rem);
+
+  /* отступы, сетка 8pt */
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;--s9:96px;--s10:144px;
+  --gutter:clamp(16px,2vw,32px);
+  --margin:max(16px,7vw);
+  --maxw:1520px;
+  --header-h:72px;
+
+  /* движение */
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --dur:240ms;
+  --z-header:30;--z-menu:40;--z-lightbox:50;
+  color-scheme:light;
+}
+
+/* Шрифты сайта: только два, из папки assets/fonts */
+@font-face{font-family:"Bebas Neue";src:url("assets/fonts/bebas-neue.woff2") format("woff2"),url("assets/fonts/bebas-neue.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Caviar Dreams";src:url("assets/fonts/caviar-dreams.woff2") format("woff2"),url("assets/fonts/caviar-dreams.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+*,*::before,*::after{box-sizing:border-box}
+html{font-synthesis:none}
+input,select,textarea,button{font-family:inherit}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--cocoa);font-family:var(--f-text);font-size:var(--t-base);line-height:1.7;letter-spacing:.01em;font-feature-settings:"kern";overflow-x:clip}
+img,video{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--terracotta);outline-offset:3px}
+.night :focus-visible{outline-color:var(--glow)}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:400;line-height:1;margin:0;text-wrap:balance;letter-spacing:.02em}
+p{margin:0}
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* --- обёртки и сетка --- */
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-left:max(var(--margin),env(safe-area-inset-left,0px));padding-right:max(var(--margin),env(safe-area-inset-right,0px))}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gutter)}
+.grid>*{min-width:0}
+.section{padding-block:clamp(88px,12vw,200px)}
+.section--tight{padding-block:clamp(48px,6vw,96px)}
+
+/* подписи, колонтитулы */
+.kicker{font-family:var(--f-text);font-size:var(--t-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--cocoa-muted)}
+.caption{font-size:var(--t-xs);line-height:1.45;color:var(--cocoa-muted);margin-top:var(--s3);max-width:42ch}
+.caption b{font-weight:400;color:var(--cocoa)}
+.night .caption{color:var(--night-muted)}
+.night .caption b{color:var(--night-text)}
+.lead{font-size:var(--t-lead);line-height:1.45;font-family:var(--f-text);font-weight:400}
+.measure{max-width:64ch}
+.prose p+p{margin-top:1.4em}
+.dropcap::first-letter{font-family:var(--f-display);font-weight:400;float:left;font-size:4.6em;line-height:.82;padding:.06em .1em 0 0;color:var(--terracotta)}
+
+/* кнопки и ссылки */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s3);min-height:48px;padding:0 var(--s5);background:var(--terracotta);color:var(--paper);font-family:var(--f-text);font-size:var(--t-sm);font-weight:400;letter-spacing:.02em;text-decoration:none;transition:background-color var(--dur) var(--ease)}
+.btn:hover{background:var(--terracotta-hover)}
+.btn[disabled]{opacity:.6;cursor:progress}
+.btn--ghost{background:transparent;color:var(--cocoa);box-shadow:inset 0 0 0 1px var(--cocoa)}
+.btn--ghost:hover{background:var(--cocoa);color:var(--paper)}
+.link{text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;padding-bottom:2px;transition:background-size var(--dur) var(--ease),color var(--dur)}
+.link:hover{color:var(--terracotta);background-size:0 1px}
+
+/* --- шапка --- */
+.header{position:fixed;inset:0 0 auto 0;z-index:var(--z-header);padding-top:env(safe-area-inset-top,0px);background:var(--night);color:var(--night-text);box-shadow:0 1px 0 var(--line-night)}
+.header__in{display:flex;align-items:center;gap:clamp(16px,2.4vw,40px);height:var(--header-h)}
+.header .logo{display:block;flex:none;width:clamp(140px,13vw,190px)}
+.header .logo img{width:100%;height:auto}
+.hcontacts{display:flex;align-items:center;gap:clamp(16px,2vw,32px);font-size:var(--t-sm);letter-spacing:.04em}
+.hcontacts a{text-decoration:none;white-space:nowrap;opacity:.9;transition:opacity var(--dur),color var(--dur)}
+.hcontacts a:hover{opacity:1;color:var(--glow)}
+.hcontacts .soc{display:flex;gap:var(--s2)}
+.hcontacts .soc a{width:36px;height:36px;display:grid;place-items:center}
+.hcontacts svg{width:18px;height:18px}
+.menubtn{margin-left:auto;display:flex;align-items:center;gap:var(--s3);min-height:44px;padding-inline:var(--s2);font-size:var(--t-sm);letter-spacing:.04em}
+.menubtn__ico{position:relative;width:28px;height:18px;display:block}
+.menubtn__ico i{position:absolute;left:0;right:0;height:1.5px;background:currentColor;transition:transform var(--dur) var(--ease),opacity var(--dur)}
+.menubtn__ico i:nth-child(1){top:0}.menubtn__ico i:nth-child(2){top:8px}.menubtn__ico i:nth-child(3){top:16px}
+.menubtn[aria-expanded="true"] .menubtn__ico i:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.menubtn[aria-expanded="true"] .menubtn__ico i:nth-child(2){opacity:0}
+.menubtn[aria-expanded="true"] .menubtn__ico i:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+.lang{display:flex;gap:2px;font-size:var(--t-sm);letter-spacing:.06em}
+.lang button{min-width:40px;min-height:40px;opacity:.55}
+.lang button[aria-pressed="true"]{opacity:1}
+@media (max-width:1100px){.hcontacts .mail{display:none}}
+@media (max-width:860px){.hcontacts{display:none}}
+@media (max-width:480px){.menubtn__txt{display:none}.lang button{min-width:34px}}
+
+/* выезжающее меню справа, как у QPRO */
+.menu{position:fixed;inset:calc(var(--header-h) + env(safe-area-inset-top,0px)) 0 0 0;z-index:var(--z-menu)}
+.menu__scrim{position:absolute;inset:0;background:rgba(29,16,13,.45)}
+.menu__panel{position:absolute;top:0;right:0;bottom:0;width:min(640px,100%);background:rgba(29,16,13,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--night-text);display:flex;flex-direction:column;padding:clamp(32px,6vh,72px) max(16px,env(safe-area-inset-right,0px),clamp(24px,5vw,72px)) calc(env(safe-area-inset-bottom,0px) + 32px) clamp(24px,5vw,72px);overflow-y:auto}
+@media (prefers-reduced-motion:no-preference){.menu:not([hidden]) .menu__panel{animation:slideIn 380ms var(--ease) both}.menu:not([hidden]) .menu__scrim{animation:fadeIn 300ms ease both}}
+@keyframes slideIn{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.menu__list{list-style:none;margin:0;padding:0;display:grid;gap:clamp(4px,1.2vh,14px)}
+.menu__list a{font-family:var(--f-display);font-size:clamp(2.2rem,1.6rem + 2.2vw,3.4rem);line-height:1.05;letter-spacing:.02em;text-decoration:none;display:inline-block;transition:color var(--dur),transform var(--dur) var(--ease)}
+.menu__list a:hover,.menu__list a[aria-current="page"]{color:var(--glow)}
+.menu__list a:hover{transform:translateX(6px)}
+.menu__foot{margin-top:auto;padding-top:var(--s7);display:flex;flex-wrap:wrap;gap:var(--s5);align-items:flex-end;justify-content:space-between}
+.menu__c{display:grid;gap:var(--s2);font-size:var(--t-sm)}
+.menu__c a{text-decoration:none}
+.menu__c a:hover{color:var(--glow)}
+.page-head--night{color:var(--night-text)}
+.page-head--night .kicker{color:var(--night-muted)}
+.page-head--night .lead{color:var(--night-text)}
+.page.night{background:var(--night);color:var(--night-text);min-height:100vh}
+
+/* --- изображения и заглушки --- */
+.fig{margin:0}
+.fig img,.fig video{width:100%;height:100%;object-fit:cover;background:var(--milk)}
+.fig .frame{position:relative;overflow:hidden;background:var(--milk)}
+.fig--zoom .frame{cursor:zoom-in}
+.fig--zoom img{transition:transform 900ms var(--ease)}
+.fig--zoom:hover img{transform:scale(1.02)}
+.ph{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:var(--s1);padding:var(--s4);background:var(--milk);color:var(--cocoa-muted);font-size:var(--t-xs);line-height:1.4;background-image:repeating-linear-gradient(135deg,transparent 0 14px,rgba(42,21,17,.035) 14px 15px)}
+.ph b{font-weight:400;color:var(--cocoa);font-size:var(--t-sm)}
+.ph code{font-family:inherit;opacity:.8;word-break:break-all}
+.ph-text{border:1px dashed rgba(42,21,17,.3);background:rgba(234,230,216,.5);display:grid;place-content:center;text-align:center;font-family:var(--f-display);font-size:var(--t-h4);color:var(--cocoa-muted);font-weight:400;letter-spacing:.04em}
+.night .ph-text{border-color:var(--line-night);background:rgba(255,255,255,.03);color:var(--night-muted)}
+
+/* --- обложка --- */
+.hero{position:relative;min-height:min(88vh,980px);display:flex;align-items:flex-end;color:var(--night-text);background:var(--night);overflow:hidden}
+.hero__img{position:absolute;inset:0}
+.hero__img img{width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+.hero__img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(29,16,13,.45) 0%,rgba(29,16,13,0) 22%,rgba(29,16,13,.1) 40%,rgba(29,16,13,.82) 100%),linear-gradient(90deg,rgba(29,16,13,.55) 0%,rgba(29,16,13,0) 60%)}
+.hero__in{position:relative;width:100%;padding-top:calc(var(--header-h) + 64px);padding-bottom:clamp(40px,6vw,88px)}
+.hero h1{grid-column:1 / span 8;font-size:var(--t-h1);font-weight:400;letter-spacing:.02em;line-height:1;text-shadow:0 2px 24px rgba(0,0,0,.45)}
+.hero__sub{text-shadow:0 1px 12px rgba(0,0,0,.5);grid-column:1 / span 5;margin-top:var(--s6);font-size:var(--t-lead);line-height:1.45;font-family:var(--f-text);font-weight:400;color:var(--night-text);max-width:34ch}
+.hero__cta{grid-column:9 / span 4;align-self:end;justify-self:end;display:flex;flex-direction:column;align-items:flex-end;gap:var(--s4)}
+.hero__cta .caption{text-align:right;color:var(--night-muted);margin:0}
+@media (prefers-reduced-motion:no-preference){
+  .hero__img img{animation:heroImg 1600ms var(--ease) both}
+  .hero h1,.hero__sub,.hero__cta{animation:rise 900ms var(--ease) both}
+  .hero__sub{animation-delay:180ms}.hero__cta{animation-delay:320ms}
+}
+@keyframes heroImg{from{transform:scale(1.05)}to{transform:none}}
+@keyframes rise{from{transform:translateY(18px);opacity:.001}to{transform:none;opacity:1}}
+
+/* --- миссия --- */
+.mission .lead-big{grid-column:2 / span 8;font-family:var(--f-text);font-weight:400;font-size:var(--t-h3);line-height:1.22}
+.mission .lead-big em{font-style:normal;color:var(--terracotta)}
+.mission__body{grid-column:7 / span 6;margin-top:clamp(64px,8vw,128px)}
+.pullquote{grid-column:1 / span 5;margin:clamp(64px,8vw,128px) 0 0;align-self:start}
+.pullquote blockquote{margin:0;font-family:var(--f-text);font-weight:400;font-style:normal;font-size:var(--t-quote);line-height:1.15;color:var(--terracotta)}
+.pullquote figcaption{margin-top:var(--s4);font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--cocoa-muted)}
+.kelly{border-top:1px solid var(--line)}
+.kelly__head{grid-column:1 / span 4}
+.kelly__head p{margin-top:var(--s4);color:var(--cocoa-muted);font-size:var(--t-sm);max-width:36ch}
+.kelly__item{grid-column:span 8;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:var(--gutter);padding-block:var(--s7);border-bottom:1px solid var(--line)}
+.kelly__item.k1{grid-column:5 / span 8}
+.kelly__item.k2{grid-column:6 / span 7}
+.kelly__item.k3{grid-column:7 / span 6}
+.kelly__item h3{font-size:var(--t-h2);font-weight:400;line-height:1}
+.kelly__item h3 span{display:block;font-size:var(--t-sm);margin-top:var(--s3)!important;font-family:var(--f-text);letter-spacing:.06em;text-transform:uppercase;color:var(--blue-ink);margin-top:var(--s2)}
+.kelly__item p{font-size:var(--t-base);line-height:1.75;align-self:center}
+
+/* --- ночной разворот: таймлапсы --- */
+.night{background:var(--night);color:var(--night-text)}
+.laps{position:relative}
+.page.night{padding-top:var(--header-h)}
+.laps__stage{position:relative;height:calc(100vh - var(--header-h) - 96px);min-height:360px;width:100%;overflow:hidden;background:#000}
+/* слайды с медленным движением (Ken Burns) и сменой справа налево */
+.kbs{position:absolute;inset:0;overflow:hidden;transform:translateX(0);transition:transform 1100ms cubic-bezier(.65,0,.35,1);will-change:transform}
+.kbs.from-r{transform:translateX(100%)}.kbs.from-l{transform:translateX(-100%)}
+.kbs.out-l{transform:translateX(-35%)}.kbs.out-r{transform:translateX(35%)}
+.kbs.leaving{z-index:0}.kbs:not(.leaving){z-index:1}
+.kbs img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.03)}
+.kbs img.fit{object-fit:contain}
+.laps .kbs{background:#000}
+.lb .kbs{background:#120907}
+@media (prefers-reduced-motion:no-preference){.kbs img{animation:kb 9s linear both}}
+.laps__cap{font-size:var(--t-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--night-text);min-width:0;line-height:1.5}
+.laps__cap span{display:block;color:var(--night-muted);text-transform:none;letter-spacing:0}
+.laps__bar{display:flex;align-items:center;gap:var(--s5);min-height:96px}
+.laps__count{font-family:var(--f-display);font-size:var(--t-h4);font-variant-numeric:tabular-nums;font-weight:400;white-space:nowrap}
+.laps__count span{color:var(--night-muted)}
+.laps__progress{flex:1;height:2px;background:var(--line-night);position:relative;overflow:hidden;min-width:60px}
+.laps__progress i{position:absolute;inset:0;background:var(--glow);transform-origin:0 50%;transform:scaleX(0)}
+.laps__progress i.run{animation:prog var(--dur-slide,4500ms) linear both}
+@keyframes prog{to{transform:scaleX(1)}}
+.arrows{display:flex;gap:var(--s2)}
+.arrow{width:48px;height:48px;display:grid;place-items:center;border:1px solid currentColor;transition:background-color var(--dur),color var(--dur)}
+.arrow svg{width:18px;height:18px}
+.night .arrow:hover{background:var(--night-text);color:var(--night)}
+
+/* --- направления --- */
+.dirs{position:relative;min-height:min(92vh,900px);display:flex;align-items:center;background:var(--night);color:var(--night-text);overflow:hidden}
+.dirs__bg{position:absolute;inset:0}
+.dirs__bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity 1100ms var(--ease),transform 6s linear}
+.dirs__bg img.is-active{opacity:1;transform:none}
+.dirs__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(29,16,13,.82) 0%,rgba(29,16,13,.55) 45%,rgba(29,16,13,.25) 100%)}
+.dirs__in{position:relative;width:100%;padding-block:clamp(88px,10vw,160px);align-items:center}
+.dirs__head{grid-column:1 / span 4;align-self:start}
+.dirs__head h2,.dirs__head h1{font-size:var(--t-h2);font-weight:400}
+.dirs__head p{margin-top:var(--s4);color:var(--night-muted);font-size:var(--t-sm)}
+.dirs__body{grid-column:6 / span 6}
+.dirs__nav{display:flex;align-items:center;gap:var(--s5)}
+.dirs__count{font-family:var(--f-display);font-weight:400;font-size:var(--t-h2);line-height:1;font-variant-numeric:tabular-nums}
+.dirs__count span{font-size:.5em;color:var(--night-muted)}
+.dirs .arrow{border-radius:50%;border-color:rgba(239,233,220,.7)}
+.dirs .arrow:hover{background:var(--night-text);color:var(--night)}
+.dirs__slides{display:grid;margin-top:var(--s7)}
+.dirs__slide{grid-area:1/1;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity 220ms ease,transform 220ms ease,visibility 0s 220ms}
+.dirs__slide.is-active{opacity:1;visibility:visible;transform:none;transition:opacity 600ms var(--ease) 240ms,transform 600ms var(--ease) 240ms,visibility 0s}
+.dirs__slide .kicker{color:var(--glow)}
+.dirs__slide h3{font-size:var(--t-h2);font-weight:400;margin-top:var(--s3)}
+.dirs__slide p.desc{margin-top:var(--s5);max-width:46ch;line-height:1.75;color:var(--night-text);opacity:.9}
+.dirs__slide .btn{margin-top:var(--s7);background:var(--night-text);color:var(--night)}
+.dirs__slide .btn:hover{background:var(--glow)}
+.dirs__dots{display:flex;gap:var(--s2);margin-top:var(--s8)}
+.dirs__dots button{flex:1;max-width:120px;min-height:44px;text-align:left;font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--night-muted);border-top:2px solid var(--line-night);padding-top:var(--s3);transition:color var(--dur),border-color var(--dur)}
+.dirs__dots button[aria-current="true"]{color:var(--night-text);border-top-color:var(--glow)}
+.dirs--proj{min-height:100vh;padding-top:var(--header-h)}
+.dirs__slide .ph-text{min-height:96px;margin-top:var(--s5);max-width:46ch;font-size:var(--t-h4)}
+.dirs__thumbs{display:flex;gap:var(--s2);margin-top:var(--s6);flex-wrap:wrap}
+.dirs__thumbs button{width:76px;height:54px;overflow:hidden;opacity:.75;transition:opacity var(--dur);outline-offset:2px}
+.dirs__thumbs button:hover{opacity:1}
+.dirs__thumbs img{width:100%;height:100%;object-fit:cover}
+.dirs__slide .btns{display:flex;flex-wrap:wrap;gap:var(--s3);margin-top:var(--s6)}
+.dirs__slide .btns .btn{margin-top:0}
+.dirs__slide .btn--line{background:transparent;color:var(--night-text);box-shadow:inset 0 0 0 1px rgba(239,233,220,.7)}
+.dirs__slide .btn--line:hover{background:var(--night-text);color:var(--night)}
+
+/* --- услуги, аккордеон-оглавление --- */
+.services__head{grid-column:1 / span 4}
+.services__head p{margin-top:var(--s5);line-height:1.75;color:var(--cocoa-muted);max-width:32ch}
+.acc{grid-column:5 / span 8;border-top:1px solid var(--cocoa)}
+.acc__item{border-bottom:1px solid var(--line)}
+.acc__btn{width:100%;display:grid;grid-template-columns:3.2em minmax(0,1fr) 48px;align-items:center;gap:var(--s4);text-align:left;min-height:88px;padding-block:var(--s4)}
+.acc__num{font-family:var(--f-display);font-weight:400;font-size:var(--t-h4);color:var(--cocoa-muted);font-variant-numeric:tabular-nums}
+.acc__title{font-family:var(--f-display);font-weight:400;font-size:var(--t-h3);line-height:1.1;transition:color var(--dur)}
+.acc__ico{width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--line);transition:transform var(--dur) var(--ease),background-color var(--dur),color var(--dur)}
+.acc__ico svg{width:18px;height:18px}
+.acc__item.is-open .acc__ico{transform:rotate(180deg);background:var(--terracotta);color:var(--paper);border-color:var(--terracotta)}
+.acc__item.is-open .acc__title,.acc__btn:hover .acc__title{color:var(--terracotta)}
+.acc__panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows 420ms var(--ease)}
+.acc__item.is-open .acc__panel{grid-template-rows:1fr}
+.acc__panel>div{overflow:hidden}
+.acc__body{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:var(--gutter);padding:0 0 var(--s6) calc(3.2em + var(--s4))}
+.acc__body p{font-size:var(--t-base);max-width:48ch}
+.acc__body .fig .frame{aspect-ratio:3/2}
+.acc__body--noimg{grid-template-columns:minmax(0,1fr)}
+.services__after{grid-column:5 / span 8;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--s5);margin-top:var(--s9)}
+.services__after p{font-family:var(--f-text);font-size:var(--t-h4);font-weight:400;max-width:26ch}
+
+/* --- нам доверяют --- */
+.trust{border-top:1px solid var(--line)}
+.trust__row{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s5);flex-wrap:wrap}
+.marquee{overflow:hidden;margin-top:var(--s6);border-block:1px solid var(--line);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee__track{display:flex;width:max-content;animation:marq 38s linear infinite}
+.marquee:hover .marquee__track{animation-play-state:paused}
+.marquee__set{display:flex;align-items:center}
+.marquee__item{display:flex;align-items:center;gap:var(--s3);padding:var(--s6) clamp(24px,4vw,64px);font-family:var(--f-display);font-weight:400;font-size:var(--t-h3);color:var(--cocoa-muted);white-space:nowrap}
+.marquee__item img{height:44px;width:auto;filter:grayscale(1)}
+.marquee__item::after{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid var(--terracotta);margin-left:clamp(24px,4vw,64px)}
+@keyframes marq{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marquee__track{animation:none;flex-wrap:wrap;width:auto}.marquee__set+.marquee__set{display:none}.marquee{mask-image:none}}
+.page-head.page-head--side h1{grid-column:1 / span 5;align-self:start}
+.page-head.page-head--side .lead{grid-column:7 / span 6;margin-top:0;align-self:start;font-size:var(--t-base);line-height:1.75}
+.trust__more{margin-top:var(--s7);line-height:1.75;color:var(--cocoa-muted);font-size:var(--t-sm);max-width:70ch}
+
+/* --- контакты и форма --- */
+.contacts{background:var(--milk)}
+.contacts__head{grid-column:1 / span 5}
+.contacts__head h2{font-size:var(--t-h2)}
+.contacts__head .lead{margin-top:var(--s6);max-width:28ch}
+.people{display:flex;gap:var(--s4);margin-top:var(--s6)}
+.people .fig{width:min(140px,40%)}
+.people .frame{aspect-ratio:4/5}
+.clist{list-style:none;padding:0;margin:var(--s6) 0 0;display:grid;gap:var(--s3)}
+.clist li{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:var(--s3);font-size:var(--t-sm);align-items:baseline}
+.clist span{color:var(--cocoa-muted);font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase}
+.clist a,.clist b{font-weight:400;font-size:var(--t-base);word-break:break-word}
+.socials{display:flex;gap:var(--s2);margin-top:var(--s5)}
+.socials a{width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--line);transition:background-color var(--dur),color var(--dur)}
+.socials a:hover{background:var(--cocoa);color:var(--paper)}
+.socials svg{width:20px;height:20px}
+.form{grid-column:7 / span 6;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s5) var(--gutter);align-content:start}
+.field{display:grid;gap:var(--s2)}
+.field--full{grid-column:1 / -1}
+.field label{font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--cocoa-muted)}
+.field input,.field select,.field textarea{font:inherit;font-size:var(--t-base);color:var(--cocoa);background:var(--paper);border:1px solid var(--line);border-radius:0;padding:12px 14px;min-height:52px;width:100%;transition:border-color var(--dur)}
+.field textarea{min-height:120px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--cocoa);outline:none;box-shadow:0 0 0 1px var(--cocoa)}
+.field.has-error input,.field.has-error select{border-color:var(--error)}
+.err{font-size:var(--t-xs);color:var(--error);min-height:0}
+.check{grid-column:1 / -1;display:flex;gap:var(--s3);align-items:flex-start;font-size:var(--t-sm);color:var(--cocoa-muted)}
+.check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--terracotta);flex:none}
+.form__foot{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:var(--s4);align-items:center}
+.form__ok{grid-column:1 / -1;padding:var(--s5);background:var(--paper);border-left:2px solid var(--terracotta);font-family:var(--f-text);font-size:var(--t-h4);font-weight:400}
+
+/* --- подвал --- */
+.footer{background:var(--cocoa);color:var(--night-text);padding-block:var(--s8) calc(var(--s6) + env(safe-area-inset-bottom,0px))}
+.footer__logo{grid-column:1 / span 4}
+.footer__logo img{width:min(320px,100%)}
+.footer nav{grid-column:6 / span 3;display:grid;gap:var(--s2);align-content:start}
+.footer nav a{text-decoration:none;font-size:var(--t-sm);opacity:.85;padding-block:4px}
+.footer nav a:hover{opacity:1;color:var(--glow)}
+.footer__c{grid-column:9 / span 4;display:grid;gap:var(--s2);font-size:var(--t-sm);align-content:start}
+.footer__c a{text-decoration:none}
+.footer__bottom{grid-column:1 / -1;margin-top:var(--s8);padding-top:var(--s4);border-top:1px solid var(--line-night);display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s3);font-size:var(--t-xs);color:var(--night-muted)}
+
+/* --- страницы --- */
+.page[hidden]{display:none}
+.page-head{padding-top:calc(var(--header-h) + clamp(48px,8vw,128px));padding-bottom:clamp(40px,6vw,80px)}
+.page-head h1{grid-column:1 / span 10;font-size:var(--t-h1);letter-spacing:.02em}
+.page-head .lead{grid-column:6 / span 6;margin-top:var(--s7);color:var(--cocoa)}
+.toc{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s5);margin-top:var(--s7);grid-column:1 / -1;border-top:1px solid var(--cocoa);padding-top:var(--s4)}
+.toc a{font-family:var(--f-display);font-size:var(--t-h4);font-weight:400;text-decoration:none;display:flex;gap:var(--s2);align-items:baseline;min-height:44px}
+.toc a sup{font-family:var(--f-text);font-size:var(--t-xs);color:var(--cocoa-muted)}
+.toc a:hover{color:var(--terracotta)}
+
+/* раздел категории проектов */
+.cat-head{border-top:1px solid var(--cocoa);padding-top:var(--s4);margin-top:clamp(64px,9vw,144px);scroll-margin-top:calc(var(--header-h) + 16px)}
+#projList>.wrap:first-child .cat-head{margin-top:0}
+.cat-head h2{grid-column:1 / span 6;font-size:var(--t-h2)}
+.cat-head p{grid-column:9 / span 4;font-size:var(--t-sm);color:var(--cocoa-muted);align-self:end}
+
+/* проектный разворот */
+.proj{margin-top:clamp(96px,11vw,176px);scroll-margin-top:calc(var(--header-h) + 16px);row-gap:var(--s6)}
+.proj__title{display:flex;flex-direction:column;gap:var(--s3)}
+.proj__title h3{font-size:var(--t-h2)}
+.proj__facts{font-size:var(--t-xs);color:var(--cocoa-muted);display:grid;gap:var(--s2);border-top:1px solid var(--line);padding-top:var(--s3)}
+.proj__facts div{display:grid;grid-template-columns:7em minmax(0,1fr);gap:var(--s3)}
+.proj__facts dt{letter-spacing:.06em;text-transform:uppercase}
+.proj__facts dd{margin:0;color:var(--cocoa)}
+.proj .ph-text{min-height:180px}
+.proj__more{display:flex;align-items:center;gap:var(--s4);flex-wrap:wrap}
+.thumbs{display:flex;gap:var(--s2);flex-wrap:wrap}
+.thumbs button{width:72px;height:54px;overflow:hidden;opacity:.85;transition:opacity var(--dur)}
+.thumbs button:hover{opacity:1}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.process{border-top:1px dashed var(--line);padding-top:var(--s4)}
+.process .row{display:flex;gap:var(--s3);margin-top:var(--s3);flex-wrap:wrap}
+.process .fig{width:min(220px,46%)}
+.process .frame{aspect-ratio:4/3}
+
+/* вариант A: фото в разворот, текст в поле */
+.v-a .p-hero{grid-column:1 / -1}
+.v-a .p-hero .frame{aspect-ratio:21/9}
+.v-a .proj__title{grid-column:1 / span 4}
+.v-a .p-text{grid-column:6 / span 6}
+.v-a .p-pair1{grid-column:2 / span 6;margin-top:var(--s6)}
+.v-a .p-pair2{grid-column:9 / span 4;margin-top:clamp(64px,10vw,180px)}
+.v-a .p-pair1 .frame{aspect-ratio:3/2}.v-a .p-pair2 .frame{aspect-ratio:4/5}
+.v-a .p-tail{grid-column:2 / span 10}
+/* вариант B: фото слева, текст справа */
+.v-b .p-hero{grid-column:1 / span 8;grid-row:1 / span 3}
+.v-b .p-hero .frame{aspect-ratio:4/3}
+.v-b .proj__title{grid-column:9 / span 4}
+.v-b .p-text{grid-column:9 / span 4}
+.v-b .p-pair1{grid-column:3 / span 4;margin-top:var(--s6)}
+.v-b .p-pair2{grid-column:8 / span 5;margin-top:calc(var(--s9) * -1)}
+.v-b .p-pair1 .frame{aspect-ratio:4/5}.v-b .p-pair2 .frame{aspect-ratio:3/2}
+.v-b .p-tail{grid-column:3 / span 10}
+/* вариант C: крупный заголовок, пара фото со смещением */
+.v-c .proj__title{grid-column:1 / span 7}
+.v-c .p-text{grid-column:8 / span 5;align-self:end}
+.v-c .p-hero{grid-column:1 / span 5;margin-top:var(--s5)}
+.v-c .p-hero .frame{aspect-ratio:4/5}
+.v-c .p-pair1{grid-column:6 / span 7;margin-top:clamp(64px,10vw,180px)}
+.v-c .p-pair1 .frame{aspect-ratio:3/2}
+.v-c .p-pair2{grid-column:3 / span 5}
+.v-c .p-pair2 .frame{aspect-ratio:16/10}
+.v-c .p-tail{grid-column:1 / -1}
+/* вариант D: ночной разворот */
+.proj-night{margin-top:clamp(64px,8vw,128px);padding-block:clamp(48px,7vw,112px)}
+.v-d{margin-top:0}
+.v-d .proj__title{grid-column:1 / span 8}
+.v-d .p-hero{grid-column:1 / span 9}
+.v-d .p-hero .frame{aspect-ratio:16/10}
+.v-d .proj__facts{border-color:var(--line-night);color:var(--night-muted)}
+.v-d .proj__facts dd{color:var(--night-text)}
+.v-d .p-text{grid-column:10 / span 3;align-self:end}
+.v-d .p-pair1{grid-column:2 / span 4}
+.v-d .p-pair1 .frame{aspect-ratio:4/5}
+.v-d .p-pair2{grid-column:6 / span 7}
+.v-d .p-pair2 .frame{aspect-ratio:16/9}
+.v-d .p-tail{grid-column:1 / -1}
+.night .thumbs button{outline-color:var(--glow)}
+.night .process{border-color:var(--line-night)}
+.night .btn--ghost{color:var(--night-text);box-shadow:inset 0 0 0 1px var(--night-text)}
+.night .btn--ghost:hover{background:var(--night-text);color:var(--night)}
+
+/* концепции */
+.concepts{padding-bottom:clamp(88px,12vw,200px)}
+.concept{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:var(--gutter);padding-block:var(--s5);border-top:1px solid var(--line)}
+.concept h3{font-size:var(--t-h4);font-weight:400}
+.concept .caption{margin-top:var(--s2)}
+.concept__row{display:flex;gap:var(--s3);overflow-x:auto;scrollbar-width:thin;padding-bottom:var(--s2)}
+.concept__row .fig{flex:none;height:clamp(140px,16vw,220px)}
+.concept__row .frame{height:100%}
+.concept__row img{height:100%;width:auto;max-width:none}
+
+/* реализуем для / экспертиза */
+.forlist{list-style:none;padding:0;margin:0;grid-column:5 / span 8;columns:2;column-gap:var(--gutter)}
+.forlist li{break-inside:avoid;padding-block:var(--s4);border-top:1px solid var(--line);font-family:var(--f-display);font-weight:400;font-size:var(--t-h4);line-height:1.2}
+.forlist li small{display:block;font-family:var(--f-text);font-size:var(--t-xs);color:var(--blue-ink);letter-spacing:.06em;text-transform:uppercase;margin-top:var(--s2)}
+.block-head{grid-column:1 / span 4}
+.block-head h2{font-size:var(--t-h3)}
+
+/* --- о нас --- */
+.about-open{padding-top:calc(var(--header-h) + clamp(40px,6vw,96px))}
+.about-open h1{grid-column:1 / span 7;font-size:var(--t-h1);letter-spacing:.02em}
+.about-open .lead{grid-column:8 / span 4;align-self:end}
+.about-open .p-wide{grid-column:1 / -1;margin-top:var(--s9)}
+.about-open .p-wide .frame{aspect-ratio:21/9}
+.longread{grid-column:3 / span 7}
+.longread .measure{font-size:var(--t-base)}
+.longread h2{font-size:var(--t-h3);margin-top:var(--s9);margin-bottom:var(--s6)}
+.aside-quote{grid-column:10 / span 3;align-self:start;position:sticky;top:calc(var(--header-h) + 32px)}
+.aside-quote blockquote{margin:0;font-family:var(--f-text);font-style:normal;font-weight:400;font-size:var(--t-h4);line-height:1.25;color:var(--terracotta)}
+.aside-quote figcaption{margin-top:var(--s3);font-size:var(--t-xs);color:var(--cocoa-muted);letter-spacing:.06em;text-transform:uppercase}
+.duo{row-gap:var(--s7)}
+.person:nth-child(1){grid-column:2 / span 4}
+.person:nth-child(2){grid-column:8 / span 4}
+.person .frame{aspect-ratio:4/5}
+.person h3{font-size:var(--t-h3);margin-top:var(--s5)}
+.person .role{font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--blue-ink);margin-top:var(--s2)}
+.person p{margin-top:var(--s5);font-size:var(--t-sm);line-height:1.75;max-width:40ch}
+.academic .block-head{grid-column:1 / span 5}
+.academic .prose{grid-column:7 / span 6}
+.academic .figs{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,3fr) minmax(0,4fr);gap:var(--gutter);margin-top:var(--s9);align-items:start}
+.academic .figs .fig:nth-child(2){margin-top:var(--s8)}
+.academic .frame{aspect-ratio:4/3}
+.strip{display:flex;gap:var(--gutter);overflow-x:auto;padding-bottom:var(--s4);scroll-snap-type:x mandatory;margin-top:var(--s6)}
+.strip .fig{flex:none;width:clamp(240px,30vw,420px);scroll-snap-align:start}
+.strip .frame{aspect-ratio:4/3}
+.badge{display:inline-block;font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--terracotta);border:1px solid currentColor;padding:2px 8px;margin-top:var(--s2)}
+
+/* --- лайтбокс --- */
+.lb{position:fixed;inset:0;z-index:var(--z-lightbox);background:rgba(18,9,7,.96);color:var(--night-text);display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:calc(env(safe-area-inset-top,0px) + 8px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 12px) max(16px,env(safe-area-inset-left,0px))}
+.lb__top{display:flex;justify-content:space-between;align-items:center;min-height:56px;gap:var(--s4)}
+.lb__count{font-family:var(--f-display);font-variant-numeric:tabular-nums}
+.lb__close{width:48px;height:48px;font-size:30px;line-height:1}
+.lb__stage{min-height:0;position:relative;overflow:hidden}
+.lb__bar{display:flex;justify-content:space-between;align-items:center;gap:var(--s4);min-height:64px}
+.lb__cap{font-size:var(--t-sm);color:var(--night-muted)}
+.lb .arrow{color:var(--night-text)}
+.lb .arrow:hover{background:var(--night-text);color:var(--night)}
+
+/* --- адаптив --- */
+@media (max-width:1024px){
+  .hero h1{grid-column:1 / -1}
+  .hero__sub{grid-column:1 / span 8}
+  .hero__cta{grid-column:1 / -1;justify-self:start;align-items:flex-start;margin-top:var(--s6)}
+  .hero__cta .caption{text-align:left}
+  .mission .lead-big{grid-column:1 / span 11}
+  .mission__body{grid-column:4 / span 9}
+  .kelly__head{grid-column:1 / -1;margin-bottom:var(--s4)}
+  .kelly__item.k1,.kelly__item.k2,.kelly__item.k3{grid-column:2 / -1}
+  .services__head,.acc,.services__after{grid-column:1 / -1}
+  .services__head{margin-bottom:var(--s6)}
+  .contacts__head,.form{grid-column:1 / -1}
+  .form{margin-top:var(--s7)}
+  .forlist{grid-column:1 / -1;margin-top:var(--s5)}
+  .block-head{grid-column:1 / -1}
+  .longread{grid-column:1 / span 8}
+  .aside-quote{grid-column:9 / span 4}
+}
+@media (max-width:767px){
+  :root{--header-h:60px;--margin:16px}
+  .grid>*{grid-column:1 / -1!important}
+  .grid{row-gap:0}
+  .hero{min-height:84vh}
+  .hero__in{padding-top:calc(var(--header-h) + 40px)}
+  .mission__body,.pullquote{margin-top:var(--s6)}
+  .kelly__item{grid-template-columns:1fr;gap:var(--s2)}
+  .laps__stage{height:calc(100vh - var(--header-h) - 150px)}
+  .laps__bar{flex-wrap:wrap}
+  .laps__progress{order:3;flex-basis:100%}
+  .dirs{min-height:auto}
+  .dirs__body{margin-top:var(--s7)}
+  .dirs__dots button{font-size:0;max-width:none}
+  .acc__btn{grid-template-columns:2.2em minmax(0,1fr) 44px;min-height:76px}
+  .acc__ico{width:44px;height:44px}
+  .acc__body{grid-template-columns:1fr;padding-left:0}
+  .form{grid-template-columns:1fr}
+  .proj .p-pair1,.proj .p-pair2,.proj .p-tail{margin-top:var(--s5)!important}
+  .proj .p-hero{grid-row:auto!important}
+  .proj .p-pair2{width:78%;margin-left:auto}
+  .proj__title{margin-top:var(--s5)}
+  .v-d .p-pair1{margin-top:var(--s5)!important}
+  .p-text{margin-top:var(--s5)}
+  .concept{grid-template-columns:1fr}
+  .forlist{columns:1}
+  .cat-head p{margin-top:var(--s3)}
+  .person:nth-child(2){margin-top:var(--s7)!important}
+  .aside-quote{position:static;margin-top:var(--s7)}
+  .academic .figs{grid-template-columns:1fr 1fr}
+  .academic .figs .fig:nth-child(2){margin-top:var(--s6)}
+  .academic .figs .fig:nth-child(3){grid-column:1 / -1}
+  .footer nav,.footer__c{margin-top:var(--s6)}
+  .services__after p{max-width:none}
+  .clist li{grid-template-columns:1fr;gap:2px}
+}
+/* Эффект наложения: блок закрепляется, следующий наезжает снизу (как на archlight.eu) */
+[data-stack]{position:sticky;background:var(--paper)}
+.dirs[data-stack]{background:var(--night)}
+[data-stack]+[data-stack]{box-shadow:0 -28px 56px -28px rgba(29,16,13,.35)}
+.trust[data-stack]{border-top:0}
+@media (prefers-reduced-motion:reduce){[data-stack]{position:relative;top:auto!important}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="visually-hidden" href="#main" data-i18n="skip">Перейти к содержанию</a>
+
+<!-- ============ ШАПКА ============ -->
+<header class="header" id="header">
+  <div class="wrap header__in">
+    <a class="logo" href="#home" aria-label="DOPPIO, на главную">
+      <img src="assets/logo/doppio-logo-light.png" alt="DOPPIO Студия архитектурного света" width="671" height="76">
+    </a>
+    <div class="hcontacts" id="hcontacts"></div>
+    <button class="menubtn" type="button" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="menu">
+      <span class="menubtn__ico" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="menubtn__txt" data-i18n="menu.label">Меню</span>
+    </button>
+    <div class="lang" role="group" aria-label="Язык / Language">
+      <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden>
+  <div class="menu__scrim" id="menuScrim"></div>
+  <nav class="menu__panel" id="menuPanel" role="dialog" aria-modal="true" aria-label="Меню">
+    <ul class="menu__list">
+      <li><a href="#about" data-nav="about" data-i18n="nav.about">О нас</a></li>
+      <li><a href="#dirs" data-i18n="nav.dirs">Направления</a></li>
+      <li><a href="#projects" data-nav="projects" data-i18n="nav.projects">Проекты</a></li>
+      <li><a href="#concepts" data-nav="concepts" data-i18n="nav.concepts">Концепции</a></li>
+      <li><a href="#services" data-i18n="nav.services">Услуги</a></li>
+      <li><a href="#light" data-nav="light" data-i18n="nav.light">Вечерний свет</a></li>
+      <li><a href="#partners" data-nav="partners" data-i18n="nav.partners">Партнёры</a></li>
+      <li><a href="#contacts" data-i18n="nav.contacts">Контакты</a></li>
+    </ul>
+    <div class="menu__foot">
+      <div class="menu__c" id="menuC"></div>
+      <a class="btn" href="#contacts" data-i18n="cta">Получить консультацию</a>
+    </div>
+  </nav>
+</div>
+
+<main id="main">
+
+<!-- ================================================================
+     СТРАНИЦА 1 · ГЛАВНАЯ
+     ================================================================ -->
+<article class="page" id="page-home" data-page="home">
+
+  <!-- 4.1 Обложка -->
+  <section class="hero" aria-labelledby="h-hero">
+    <div class="hero__img"><img src="assets/home/hero.jpg" alt="" data-i18n-alt="hero.alt" width="2400" height="1600" fetchpriority="high"></div>
+    <div class="wrap hero__in grid">
+      <h1 id="h-hero" data-i18n="hero.title">Создаем световой облик вашего пространства</h1>
+      <p class="hero__sub" data-i18n="hero.sub">Мы делаем вечерний облик зданий и пространств выразительным, а свет осознанной частью архитектуры</p>
+      <div class="hero__cta">
+        <a class="btn" href="#contacts" data-i18n="cta">Получить консультацию</a>
+        <p class="caption" data-i18n="hero.cap">На фото: проект «Гольф 1»</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4.2 Философия и миссия -->
+  <section class="section mission" data-stack aria-labelledby="h-mission">
+    <div class="wrap grid">
+      <h2 id="h-mission" class="visually-hidden" data-i18n="mission.h">Миссия</h2>
+      <p class="lead-big" data-i18n-html="mission.lead">Создаем световую среду, в которой <em>архитектура раскрывается в вечернем свете</em>, интерьер обретает глубину, а городские пространства становятся комфортными</p>
+      <figure class="pullquote">
+        <blockquote data-i18n="quote.turrell">«Свет это не то, что освещает пространство. Свет это то, из чего пространство состоит»</blockquote>
+        <figcaption data-i18n="quote.turrell.by">Джеймс Тюрелл</figcaption>
+      </figure>
+      <div class="mission__body prose measure">
+        <p data-i18n="mission.p1">DOPPIO по-итальянски значит «дуэт». Светодизайн для нас это диалог архитектуры, света и человека. Сначала мы слушаем объект: понимаем его характер, материалы, то, как в него входит дневной свет. Потом создаем световую среду, которая раскрывает его лучшие стороны.</p>
+        <p data-i18n="mission.p2">Мы работаем на стыке архитектуры, инженерии и искусства. Свет для нас материал: его можно формировать, направлять и делать видимым ровно там, где он нужен. Тогда вечерний облик здания становится его продолжением, а не дополнением.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- 4.2а Три роли света: наезжает на миссию -->
+  <section class="section kelly" data-stack aria-labelledby="h-kelly">
+      <div class="wrap grid">
+        <div class="kelly__head">
+          <h2 class="kicker" id="h-kelly" data-i18n="kelly.h">Три роли света</h2>
+          <p data-i18n="kelly.p">Ричард Келли, основоположник архитектурного светодизайна, описал свет через три роли. Мы используем эту логику в каждом проекте.</p>
+        </div>
+        <div class="kelly__item k1">
+          <h3>Focal glow<span data-i18n="kelly.1t">Фокусное свечение</span></h3>
+          <p data-i18n="kelly.1">Выделяем главное: вход, фактуру фасада, скульптуру, акцент интерьера. Взгляд сам находит то, ради чего задуман объект.</p>
+        </div>
+        <div class="kelly__item k2">
+          <h3>Ambient luminescence<span data-i18n="kelly.2t">Общий свет</span></h3>
+          <p data-i18n="kelly.2">Создаем среду: мягкий фон, в котором спокойно находиться, ориентироваться и видеть лица людей.</p>
+        </div>
+        <div class="kelly__item k3">
+          <h3>Play of brilliants<span data-i18n="kelly.3t">Игра бликов</span></h3>
+          <p data-i18n="kelly.3">Добавляем характер: блики, мерцание, точечные источники. То, что делает вечер живым и запоминающимся.</p>
+        </div>
+      </div>
+  </section>
+
+  <!-- 4.4 Направления работы -->
+  <section class="dirs" data-stack id="dirs" aria-roledescription="carousel" aria-labelledby="h-dir">
+    <div class="dirs__bg" id="dirsBg" aria-hidden="true"></div>
+    <div class="wrap grid dirs__in">
+      <div class="dirs__head">
+        <h2 id="h-dir" data-i18n="dir.h">Направления</h2>
+        <p data-i18n="dir.sub">Наружная и внутренняя среда освещения</p>
+      </div>
+      <div class="dirs__body">
+        <div class="dirs__nav">
+          <div class="dirs__count" id="dirsCount" aria-live="polite">1 <span>/ 4</span></div>
+          <div class="arrows">
+            <button class="arrow" type="button" id="dirsPrev" aria-label="Предыдущее направление"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="arrow" type="button" id="dirsNext" aria-label="Следующее направление"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+        </div>
+        <div class="dirs__slides" id="dirsSlides"></div>
+        <div class="dirs__dots" id="dirsDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4.5 Услуги -->
+  <section class="section" data-stack id="services" aria-labelledby="h-serv" style="scroll-margin-top:var(--header-h)">
+    <div class="wrap grid">
+      <div class="services__head">
+        <h2 id="h-serv" style="font-size:var(--t-h2)" data-i18n="serv.h">Услуги</h2>
+        <p data-i18n="serv.sub">Полный цикл, от первой идеи до настройки сценариев на объекте. Можно заказать весь путь или отдельный этап.</p>
+      </div>
+      <div class="acc" id="acc"></div>
+      <div class="services__after">
+        <p data-i18n="serv.note">Светодизайн не обязательно дорого. Это грамотный и важный шаг проектирования</p>
+        <a class="btn" href="#contacts" data-i18n="cta">Получить консультацию</a>
+      </div>
+    </div>
+  </section>
+
+</article>
+
+<!-- ================================================================
+     СТРАНИЦА 2 · ПРОЕКТЫ
+     ================================================================ -->
+<article class="page" id="page-projects" data-page="projects" hidden>
+  <section class="dirs dirs--proj" id="projSlider" aria-roledescription="carousel" aria-labelledby="h-proj">
+    <div class="dirs__bg" id="projBg" aria-hidden="true"></div>
+    <div class="wrap grid dirs__in">
+      <div class="dirs__head">
+        <h1 id="h-proj" data-i18n="proj.h">Проекты</h1>
+        <p data-i18n="proj.sub">Реализованные объекты</p>
+      </div>
+      <div class="dirs__body">
+        <div class="dirs__nav">
+          <div class="dirs__count" id="projCount" aria-live="polite">1 <span>/ 13</span></div>
+          <div class="arrows">
+            <button class="arrow" type="button" id="projPrev" aria-label="Предыдущий проект"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="arrow" type="button" id="projNext" aria-label="Следующий проект"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+        </div>
+        <div class="dirs__slides" id="projSlides"></div>
+        <div class="dirs__dots" id="projDots"></div>
+      </div>
+    </div>
+  </section>
+
+
+</article>
+
+<!-- ================================================================
+     СТРАНИЦА · КОНЦЕПЦИИ
+     ================================================================ -->
+<article class="page" id="page-concepts" data-page="concepts" hidden>
+  <header class="wrap grid page-head page-head--side">
+    <p class="kicker" style="grid-column:1 / -1;margin-bottom:var(--s5)" data-i18n="conc.kicker">Визуализации и скетчи</p>
+    <h1 id="h-conc" data-i18n="conc.h">Концепции</h1>
+    <p class="lead" data-i18n="conc.p">Визуализации, скетчи и проектные решения, которые еще ждут реализации или уже в работе</p>
+  </header>
+  <section class="wrap concepts" aria-labelledby="h-conc">
+    <div class="grid" id="concList"></div>
+  </section>
+</article>
+
+<!-- ================================================================
+     СТРАНИЦА 3 · О НАС
+     ================================================================ -->
+<article class="page" id="page-about" data-page="about" hidden>
+  <div class="stackband" data-stack><header class="wrap grid about-open">
+    <p class="kicker" style="grid-column:1 / -1;margin-bottom:var(--s5)" data-i18n="about.kicker">О бюро</p>
+    <h1 data-i18n="about.h">Doppio значит дуэт</h1>
+    <p class="lead" data-i18n="about.lead">Два светодизайнера, одна семья и больше двадцати лет работы со светом</p>
+    <!-- ЗАМЕНИТЬ: общее фото команды assets/about/team.jpg -->
+    <figure class="fig p-wide"><div class="frame" data-img="about/team.jpg" data-ph-ru="Общее фото команды" data-ph-en="Team photo"></div></figure>
+  </header></div>
+
+  <section class="section" data-stack>
+    <div class="wrap grid">
+      <div class="longread prose">
+        <p class="lead" style="margin-bottom:var(--s6)" data-i18n="about.l0">Мы семейное бюро светодизайна из Екатеринбурга. За двадцать с лишним лет мы осветили фасады, парки, улицы и интерьеры, от частного дома до городского бульвара.</p>
+        <p class="dropcap measure" data-i18n="about.l1">Профессиональный светодизайн это не подбор светильников по каталогу. Мы смотрим на объект целиком: как свет ложится на материалы, как в пространство приходит дневной свет и какой должна стать атмосфера вечером. Прорабатываем источники разных уровней и делаем упор на качество характеристик, а не на количество оборудования.</p>
+        <p class="measure" data-i18n="about.l2">Мы ведем проект полным циклом: концепция, расчеты и визуализация, проект, подбор и поставка оборудования, мок-ап на объекте, монтаж и настройка сценариев. При этом легко встраиваемся в команду: работаем в паре с архитектором или дизайнером объекта и сопровождаем смежные разделы.</p>
+        <h2 data-i18n="about.h2">Свет как материал</h2>
+        <p class="measure" data-i18n="about.l3">Мы не соревнуемся с большими бюро. Наша сила в личном участии: нас двое, и каждый проект мы ведем сами. Поэтому к нам приходят и девелоперы, и муниципалитеты, и владельцы частных домов. Светодизайн не обязательно дорого, это грамотный шаг архитектурного и интерьерного проектирования.</p>
+      </div>
+      <figure class="aside-quote">
+        <blockquote data-i18n="about.q">«Выделяем главное, создаем среду и добавляем характер»</blockquote>
+        <figcaption data-i18n="about.qby">Метод DOPPIO по Ричарду Келли</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section--tight" data-stack>
+    <div class="wrap grid duo" id="duo"></div>
+  </section>
+
+  <section class="section academic" data-stack>
+    <div class="wrap grid">
+      <div class="block-head"><h2 data-i18n="acad.h">Практика и академия</h2></div>
+      <div class="prose measure">
+        <p data-i18n="acad.p1">Мы преподаем в УГАХА и передаем студентам архитектурный взгляд на свет. Участвуем в фестивалях, выставках и профессиональных конкурсах в России и за рубежом.</p>
+        <p data-i18n="acad.p2">Практика и академия поддерживают друг друга: в проекты приходят свежие идеи, а в аудиторию живые кейсы.</p>
+      </div>
+      <div class="figs">
+        <!-- ЗАМЕНИТЬ: фото из УГАХА, с фестивалей и выставок -->
+        <figure class="fig"><div class="frame" data-img="about/academic/01.jpg" data-ph-ru="Лекция в УГАХА" data-ph-en="Lecture at USUAA"></div></figure>
+        <figure class="fig"><div class="frame" data-img="about/academic/02.jpg" data-ph-ru="Фестиваль света" data-ph-en="Light festival"></div></figure>
+        <figure class="fig"><div class="frame" data-img="projects/veer/06.jpg" data-ph-ru="Профессиональная премия" data-ph-en="Professional award"></div><figcaption class="caption" data-i18n="acad.cap">Вручение профессиональной премии за проект VEER Mall</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section" data-stack aria-labelledby="h-exp">
+    <div class="wrap grid">
+      <div class="block-head"><h2 id="h-exp" data-i18n="exp.h">Где применима наша экспертиза</h2></div>
+      <ul class="forlist" id="expList"></ul>
+    </div>
+  </section>
+</article>
+
+
+<!-- ================================================================
+     СТРАНИЦА 4 · ВЕЧЕРНИЙ СВЕТ (таймлапсы)
+     ================================================================ -->
+<article class="page night" id="page-light" data-page="light" hidden>
+  <!-- 4.3 Слайдшоу таймлапсов, ночной разворот -->
+  <section class="night laps" aria-roledescription="carousel" aria-labelledby="h-laps" id="laps">
+    <h2 id="h-laps" class="visually-hidden" data-i18n="laps.h">Объекты в вечернем свете</h2>
+    <div class="laps__stage" id="lapsStage"></div>
+    <div class="wrap">
+      <div class="laps__bar">
+        <div class="laps__count" aria-live="polite" id="lapsCount">01 <span>/ 05</span></div>
+        <p class="laps__cap" id="lapsCap"></p>
+        <div class="laps__progress" aria-hidden="true"><i id="lapsProg"></i></div>
+        <div class="arrows">
+          <button class="arrow" type="button" id="lapsPrev" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="arrow" type="button" id="lapsNext" aria-label="Следующее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+</article>
+
+<!-- ================================================================
+     СТРАНИЦА 5 · ПАРТНЁРЫ
+     ================================================================ -->
+<article class="page" id="page-partners" data-page="partners" hidden>
+  <div class="stackband" data-stack><header class="wrap grid page-head page-head--side">
+    <p class="kicker" style="grid-column:1 / -1;margin-bottom:var(--s5)" data-i18n="trust.k">Заказчики и партнёры</p>
+    <h1 data-i18n="partners.h">Партнёры</h1>
+    <p class="lead" data-i18n="partners.lead">С нами работают девелоперы и городские власти, архитектурные и ландшафтные бюро, владельцы недвижимости, отелей, спортивных объектов и курортов, авторы амбициозных частных проектов. Мы дилеры итальянской марки LineaLight и закупаем оборудование напрямую у заводов, без дистрибьюторов, поэтому можем предложить лучшую цену под проект.</p>
+  </header></div>
+  <!-- 4.6 Нам доверяют -->
+  <section class="section--tight trust" data-stack aria-labelledby="h-trust">
+    <div class="wrap">
+      <div class="trust__row">
+        <h2 id="h-trust" style="font-size:var(--t-h3)" data-i18n="trust.h">Нам доверяют</h2>
+      </div>
+    </div>
+    <div class="marquee" id="marquee"></div>
+    <div class="wrap">
+    </div>
+  </section>
+  <section class="section--tight" data-stack aria-labelledby="h-partners">
+    <div class="wrap grid">
+      <div class="block-head" style="grid-column:1 / span 6"><h2 id="h-partners" data-i18n="partn.h">Заводы и выставки</h2></div>
+      <p class="measure" style="grid-column:7 / span 6" data-i18n="partn.p">Мы дилеры премиальной марки LineaLight с поставками с заводов в Италии и Китае и работаем с производителями по прямым договорам, без посредников. Регулярно бываем на производствах и профильных выставках, чтобы знать оборудование вживую.</p>
+    </div>
+    <div class="wrap">
+      <div class="strip" id="partnersStrip"></div>
+    </div>
+  </section>
+</article>
+
+<!-- ============ КОНТАКТЫ И ФОРМА (общие для всех страниц) ============ -->
+<section class="section contacts" id="contacts" aria-labelledby="h-cont" style="scroll-margin-top:var(--header-h)">
+  <div class="wrap grid">
+    <div class="contacts__head">
+      <h2 id="h-cont" data-i18n="cont.h">Обсудим ваш объект</h2>
+      <p class="lead" data-i18n="cont.lead">Расскажите о задаче, и мы предложим, с чего начать.</p>
+      <div class="people">
+        <figure class="fig"><div class="frame" data-img="about/person-1.jpg" data-alt="Елена Годова"></div></figure>
+        <figure class="fig"><div class="frame" data-img="about/person-2.jpg" data-alt="Сергей Годов"></div></figure>
+      </div>
+      <p class="caption" data-i18n="cont.people">Елена Годова и Сергей Годов, основатели DOPPIO</p>
+      <ul class="clist" id="clist"></ul>
+      <div class="socials" id="socials"></div>
+    </div>
+
+    <form class="form" id="leadForm" novalidate>
+      <div class="field">
+        <label for="f-name" data-i18n="f.name">Имя *</label>
+        <input id="f-name" name="name" autocomplete="name" required>
+        <p class="err" id="e-name" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="f-phone" data-i18n="f.phone">Телефон *</label>
+        <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
+        <p class="err" id="e-phone" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="f-email" data-i18n="f.email">Email</label>
+        <input id="f-email" name="email" type="email" autocomplete="email">
+        <p class="err" id="e-email" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="f-type" data-i18n="f.type">Тип объекта *</label>
+        <select id="f-type" name="type" required></select>
+        <p class="err" id="e-type" aria-live="polite"></p>
+      </div>
+      <div class="field field--full">
+        <label for="f-task" data-i18n="f.task">Задача</label>
+        <textarea id="f-task" name="task" data-i18n-ph="f.taskph" placeholder="Например: подсветка фасада частного дома, есть проект архитектора"></textarea>
+      </div>
+      <label class="check" for="f-agree">
+        <input id="f-agree" name="agree" type="checkbox" required>
+        <span data-i18n-html="f.agree">Я соглашаюсь на обработку персональных данных по <a class="link" href="#">политике конфиденциальности</a> (152-ФЗ) *</span>
+      </label>
+      <p class="err" id="e-agree" aria-live="polite" style="grid-column:1 / -1;margin-top:calc(var(--s4) * -1)"></p>
+      <div class="form__foot">
+        <button class="btn" type="submit" id="f-submit" data-i18n="f.submit">Отправить заявку</button>
+        <span class="caption" style="margin:0" data-i18n="f.req">* обязательные поля</span>
+      </div>
+      <div class="form__ok" id="formOk" hidden role="status" data-i18n="f.ok">Заявка отправлена. Мы свяжемся с вами в течение рабочего дня</div>
+    </form>
+  </div>
+</section>
+</main>
+
+<!-- ============ ПОДВАЛ ============ -->
+<footer class="footer">
+  <div class="wrap grid">
+    <div class="footer__logo"><img src="assets/logo/doppio-logo-light.png" alt="DOPPIO Студия архитектурного света" width="671" height="76"></div>
+    <nav aria-label="Меню в подвале">
+      <a href="#about" data-i18n="nav.about">О нас</a>
+      <a href="#projects" data-i18n="nav.projects">Проекты</a>
+      <a href="#services" data-i18n="nav.services">Услуги</a>
+      <a href="#partners" data-i18n="nav.partners">Партнёры</a>
+      <a href="#contacts" data-i18n="nav.contacts">Контакты</a>
+    </nav>
+    <div class="footer__c" id="footC"></div>
+    <div class="footer__bottom">
+      <span>© <span id="year"></span> DOPPIO</span>
+      <span id="req"></span>
+      <a class="link" href="#" data-i18n="f.policy">Политика конфиденциальности</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ ЛАЙТБОКС ============ -->
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Просмотр фото">
+  <div class="lb__top"><span class="lb__count" id="lbCount"></span><button class="lb__close" type="button" id="lbClose" aria-label="Закрыть">&times;</button></div>
+  <div class="lb__stage" id="lbStage"></div>
+  <div class="lb__bar">
+    <span class="lb__cap" id="lbCap"></span>
+    <div class="arrows">
+      <button class="arrow" type="button" id="lbPrev" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="arrow" type="button" id="lbNext" aria-label="Следующее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ======================================================================
+   ЗАМЕНИТЬ: контакты. Все данные для связи правятся только здесь.
+   ====================================================================== */
+const CONTACTS = {
+  phone: "+7 (000) 000-00-00",          // ЗАМЕНИТЬ
+  email: "hello@doppio.com.ru",          // ЗАМЕНИТЬ
+  city: { ru: "Екатеринбург, [адрес]", en: "Yekaterinburg, [address]" }, // ЗАМЕНИТЬ
+  telegram: "https://t.me/",             // ЗАМЕНИТЬ
+  whatsapp: "https://wa.me/",            // ЗАМЕНИТЬ
+  vk: "https://vk.com/",                 // ЗАМЕНИТЬ
+  requisites: { ru: "[ИП/ООО, ИНН]", en: "[Company, Tax ID]" } // ЗАМЕНИТЬ
+};
+
+/* Отправка заявки. ПОДКЛЮЧИТЬ: Telegram-бот / Web3Forms / почта */
+async function submitLead(data){
+  // ПОДКЛЮЧИТЬ: здесь будет реальная отправка, например:
+  // await fetch("https://api.web3forms.com/submit", {method:"POST", body: JSON.stringify(data)})
+  await new Promise(r => setTimeout(r, 700));
+  return true;
+}
+
+/* Размеры фото (подставлены при сборке), нужны для аккуратной загрузки без скачков */
+const IMG = {"home/hero.jpg":[2400,1600],"directions/architecture/01.jpg":[1800,1200],"directions/architecture/02.jpg":[1800,1200],"directions/architecture/03.jpg":[1800,1350],"directions/architecture/04.jpg":[1280,790],"directions/interior/01.jpg":[1773,1182],"directions/interior/02.jpg":[1350,1800],"directions/interior/03.jpg":[1773,1182],"directions/interior/04.jpg":[960,1280],"directions/landscape/01.jpg":[1800,1200],"directions/landscape/02.jpg":[1800,1200],"directions/landscape/03.jpg":[1800,1200],"directions/landscape/04.jpg":[1200,1800],"directions/street/01.jpg":[1800,1013],"directions/street/02.jpg":[1800,1013],"directions/street/03.jpg":[1800,1200],"directions/street/04.jpg":[1200,1800],"about/person-1.jpg":[900,1200],"about/person-2.jpg":[640,640],"projects/golf1/01.jpg":[1800,1200],"projects/golf1/02.jpg":[1800,1200],"projects/golf1/03.jpg":[1800,1200],"projects/golf1/04.jpg":[1800,1200],"projects/golf1/05.jpg":[1800,1200],"projects/golf1/06.jpg":[1200,1800],"projects/golf1/process/01.jpg":[1800,1350],"projects/golf1/process/02.jpg":[1200,1600],"projects/golf2/01.jpg":[1585,985],"projects/golf2/02.jpg":[1627,1016],"projects/golf2/03.jpg":[1641,1251],"projects/golf2/04.jpg":[1681,1177],"projects/golf2/05.jpg":[1641,1219],"projects/sevastyanov/01.jpg":[1800,1200],"projects/sevastyanov/02.jpg":[1800,1200],"projects/sevastyanov/03.jpg":[1800,1200],"projects/sevastyanov/04.jpg":[1800,1013],"projects/tyuz/01.jpg":[1800,1200],"projects/tyuz/02.jpg":[1800,1013],"projects/tyuz/03.jpg":[1800,1200],"projects/tyuz/04.jpg":[1350,1800],"projects/tyuz/05.jpg":[1350,1800],"projects/kursk/01.jpg":[1800,1350],"projects/kursk/02.jpg":[1800,1350],"projects/kursk/03.jpg":[1350,1800],"projects/kursk/04.jpg":[1800,1350],"projects/kursk/05.jpg":[1350,1800],"projects/kursk/process/01.jpg":[1800,1012],"projects/kursk/process/02.jpg":[1800,1012],"projects/atrium/01.jpg":[1800,1200],"projects/atrium/02.jpg":[1800,1200],"projects/atrium/03.jpg":[1800,1350],"projects/atrium/04.jpg":[1350,1800],"projects/rmk/01.jpg":[1800,1200],"projects/rmk/02.jpg":[1800,1200],"projects/rmk/03.jpg":[1800,1200],"projects/rmk/04.jpg":[1800,1200],"projects/rmk/05.jpg":[1800,1200],"projects/mashuk/01.jpg":[1350,1800],"projects/mashuk/02.jpg":[1350,1800],"projects/mashuk/03.jpg":[1350,1800],"projects/mashuk/04.jpg":[1350,1800],"projects/mashuk/05.jpg":[1350,1800],"projects/boulevard/01.jpg":[1800,1013],"projects/boulevard/02.jpg":[1800,1013],"projects/boulevard/03.jpg":[1800,1013],"projects/boulevard/04.jpg":[1800,1013],"projects/boulevard/05.jpg":[1800,1200],"projects/boulevard/06.jpg":[1200,1800],"projects/boulevard/07.jpg":[1800,1200],"projects/divs/01.jpg":[1280,960],"projects/divs/02.jpg":[1280,720],"projects/divs/03.jpg":[1280,960],"projects/kinkyhair/01.jpg":[1773,1182],"projects/kinkyhair/02.jpg":[1773,1182],"projects/kinkyhair/03.jpg":[1800,1207],"projects/kinkyhair/04.jpg":[1773,1182],"projects/kinkyhair/05.jpg":[1182,1773],"projects/kinkyhair/06.jpg":[1773,1182],"projects/kinkyhair/07.jpg":[1772,1182],"projects/nekrasova/01.jpg":[960,1280],"projects/nekrasova/02.jpg":[960,1280],"projects/nekrasova/03.jpg":[959,1280],"projects/nekrasova/04.jpg":[960,1280],"projects/nekrasova/05.jpg":[960,1280],"projects/nekrasova/06.jpg":[960,1280],"projects/veer/01.jpg":[1800,876],"projects/veer/02.jpg":[1183,661],"projects/veer/03.jpg":[1181,600],"projects/veer/04.jpg":[1181,600],"projects/veer/05.jpg":[1183,663],"projects/veer/06.jpg":[960,1280],"projects/kursk-sketch/01.jpg":[1280,804],"projects/kursk-sketch/02.jpg":[1280,782],"projects/kursk-sketch/03.jpg":[1280,926],"projects/mrsk/01.jpg":[1020,772],"projects/mrsk/02.jpg":[1037,765],"projects/riviera/01.jpg":[1070,745],"projects/riviera/02.jpg":[1062,740],"projects/riviera/03.jpg":[1800,1200],"projects/rostov/01.jpg":[1800,859],"projects/rostov/02.jpg":[1235,580],"projects/rostov/03.jpg":[1142,582],"projects/sochi/01.jpg":[1280,790],"projects/sochi/02.jpg":[1280,790],"projects/sochi/03.jpg":[1280,790]};
+
+/* ======================================================================
+   ТЕКСТЫ RU / EN
+   ====================================================================== */
+const I18N = {
+ru:{
+  "skip":"Перейти к содержанию",
+  "nav.home":"Главная","nav.about":"О нас","nav.dirs":"Направления","nav.concepts":"Концепции","nav.light":"Вечерний свет","menu.label":"Меню","nav.projects":"Проекты","nav.services":"Услуги","nav.partners":"Партнёры","nav.contacts":"Контакты",
+  "cta":"Получить консультацию",
+  "run.home":"Главная","run.projects":"Проекты","run.about":"О бюро",
+  "hero.title":"Создаем световой облик вашего пространства",
+  "hero.sub":"Мы делаем вечерний облик зданий и пространств выразительным, а свет осознанной частью архитектуры",
+  "hero.cap":"На фото: проект «Гольф 1»",
+  "hero.alt":"Частный дом в сосновом лесу с архитектурной и ландшафтной подсветкой вечером",
+  "mission.h":"Миссия",
+  "mission.lead":"Создаем световую среду, в которой <em>архитектура раскрывается в вечернем свете</em>, интерьер обретает глубину, а городские пространства становятся комфортными",
+  "quote.turrell":"«Свет это не то, что освещает пространство. Свет это то, из чего пространство состоит»",
+  "quote.turrell.by":"Джеймс Тюрелл",
+  "mission.p1":"DOPPIO по-итальянски значит «дуэт». Светодизайн для нас это диалог архитектуры, света и человека. Сначала мы слушаем объект: понимаем его характер, материалы, то, как в него входит дневной свет. Потом создаем световую среду, которая раскрывает его лучшие стороны.",
+  "mission.p2":"Мы работаем на стыке архитектуры, инженерии и искусства. Свет для нас материал: его можно формировать, направлять и делать видимым ровно там, где он нужен. Тогда вечерний облик здания становится его продолжением, а не дополнением.",
+  "kelly.h":"Три роли света",
+  "kelly.p":"Ричард Келли, основоположник архитектурного светодизайна, описал свет через три роли. Мы используем эту логику в каждом проекте.",
+  "kelly.1t":"Фокусное свечение","kelly.1":"Выделяем главное: вход, фактуру фасада, скульптуру, акцент интерьера. Взгляд сам находит то, ради чего задуман объект.",
+  "kelly.2t":"Общий свет","kelly.2":"Создаем среду: мягкий фон, в котором спокойно находиться, ориентироваться и видеть лица людей.",
+  "kelly.3t":"Игра бликов","kelly.3":"Добавляем характер: блики, мерцание, точечные источники. То, что делает вечер живым и запоминающимся.",
+  "laps.h":"Объекты в вечернем свете","light.kicker":"Объекты после заката","light.h":"Вечерний свет","light.lead":"Как меняется облик зданий и улиц, когда загорается свет. Таймлапсы и вечерние кадры наших объектов.","partners.h":"Партнёры","partners.lead":"С нами работают девелоперы и городские власти, архитектурные и ландшафтные бюро, владельцы недвижимости, отелей, спортивных объектов и курортов, авторы амбициозных частных проектов. Мы дилеры итальянской марки LineaLight и закупаем оборудование напрямую у заводов, без дистрибьюторов, поэтому можем предложить лучшую цену под проект.",
+  "laps.hist":"Архитектурная подсветка исторических зданий",
+  "laps.city":"Освещение городских пространств и улиц",
+  "dir.h":"Направления","dir.sub":"Наружная и внутренняя среда освещения","dir.photos":"фото","dir.more":"Смотреть проекты",
+  "serv.h":"Услуги","serv.sub":"Полный цикл, от первой идеи до настройки сценариев на объекте. Можно заказать весь путь или отдельный этап.",
+  "serv.note":"Светодизайн не обязательно дорого. Это грамотный и важный шаг проектирования",
+  "trust.h":"Нам доверяют","trust.k":"Заказчики и партнёры",
+  "trust.more":"А также архитектурные и ландшафтные бюро, владельцы недвижимости, отелей, спортивных объектов и курортов, авторы амбициозных частных проектов. Мы дилеры итальянской марки LineaLight и работаем с заводами напрямую, без дистрибьюторов.",
+  "proj.kicker":"Избранные объекты","proj.h":"Проекты","proj.sub":"Реализованные объекты","proj.photos":"Смотреть фото",
+  "proj.lead":"Мы не делаем сотни объектов в год. Каждый проект ниже прожит от концепции до настройки, поэтому показываем их подряд, как журнальные истории.",
+  "proj.text":"Текст","proj.all":"Смотреть все фото","proj.process":"Из рабочего процесса","proj.video":"Видеоотзыв заказчика",
+  "proj.f.city":"Город","proj.f.year":"Год","proj.f.works":"Работы","proj.f.tbd":"Текст",
+  "conc.h":"Концепции","conc.kicker":"Визуализации и скетчи","conc.p":"Визуализации, скетчи и проектные решения, которые еще ждут реализации или уже в работе",
+  "for.h":"Реализуем проекты для",
+  "about.kicker":"О бюро","about.h":"Doppio значит дуэт","about.lead":"Два светодизайнера, одна семья и больше двадцати лет работы со светом",
+  "about.l0":"Мы семейное бюро светодизайна из Екатеринбурга. За двадцать с лишним лет мы осветили фасады, парки, улицы и интерьеры, от частного дома до городского бульвара.",
+  "about.l1":"Профессиональный светодизайн это не подбор светильников по каталогу. Мы смотрим на объект целиком: как свет ложится на материалы, как в пространство приходит дневной свет и какой должна стать атмосфера вечером. Прорабатываем источники разных уровней и делаем упор на качество характеристик, а не на количество оборудования.",
+  "about.l2":"Мы ведем проект полным циклом: концепция, расчеты и визуализация, проект, подбор и поставка оборудования, мок-ап на объекте, монтаж и настройка сценариев. При этом легко встраиваемся в команду: работаем в паре с архитектором или дизайнером объекта и сопровождаем смежные разделы.",
+  "about.h2":"Свет как материал",
+  "about.l3":"Мы не соревнуемся с большими бюро. Наша сила в личном участии: нас двое, и каждый проект мы ведем сами. Поэтому к нам приходят и девелоперы, и муниципалитеты, и владельцы частных домов. Светодизайн не обязательно дорого, это грамотный шаг архитектурного и интерьерного проектирования.",
+  "about.q":"«Выделяем главное, создаем среду и добавляем характер»","about.qby":"Метод DOPPIO по Ричарду Келли",
+  "p1.name":"Елена Годова","p1.role":"[роль]",
+  "p1.bio":"Архитектор, выпускница УГАХА. Основатель и идейный вдохновитель бюро. Большой опыт проектов hi-end уровня в Студии Профессионального Архитектурного Света.",
+  "p2.name":"Сергей Годов","p2.role":"[роль]",
+  "p2.bio":"Выпускник Стокгольмского архитектурного института (KTH Arkitektur) по направлению Architectural Lighting Design. Участник международных событий в светодизайне.",
+  "acad.h":"Практика и академия",
+  "acad.p1":"Мы преподаем в УГАХА и передаем студентам архитектурный взгляд на свет. Участвуем в фестивалях, выставках и профессиональных конкурсах в России и за рубежом.",
+  "acad.p2":"Практика и академия поддерживают друг друга: в проекты приходят свежие идеи, а в аудиторию живые кейсы.",
+  "acad.cap":"Вручение профессиональной премии за проект VEER Mall",
+  "partn.h":"Заводы и выставки",
+  "partn.p":"Мы дилеры премиальной марки LineaLight с поставками с заводов в Италии и Китае и работаем с производителями по прямым договорам, без посредников. Регулярно бываем на производствах и профильных выставках, чтобы знать оборудование вживую.",
+  "exp.h":"Где применима наша экспертиза","exp.new":"Новое направление",
+  "cont.h":"Обсудим ваш объект","cont.lead":"Расскажите о задаче, и мы предложим, с чего начать.",
+  "cont.people":"Елена Годова и Сергей Годов, основатели DOPPIO",
+  "c.phone":"Телефон","c.email":"Почта","c.city":"Адрес",
+  "f.name":"Имя *","f.phone":"Телефон *","f.email":"Email","f.type":"Тип объекта *","f.task":"Задача",
+  "f.taskph":"Например: подсветка фасада частного дома, есть проект архитектора",
+  "f.agree":"Я соглашаюсь на обработку персональных данных по <a class=\"link\" href=\"#\">политике конфиденциальности</a> (152-ФЗ) *",
+  "f.submit":"Отправить заявку","f.sending":"Отправляем…","f.req":"* обязательные поля",
+  "f.ok":"Заявка отправлена. Мы свяжемся с вами в течение рабочего дня",
+  "f.policy":"Политика конфиденциальности","f.choose":"Выберите тип объекта",
+  "e.name":"Напишите, как к вам обращаться","e.phone":"Введите номер полностью, 10 цифр после +7","e.email":"Проверьте адрес: в нем должны быть @ и домен","e.type":"Выберите вариант из списка","e.agree":"Без согласия мы не сможем принять заявку",
+  "lb":"Просмотр фото","prev":"Предыдущее","next":"Следующее","close":"Закрыть",
+  "menu.open":"Открыть меню","menu.close":"Закрыть меню"
+},
+en:{
+  "skip":"Skip to content",
+  "nav.home":"Home","nav.about":"About","nav.dirs":"What we light","nav.concepts":"Concepts","nav.light":"Evening light","menu.label":"Menu","nav.projects":"Projects","nav.services":"Services","nav.partners":"Partners","nav.contacts":"Contact",
+  "cta":"Book a consultation",
+  "run.home":"Home","run.projects":"Projects","run.about":"About the studio",
+  "hero.title":"We shape the way your space looks after dark",
+  "hero.sub":"We give buildings and places an expressive evening presence and make light a deliberate part of the architecture",
+  "hero.cap":"Pictured: Golf 1 project",
+  "hero.alt":"Private house in a pine forest with architectural and landscape lighting at dusk",
+  "mission.h":"Mission",
+  "mission.lead":"We create lighting in which <em>architecture comes alive in the evening</em>, interiors gain depth and city spaces become comfortable",
+  "quote.turrell":"“Light is not so much something that reveals, as it is itself the revelation”",
+  "quote.turrell.by":"James Turrell",
+  "mission.p1":"Doppio is Italian for “duet”. To us lighting design is a dialogue between architecture, light and people. First we listen to the building: its character, its materials, the way daylight enters it. Then we create a lit environment that brings out its best.",
+  "mission.p2":"We work where architecture, engineering and art meet. We treat light as a material that can be shaped, directed and made visible exactly where it is needed. That way a building’s evening appearance becomes its continuation rather than an add-on.",
+  "kelly.h":"Three roles of light",
+  "kelly.p":"Richard Kelly, a founder of architectural lighting design, described light through three roles. We follow this logic in every project.",
+  "kelly.1t":"Focal glow","kelly.1":"We highlight what matters: an entrance, the texture of a facade, a sculpture, an interior feature. The eye finds what the place is about.",
+  "kelly.2t":"Ambient luminescence","kelly.2":"We build the setting: a soft background where it is easy to be, to find your way and to see faces.",
+  "kelly.3t":"Play of brilliants","kelly.3":"We add character: sparkle, glints and points of light that make an evening feel alive.",
+  "laps.h":"Projects in evening light","light.kicker":"After sunset","light.h":"Evening light","light.lead":"How buildings and streets change once the lights come on. Timelapses and evening shots of our projects.","partners.h":"Partners","partners.lead":"We work with developers and city authorities, architecture and landscape practices, owners of property, hotels, sports venues and resorts, and the authors of ambitious private projects. We are dealers for the Italian brand LineaLight and buy equipment directly from factories, without distributors, so we can offer the best price for each project.",
+  "laps.hist":"Architectural lighting of historic buildings",
+  "laps.city":"Lighting for city spaces and streets",
+  "dir.h":"What we light","dir.sub":"Outdoor and indoor lighting environments","dir.photos":"photos","dir.more":"See projects",
+  "serv.h":"Services","serv.sub":"The full cycle, from first idea to tuning lighting scenes on site. Order the whole journey or a single stage.",
+  "serv.note":"Lighting design does not have to be expensive. It is a smart and essential design step",
+  "trust.h":"Trusted by","trust.k":"Clients and partners",
+  "trust.more":"Along with architecture and landscape practices, property, hotel, sports venue and resort owners, and the authors of ambitious private projects. We are dealers for the Italian brand LineaLight and work directly with factories, without distributors.",
+  "proj.kicker":"Selected work","proj.h":"Projects","proj.sub":"Completed projects","proj.photos":"View photos",
+  "proj.lead":"We don’t take on hundreds of projects a year. Each one below was carried from concept to commissioning, so we show them one after another, like magazine stories.",
+  "proj.text":"Text","proj.all":"View all photos","proj.process":"From the design process","proj.video":"Client video review",
+  "proj.f.city":"City","proj.f.year":"Year","proj.f.works":"Scope","proj.f.tbd":"Text",
+  "conc.h":"Concepts","conc.kicker":"Visualisations and sketches","conc.p":"Visualisations, sketches and design proposals that are awaiting construction or already under way",
+  "for.h":"We design for",
+  "about.kicker":"About the studio","about.h":"Doppio means duet","about.lead":"Two lighting designers, one family and more than twenty years of working with light",
+  "about.l0":"We are a family lighting design studio based in Yekaterinburg. Over twenty-plus years we have lit facades, parks, streets and interiors, from a private house to a city boulevard.",
+  "about.l1":"Professional lighting design is not picking fixtures from a catalogue. We look at the whole project: how light falls on materials, how daylight enters the space and what the evening atmosphere should be. We work with light sources at several levels and focus on the quality of their performance rather than the number of fixtures.",
+  "about.l2":"We run projects through the full cycle: concept, calculations and visualisation, design documentation, equipment selection and supply, on-site mock-up, installation and scene programming. We also fit easily into a team, working alongside the project architect or interior designer and supporting related design sections.",
+  "about.h2":"Light as a material",
+  "about.l3":"We don’t compete with large practices. Our strength is personal involvement: there are two of us, and we lead every project ourselves. That is why developers, city authorities and private homeowners all come to us. Lighting design does not have to be expensive; it is a smart step in architectural and interior design.",
+  "about.q":"“We highlight what matters, build the setting and add character”","about.qby":"The DOPPIO method, after Richard Kelly",
+  "p1.name":"Elena Godova","p1.role":"[role]",
+  "p1.bio":"Architect, graduate of the Ural State University of Architecture and Art. Founder and creative lead of the studio, with extensive experience on high-end projects at the Professional Architectural Lighting Studio.",
+  "p2.name":"Sergey Godov","p2.role":"[role]",
+  "p2.bio":"Graduate of KTH Royal Institute of Technology in Stockholm (KTH Arkitektur), Architectural Lighting Design. Takes part in international lighting design events.",
+  "acad.h":"Practice and academia",
+  "acad.p1":"We teach at the Ural State University of Architecture and Art, passing on an architectural view of light. We take part in festivals, exhibitions and professional competitions in Russia and abroad.",
+  "acad.p2":"Practice and teaching feed each other: fresh ideas come into our projects and real cases come into the classroom.",
+  "acad.cap":"Receiving a professional award for VEER Mall",
+  "partn.h":"Factories and exhibitions",
+  "partn.p":"We are dealers for the premium brand LineaLight, supplied from factories in Italy and China, and we work with manufacturers under direct contracts without intermediaries. We regularly visit factories and trade shows to know the equipment first-hand.",
+  "exp.h":"Where our expertise applies","exp.new":"New direction",
+  "cont.h":"Let’s talk about your project","cont.lead":"Tell us about the task and we’ll suggest where to start.",
+  "cont.people":"Elena Godova and Sergey Godov, founders of DOPPIO",
+  "c.phone":"Phone","c.email":"Email","c.city":"Address",
+  "f.name":"Name *","f.phone":"Phone *","f.email":"Email","f.type":"Project type *","f.task":"Your task",
+  "f.taskph":"For example: facade lighting for a private house, we have the architect’s drawings",
+  "f.agree":"I agree to the processing of my personal data under the <a class=\"link\" href=\"#\">privacy policy</a> *",
+  "f.submit":"Send request","f.sending":"Sending…","f.req":"* required fields",
+  "f.ok":"Request sent. We’ll get back to you within one business day",
+  "f.policy":"Privacy policy","f.choose":"Choose a project type",
+  "e.name":"Tell us how to address you","e.phone":"Enter the full number with country code","e.email":"Check the address: it needs an @ and a domain","e.type":"Choose an option from the list","e.agree":"We can’t accept the request without your consent",
+  "lb":"Photo viewer","prev":"Previous","next":"Next","close":"Close",
+  "menu.open":"Open menu","menu.close":"Close menu"
+}};
+
+/* ======================================================================
+   ДАННЫЕ: таймлапсы, направления, услуги, проекты
+   ====================================================================== */
+/* Слайды «Вечернего света» собираются из фото всех проектов (см. PROJECTS) */
+let LAPS = [];
+
+const DIRS = [
+  {k:"architecture", img:"directions/architecture/01.jpg", n:{ru:"Архитектура",en:"Architecture"}, d:{ru:"частные, исторические и муниципальные здания",en:"private, historic and public buildings"},
+   p:{ru:"Подсветка фасадов частных домов, общественных зданий и объектов культурного наследия. Подчеркиваем пластику, материалы и ритм архитектуры, бережно работаем с историческими фасадами.",en:"Facade lighting for private houses, public buildings and heritage sites. We bring out the form, materials and rhythm of the architecture and treat historic facades with care."}},
+  {k:"interior", img:"directions/interior/01.jpg", n:{ru:"Интерьеры",en:"Interiors"}, d:{ru:"жилые и коммерческие",en:"residential and commercial"},
+   p:{ru:"Свет в квартирах, домах и коммерческих пространствах. Продумываем сценарии под разное время суток и задачи и работаем в паре с дизайнером интерьера.",en:"Lighting for apartments, houses and commercial spaces. We plan scenes for different times of day and tasks, working alongside the interior designer."}},
+  {k:"landscape", img:"directions/landscape/01.jpg", n:{ru:"Ландшафт",en:"Landscape"}, d:{ru:"приватные и общественные зоны",en:"private and public grounds"},
+   p:{ru:"Приватные сады и общественные зоны. Свет ведет по дорожкам, раскрывает растения и рельеф и не спорит с ночным небом.",en:"Private gardens and public grounds. Light guides you along paths, reveals plants and terrain and leaves room for the night sky."}},
+  {k:"street", img:"directions/street/01.jpg", n:{ru:"Улицы и территории",en:"Streets and public realm"}, d:{ru:"реконструкция инфраструктуры",en:"infrastructure renewal"},
+   p:{ru:"Освещение улиц, бульваров и благоустройства при реконструкции городской инфраструктуры. Комфорт и безопасность для пешеходов, нормативные расчеты.",en:"Lighting for streets, boulevards and public spaces as part of infrastructure renewal. Comfort and safety for pedestrians, backed by code-compliant calculations."}}
+];
+
+const SERVICES = [
+  {t:{ru:"Концепция световой среды",en:"Lighting concept"}, img:"projects/kursk-sketch/01.jpg",
+   p:{ru:"Изучаем характер объекта и сценарии его восприятия, собираем референсы и показываем идею в скетчах и визуализациях. Работаем в паре с архитектором или дизайнером, чтобы свет стал частью общего замысла.",
+      en:"We study the character of the place and how people will experience it, gather references and present the idea in sketches and visualisations, working alongside the architect or designer so light becomes part of the overall idea."}},
+  {t:{ru:"Светотехнический проект",en:"Lighting design documentation"}, img:"projects/golf2/03.jpg",
+   p:{ru:"Нормативный светотехнический расчет, визуализация решения, сценарии освещения и технические спецификации. Сопровождаем разделы РД ЭОМ (рабочая документация по электроосвещению), АР и смежные.",
+      en:"Code-compliant lighting calculations, visualisation, lighting scenes and technical specifications. We support the electrical lighting documentation, architectural and related design sections."}},
+  {t:{ru:"Подбор и поставка оборудования",en:"Equipment selection and supply"}, img:null,
+   p:{ru:"Мы дилеры итальянской марки LineaLight с поставками с заводов в Италии и Китае. Прямые договоры с производителями без дистрибьюторов дают лучшую цену под проект, а гарантийные обязательства соблюдаются полностью.",
+      en:"We are LineaLight dealers, supplied from factories in Italy and China. Direct contracts with manufacturers, with no distributors in between, give the best price for your project with full warranty cover."}},
+  {t:{ru:"Мок-ап",en:"Mock-up"}, img:null,
+   p:{ru:"Пробная установка светильников на объекте. Проверяем эффект, цветовую температуру и углы раскрытия вживую, до закупки всей партии. Так решения принимаются на месте, а не по картинке.",
+      en:"A trial installation of fixtures on site. We check the effect, colour temperature and beam angles in real conditions before the full order is placed, so decisions are made on site rather than from a render."}},
+  {t:{ru:"Монтаж и наладка оборудования",en:"Installation and commissioning"}, img:"projects/golf1/process/01.jpg",
+   p:{ru:"Монтаж, пусконаладка и настройка сценариев освещения. Вместе с интегратором прорабатываем автоматизацию и управление светом в системе «Умный дом».",
+      en:"Installation, commissioning and programming of lighting scenes. Together with the integrator we set up automation and light control within the smart home system."}}
+];
+
+/* Категории: проверить отнесение объектов (ЗАМЕНИТЬ: проверить категорию) */
+const CATS = [
+  {k:"architecture", n:{ru:"Архитектурное освещение",en:"Architectural lighting"}, d:{ru:"Фасады частных, исторических и общественных зданий",en:"Facades of private, historic and public buildings"}},
+  {k:"landscape", n:{ru:"Ландшафтное освещение",en:"Landscape lighting"}, d:{ru:"Сады, парки и приватные территории",en:"Gardens, parks and private grounds"}},
+  {k:"street", n:{ru:"Уличное освещение",en:"Street lighting"}, d:{ru:"Бульвары, улицы и общественные пространства",en:"Boulevards, streets and public spaces"}},
+  {k:"interior", n:{ru:"Интерьеры",en:"Interiors"}, d:{ru:"Жилые и коммерческие пространства",en:"Residential and commercial spaces"}}
+];
+
+/* Проекты. Тексты пока не готовы: на их месте плашка «Текст».
+   Чтобы добавить текст, впишите его в поле text: {ru:"...", en:"..."} */
+const P = (slug,n,extra={}) => Object.assign({slug, imgs:Array.from({length:n},(_,i)=>`projects/${slug}/${String(i+1).padStart(2,"0")}.jpg`)}, extra);
+/* ЗАМЕНИТЬ: проверить, кто из основателей выпускник УГАХА, а кто KTH (p1 = Елена, p2 = Сергей) */
+const PROJECTS = [
+  P("golf1",6,{cat:"architecture", n:{ru:"Гольф 1",en:"Golf 1"}, s:{ru:"Частный дом",en:"Private house"}, process:["projects/golf1/process/01.jpg","projects/golf1/process/02.jpg"]}),
+  P("sevastyanov",4,{cat:"architecture", night:true, n:{ru:"Дом Севастьянова",en:"Sevastyanov House"}, s:{ru:"Объект культурного наследия",en:"Heritage site"}}),
+  P("tyuz",5,{cat:"architecture", n:{ru:"ТЮЗ",en:"Youth Theatre"}, s:{ru:"Театр юного зрителя",en:"Theatre for young audiences"}}),
+  Object.assign(P("golf2",2),{cat:"architecture", n:{ru:"Гольф 2",en:"Golf 2"}, s:{ru:"Частный дом",en:"Private house"}, process:["projects/golf2/03.jpg","projects/golf2/04.jpg","projects/golf2/05.jpg"]}),
+  P("kursk",5,{cat:"architecture", n:{ru:"Курск",en:"Kursk"}, s:{ru:"Частный дом",en:"Private house"}, process:["projects/kursk/process/01.jpg","projects/kursk/process/02.jpg"]}),
+  P("atrium",4,{cat:"architecture", n:{ru:"Атриум",en:"Atrium"}}),
+  P("divs",3,{cat:"architecture", night:true, n:{ru:"ДИВС",en:"DIVS Arena"}, s:{ru:"Дворец игровых видов спорта",en:"Sports arena"}}),
+  P("veer",6,{cat:"architecture", n:{ru:"VEER Mall",en:"VEER Mall"}, s:{ru:"Торгово-развлекательный центр",en:"Shopping and leisure centre"}}),
+  P("rmk",5,{cat:"landscape", n:{ru:"РМК",en:"RMK"}}),
+  P("mashuk",5,{cat:"landscape", n:{ru:"Машук",en:"Mashuk"}}),
+  P("boulevard",7,{cat:"street", night:true, n:{ru:"Бульвары к ЧМ-2018",en:"World Cup 2018 boulevards"}, s:{ru:"Городские бульвары",en:"City boulevards"}}),
+  P("kinkyhair",7,{cat:"interior", n:{ru:"Академия KinkyHair",en:"KinkyHair Academy"}, s:{ru:"ЗИЛ Арт, коммерческий интерьер",en:"ZIL Art, commercial interior"}, video:"projects/kinkyhair/video/review"}),
+  P("nekrasova",6,{cat:"interior", n:{ru:"Квартира на Некрасова",en:"Apartment on Nekrasova Street"}, s:{ru:"Жилой интерьер",en:"Residential interior"}})
+];
+
+const CONCEPTS = [
+  {slug:"kursk-sketch", n:3, t:{ru:"Курск, скетчи",en:"Kursk, sketches"}, s:{ru:"Концепция ландшафтного света",en:"Landscape lighting concept"}},
+  {slug:"mrsk", n:2, t:{ru:"МРСК",en:"MRSK"}, s:{ru:"Визуализация фасадного освещения",en:"Facade lighting visualisation"}},
+  {slug:"riviera", n:3, t:{ru:"Ривьера",en:"Riviera"}, s:{ru:"Архитектурная подсветка жилого комплекса",en:"Residential complex facade lighting"}},
+  {slug:"rostov", n:3, t:{ru:"Ростов-на-Дону, Платовский проспект",en:"Rostov-on-Don, Platovsky Avenue"}, s:{ru:"Проект освещения",en:"Lighting design"}},
+  {slug:"sochi", n:3, t:{ru:"Сочи",en:"Sochi"}, s:{ru:"Концепция подсветки",en:"Lighting concept"}}
+];
+
+const FOR = [
+  {ru:"Частные дома и резиденции",en:"Private houses and residences"},
+  {ru:"Многоквартирные жилые дома, девелоперы",en:"Apartment buildings and developers"},
+  {ru:"Муниципальные объекты",en:"Municipal projects"},
+  {ru:"Коммерческие объекты",en:"Commercial buildings"},
+  {ru:"HoReCa",en:"Hotels, restaurants and cafes"},
+  {ru:"Освещение мероприятий и арт-инсталляций",en:"Events and art installations"}
+];
+const EXP = [
+  {ru:"Архитектурное освещение",en:"Architectural lighting", s:{ru:"фасады, ОКН (объекты культурного наследия), монументы",en:"facades, heritage sites, monuments"}},
+  {ru:"Ландшафтное освещение",en:"Landscape lighting", s:{ru:"сады, парки, территории",en:"gardens, parks, grounds"}},
+  {ru:"Уличное и праздничное освещение",en:"Street and festive lighting", s:{ru:"улицы, бульвары, площади",en:"streets, boulevards, squares"}},
+  {ru:"Интерьерное освещение",en:"Interior lighting", s:{ru:"квартиры, дома, HoReCa, музеи",en:"apartments, houses, hospitality, museums"}},
+  {ru:"Световые инсталляции и арт-объекты",en:"Light installations and art objects", s:{ru:"МАФ (малые архитектурные формы), перманентные инсталляции",en:"street furniture, permanent installations"}, isNew:true}
+];
+const CLIENTS = ["УГМК","РМК","Forum Group","Администрация Екатеринбурга"]; /* ЗАМЕНИТЬ: логотипы в assets/clients/ */
+const PARTNER_PH = [
+  {ru:"Завод LineaLight, Италия",en:"LineaLight factory, Italy"},
+  {ru:"Выставка, Германия",en:"Trade show, Germany"},
+  {ru:"Производство, Китай",en:"Factory, China"},
+  {ru:"Выставка, Италия",en:"Trade show, Italy"}
+]; /* ЗАМЕНИТЬ: фото assets/about/partners/01.jpg … 04.jpg */
+
+/* ======================================================================
+   УТИЛИТЫ
+   ====================================================================== */
+let LANG = "ru";
+try{ const s = localStorage.getItem("doppio-lang"); if(s==="en"||s==="ru") LANG = s; }catch(e){}
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const t = k => (I18N[LANG][k] ?? I18N.ru[k] ?? k);
+const L = o => o ? (o[LANG] ?? o.ru) : "";
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ICON = {
+  prev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg>',
+  next:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg>',
+  down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 9l7 7 7-7"/></svg>'
+};
+
+/* Картинка с заглушкой: если файла нет, показывается плашка с путём */
+function phHTML(path, label){
+  return `<div class="ph"><b>${esc(label||"Фото")}</b><code>assets/${esc(path)}</code></div>`;
+}
+function imgHTML(path, alt="", {lazy=true, label}={}){
+  const d = IMG[path];
+  if(!d) return phHTML(path, label||alt);
+  return `<img src="assets/${path}" alt="${esc(alt)}" width="${d[0]}" height="${d[1]}" ${lazy?'loading="lazy" decoding="async"':''} onerror="this.outerHTML=phHTML('${path}','${esc(label||alt).replace(/'/g,"")}')">`;
+}
+function hydrateFrames(root=document){
+  $$("[data-img]",root).forEach(el=>{
+    const p = el.dataset.img, lbl = LANG==="en" ? el.dataset.phEn : el.dataset.phRu;
+    el.innerHTML = imgHTML(p, el.dataset.alt || lbl || "", {label: lbl || el.dataset.alt});
+  });
+}
+
+/* ======================================================================
+   РЕНДЕР ДИНАМИЧЕСКИХ БЛОКОВ
+   ====================================================================== */
+/* общий показ слайда: новый кадр въезжает справа, старый уходит влево */
+function kbShow(stage, src, alt, dir, fit){
+  const el = document.createElement("div");
+  el.className = "kbs " + (dir < 0 ? "from-l" : "from-r");
+  el.innerHTML = `<img src="${src}" alt="${esc(alt)}" class="${fit||""}">`;
+  const olds = [...stage.querySelectorAll(".kbs:not(.leaving)")];
+  stage.appendChild(el);
+  const im = el.querySelector("img");
+  const go = ()=>{
+    if(reduceMotion || !olds.length || dir===0){ el.classList.remove("from-r","from-l"); olds.forEach(o=>o.remove()); return; }
+    el.getBoundingClientRect();
+    requestAnimationFrame(()=>{
+      el.classList.remove("from-r","from-l");
+      olds.forEach(o=>{ o.classList.add("leaving", dir < 0 ? "out-r" : "out-l"); setTimeout(()=>o.remove(), 1200); });
+    });
+  };
+  (im.decode ? im.decode() : Promise.resolve()).catch(()=>{}).then(go);
+}
+function preload(src){ const i = new Image(); i.src = src; }
+
+const LAP_MS = 4500;
+let lapIdx = 0, lapTimer = null, lapPaused = false;
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function renderLaps(){
+  LAPS = PROJ_ORDER.flatMap(p=>p.imgs.filter(x=>IMG[x]).map(img=>({img, cat:CATS.find(c=>c.k===p.cat), p})));
+  $("#lapsStage").innerHTML = "";
+  showLap(0);
+}
+function showLap(dir){
+  if(!LAPS.length) return;
+  const l = LAPS[lapIdx];
+  kbShow($("#lapsStage"), "assets/"+l.img, `${L(l.p.n)}, ${L(l.cat.n)}`, dir);
+  preload("assets/"+LAPS[(lapIdx+1)%LAPS.length].img);
+  $("#lapsCap").innerHTML = `${esc(L(l.p.n))}<span>${esc(L(l.cat.n))}</span>`;
+  $("#lapsCount").innerHTML = `${String(lapIdx+1).padStart(2,"0")} <span>/ ${String(LAPS.length).padStart(2,"0")}</span>`;
+  const pr = $("#lapsProg"); pr.classList.remove("run"); pr.getBoundingClientRect(); if(!reduceMotion && !lapPaused) pr.classList.add("run");
+}
+function goLap(i, user){
+  if(!LAPS.length) return;
+  const n = LAPS.length, dir = i > lapIdx ? 1 : -1;
+  lapIdx = (i + n) % n; showLap(dir);
+  if(user) restartLapTimer();
+}
+function restartLapTimer(){
+  clearInterval(lapTimer);
+  if(reduceMotion) return;
+  document.documentElement.style.setProperty("--dur-slide", LAP_MS+"ms");
+  lapTimer = setInterval(()=>{ if(!lapPaused && !document.hidden && currentPage==="light") goLap(lapIdx+1); }, LAP_MS);
+}
+
+let dirIdx = 0, dirTimer = null;
+function renderDirs(){
+  $("#dirsBg").innerHTML = DIRS.map((d,i)=>`<img src="assets/${d.img}" alt="" ${i?'loading="lazy"':''} class="${i===dirIdx?'is-active':''}">`).join("");
+  $("#dirsSlides").innerHTML = DIRS.map((d,i)=>`
+    <article class="dirs__slide${i===dirIdx?' is-active':''}" role="group" aria-roledescription="slide" aria-label="${i+1} / ${DIRS.length}" ${i===dirIdx?'':'aria-hidden="true"'}>
+      <p class="kicker">${esc(L(d.d))}</p>
+      <h3>${esc(L(d.n))}</h3>
+      <p class="desc">${esc(L(d.p))}</p>
+      <a class="btn" href="#projects-${d.k}" ${i===dirIdx?'':'tabindex="-1"'}>${esc(t("dir.more"))}</a>
+    </article>`).join("");
+  $("#dirsDots").innerHTML = DIRS.map((d,i)=>`<button type="button" aria-current="${i===dirIdx}">${esc(L(d.n))}</button>`).join("");
+  $$("#dirsDots button").forEach((b,i)=>b.onclick=()=>goDir(i,true));
+  goDir(dirIdx);
+}
+function goDir(i, user){
+  dirIdx = (i + DIRS.length) % DIRS.length;
+  $$("#dirsBg img").forEach((im,k)=>im.classList.toggle("is-active",k===dirIdx));
+  $$("#dirsSlides .dirs__slide").forEach((s,k)=>{ const on=k===dirIdx; s.classList.toggle("is-active",on); s.toggleAttribute("aria-hidden",!on); const a=$("a",s); if(on) a.removeAttribute("tabindex"); else a.setAttribute("tabindex","-1"); });
+  $$("#dirsDots button").forEach((b,k)=>b.setAttribute("aria-current",k===dirIdx));
+  $("#dirsCount").innerHTML = `${dirIdx+1} <span>/ ${DIRS.length}</span>`;
+  if(user) restartDirTimer();
+}
+let dirPaused = false;
+function restartDirTimer(){ clearInterval(dirTimer); if(reduceMotion) return; dirTimer=setInterval(()=>{ if(!dirPaused&&!document.hidden&&currentPage==="home") goDir(dirIdx+1); },6000); }
+
+function renderServices(){
+  $("#acc").innerHTML = SERVICES.map((s,i)=>`
+    <div class="acc__item${i===openSvc?' is-open':''}">
+      <button class="acc__btn" type="button" aria-expanded="${i===openSvc}" aria-controls="svc-${i}" id="svcb-${i}">
+        <span class="acc__num">${String(i+1).padStart(2,"0")}</span>
+        <span class="acc__title">${esc(L(s.t))}</span>
+        <span class="acc__ico" aria-hidden="true">${ICON.down}</span>
+      </button>
+      <div class="acc__panel" id="svc-${i}" role="region" aria-labelledby="svcb-${i}"><div>
+        <div class="acc__body${s.img?'':' acc__body--noimg'}">
+          <p>${esc(L(s.p))}</p>
+          ${s.img?`<figure class="fig"><div class="frame">${imgHTML(s.img, L(s.t))}</div></figure>`:""}
+        </div>
+      </div></div>
+    </div>`).join("");
+  const items = $$(".acc__item");
+  const open = n=>{ openSvc = n; items.forEach((it,k)=>{ const on=k===n; it.classList.toggle("is-open",on); $(".acc__btn",it).setAttribute("aria-expanded",on); }); };
+  items.forEach((it,k)=>{
+    $(".acc__btn",it).onclick=()=>open(openSvc===k?-1:k);
+    if(matchMedia("(hover:hover) and (pointer:fine)").matches){
+      let h; it.addEventListener("mouseenter",()=>{ h=setTimeout(()=>open(k),160); });
+      it.addEventListener("mouseleave",()=>clearTimeout(h));
+    }
+  });
+}
+let openSvc = 0;
+
+function renderMarquee(){
+  const set = CLIENTS.map(c=>`<span class="marquee__item">${esc(c)}</span>`).join("");
+  $("#marquee").innerHTML = `<div class="marquee__track"><div class="marquee__set">${set}${set}</div><div class="marquee__set" aria-hidden="true">${set}${set}</div></div>`;
+}
+
+/* Проекты: разворот с меняющейся композицией */
+const VARIANTS = ["v-a","v-b","v-c"];
+function projHTML(p, idx){
+  const name = L(p.n), all = p.imgs;
+  const v = p.night ? "v-d" : VARIANTS[idx % 3];
+  const fig = (path,cls,k)=> path ? `<figure class="fig fig--zoom ${cls}"><div class="frame" data-lb="${p.slug}" data-i="${k}" tabindex="0" role="button" aria-label="${esc(name)}: ${esc(t("lb"))}, ${k+1}">${imgHTML(path, `${name}, ${k+1}`)}</div></figure>` : "";
+  const text = p.text ? `<div class="p-text prose measure"><p>${esc(L(p.text))}</p></div>`
+    : `<!-- ЗАМЕНИТЬ: текст проекта --><div class="p-text"><div class="ph-text">${esc(t("proj.text"))}</div></div>`;
+  const facts = `<dl class="proj__facts">
+      <div><dt>${esc(t("proj.f.city"))}</dt><dd>[${esc(t("proj.f.tbd"))}]</dd></div>
+      <div><dt>${esc(t("proj.f.year"))}</dt><dd>[${esc(t("proj.f.tbd"))}]</dd></div>
+      <div><dt>${esc(t("proj.f.works"))}</dt><dd>[${esc(t("proj.f.tbd"))}]</dd></div>
+    </dl>`;
+  const rest = all.slice(3);
+  const tail = `<div class="p-tail">
+      <div class="proj__more">
+        ${rest.length?`<div class="thumbs">${rest.map((r,k)=>`<button type="button" data-lb="${p.slug}" data-i="${k+3}" aria-label="${esc(name)}, ${k+4}">${imgHTML(r,"")}</button>`).join("")}</div>`:""}
+        <button class="btn btn--ghost" type="button" data-lb="${p.slug}" data-i="0">${esc(t("proj.all"))} (${all.length + (p.process?.length||0)})</button>
+      </div>
+      ${p.process?`<div class="process" style="margin-top:var(--s6)"><p class="kicker">${esc(t("proj.process"))}</p><div class="row">${p.process.map((r,k)=>`<figure class="fig fig--zoom"><div class="frame" data-lb="${p.slug}" data-i="${all.length+k}" tabindex="0" role="button" aria-label="${esc(t("proj.process"))}, ${k+1}">${imgHTML(r, t("proj.process"))}</div></figure>`).join("")}</div></div>`:""}
+      ${p.video?`<div class="process" style="margin-top:var(--s6)"><p class="kicker">${esc(t("proj.video"))}</p><div class="row"><figure class="fig" style="width:min(320px,100%)"><video controls playsinline preload="none" poster="assets/${p.video}.jpg" width="480" height="480"><source src="assets/${p.video}.mp4" type="video/mp4"></video></figure></div></div>`:""}
+    </div>`;
+  const body = `
+    <div class="proj__title">
+      <p class="kicker">${esc(p.s ? L(p.s) : L(CATS.find(c=>c.k===p.cat).n))}</p>
+      <h3>${esc(name)}</h3>
+      ${facts}
+    </div>
+    ${fig(all[0],"p-hero",0)}
+    ${text}
+    ${fig(all[1],"p-pair1",1)}
+    ${fig(all[2],"p-pair2",2)}
+    ${tail}`;
+  const article = `<article class="grid proj ${v}" id="p-${p.slug}" aria-label="${esc(name)}">${body}</article>`;
+  return p.night ? `<div class="night proj-night"><div class="wrap">${article}</div></div>` : `<div class="wrap">${article}</div>`;
+}
+let projIdx = 0;
+const PROJ_ORDER = CATS.flatMap(c=>PROJECTS.filter(p=>p.cat===c.k));
+function renderProjects(){
+  $("#projBg").innerHTML = PROJ_ORDER.map((p,i)=>`<img src="assets/${p.imgs[0]}" alt="" ${i?'loading="lazy"':''} class="${i===projIdx?'is-active':''}">`).join("");
+  $("#projSlides").innerHTML = PROJ_ORDER.map((p,i)=>{
+    const cat = CATS.find(c=>c.k===p.cat);
+    const all = [...p.imgs, ...(p.process||[])];
+    const text = p.text ? `<p class="desc">${esc(L(p.text))}</p>` : `<!-- ЗАМЕНИТЬ: текст проекта --><div class="ph-text">${esc(t("proj.text"))}</div>`;
+    return `<article class="dirs__slide${i===projIdx?' is-active':''}" id="p-${p.slug}" role="group" aria-roledescription="slide" aria-label="${i+1} / ${PROJ_ORDER.length}" ${i===projIdx?'':'aria-hidden="true"'}>
+      <p class="kicker">${esc(L(cat.n))}${p.s?`, ${esc(L(p.s).toLowerCase())}`:""}</p>
+      <h3>${esc(L(p.n))}</h3>
+      ${text}
+      <div class="dirs__thumbs">${all.slice(1,6).map((r,k)=>`<button type="button" data-lb="${p.slug}" data-i="${k+1}" aria-label="${esc(L(p.n))}, ${k+2}">${imgHTML(r,"")}</button>`).join("")}</div>
+      <div class="btns"><button class="btn" type="button" data-lb="${p.slug}" data-i="0">${esc(t("proj.photos"))} (${all.length})</button></div>
+    </article>`;
+  }).join("");
+  $("#projDots").innerHTML = CATS.map(c=>`<button type="button" data-cat="${c.k}">${esc(L(c.n))}</button>`).join("");
+  $$("#projDots button").forEach(b=>b.onclick=()=>goProj(PROJ_ORDER.findIndex(p=>p.cat===b.dataset.cat),true));
+  goProj(projIdx);
+  $("#concList").innerHTML = CONCEPTS.map(c=>{
+    const imgs = Array.from({length:c.n},(_,i)=>`projects/${c.slug}/0${i+1}.jpg`);
+    return `<div class="concept"><div><h3>${esc(L(c.t))}</h3><p class="caption">${esc(L(c.s))}</p></div>
+      <div class="concept__row">${imgs.map((r,k)=>`<figure class="fig fig--zoom"><div class="frame" data-lb="c-${c.slug}" data-i="${k}" tabindex="0" role="button" aria-label="${esc(L(c.t))}, ${k+1}">${imgHTML(r, `${L(c.t)}, ${k+1}`)}</div></figure>`).join("")}</div></div>`;
+  }).join("");
+}
+
+function goProj(i){
+  const n = PROJ_ORDER.length; projIdx = (i + n) % n;
+  $$("#projBg img").forEach((im,k)=>im.classList.toggle("is-active",k===projIdx));
+  $$("#projSlides .dirs__slide").forEach((el,k)=>{ const on=k===projIdx; el.classList.toggle("is-active",on); el.toggleAttribute("aria-hidden",!on); $$("button",el).forEach(b=>{ if(on) b.removeAttribute("tabindex"); else b.setAttribute("tabindex","-1"); }); });
+  const cat = PROJ_ORDER[projIdx].cat;
+  $$("#projDots button").forEach(b=>b.setAttribute("aria-current", b.dataset.cat===cat));
+  $("#projCount").innerHTML = `${projIdx+1} <span>/ ${n}</span>`;
+}
+
+function renderAbout(){
+  $("#duo").innerHTML = [1,2].map(n=>`
+    <div class="person">
+      <figure class="fig"><div class="frame">${imgHTML(`about/person-${n}.jpg`, t(`p${n}.name`))}</div></figure>
+      <h3>${esc(t(`p${n}.name`))}</h3>
+      <p class="role">${esc(t(`p${n}.role`))}</p><!-- ЗАМЕНИТЬ: роль -->
+      <p>${esc(t(`p${n}.bio`))}</p>
+    </div>`).join("");
+  $("#partnersStrip").innerHTML = PARTNER_PH.map((c,i)=>`<figure class="fig"><div class="frame">${imgHTML(`about/partners/0${i+1}.jpg`, L(c), {label:L(c)})}</div><figcaption class="caption">${esc(L(c))}</figcaption></figure>`).join("");
+  $("#expList").innerHTML = EXP.map(e=>`<li>${esc(L(e))}<small>${esc(L(e.s))}</small>${e.isNew?`<span class="badge">${esc(t("exp.new"))}</span>`:""}</li>`).join("");
+}
+
+function renderContacts(){
+  $("#clist").innerHTML = `
+    <li><span>${esc(t("c.phone"))}</span><a href="tel:${CONTACTS.phone.replace(/[^+\d]/g,"")}">${esc(CONTACTS.phone)}</a></li>
+    <li><span>${esc(t("c.email"))}</span><a href="mailto:${esc(CONTACTS.email)}">${esc(CONTACTS.email)}</a></li>
+    <li><span>${esc(t("c.city"))}</span><b>${esc(L(CONTACTS.city))}</b></li>`;
+  const svg = {
+    tg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M21 4L3 11.2l6.3 2.3L18 7.5l-6.9 7.1 6.2 4.9L21 4z"/></svg>',
+    wa:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M4 20l1.3-4A8 8 0 1 1 8.4 19L4 20z"/><path d="M9 9.5c.3 2 2 3.8 4.5 4.5l1.2-1.2 1.8.9c-.3 1-1.2 1.6-2.2 1.5-3.4-.4-6-3-6.4-6.4-.1-1 .5-1.9 1.5-2.2l.9 1.8L9 9.5z"/></svg>',
+    vk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M3 7h3.2c.5 3.3 2 5.2 3.3 5.6V7h3v3.6c1.4-.2 2.8-1.8 3.3-3.6h3c-.5 2.3-2 4-3.2 4.8 1.2.6 3 2.2 3.6 4.7h-3.3c-.6-1.7-2-3-3.4-3.2v3.2h-.4C6.6 16.5 3.4 13 3 7z"/></svg>'
+  };
+  $("#socials").innerHTML = `
+    <a href="${CONTACTS.telegram}" target="_blank" rel="noopener" aria-label="Telegram">${svg.tg}</a>
+    <a href="${CONTACTS.whatsapp}" target="_blank" rel="noopener" aria-label="WhatsApp">${svg.wa}</a>
+    <a href="${CONTACTS.vk}" target="_blank" rel="noopener" aria-label="VK">${svg.vk}</a>`;
+  $("#footC").innerHTML = `<a href="tel:${CONTACTS.phone.replace(/[^+\d]/g,"")}">${esc(CONTACTS.phone)}</a><a href="mailto:${esc(CONTACTS.email)}">${esc(CONTACTS.email)}</a><span>${esc(L(CONTACTS.city))}</span>`;
+  $("#req").textContent = L(CONTACTS.requisites);
+  const tel = CONTACTS.phone.replace(/[^+\d]/g,"");
+  $("#hcontacts").innerHTML = `<a href="tel:${tel}">${esc(CONTACTS.phone)}</a><a class="mail" href="mailto:${esc(CONTACTS.email)}">${esc(CONTACTS.email)}</a><span class="soc">${$("#socials").innerHTML}</span>`;
+  $("#menuC").innerHTML = `<a href="tel:${tel}">${esc(CONTACTS.phone)}</a><a href="mailto:${esc(CONTACTS.email)}">${esc(CONTACTS.email)}</a>`;
+  const types = LANG==="en"
+    ? ["Private house","Apartment","Apartment building or developer","Commercial building","Municipal project","Hotel, restaurant or cafe","Museum or heritage site","Installation or art object","Other"]
+    : ["Частный дом","Квартира или апартаменты","МКД или девелопер","Коммерческий объект","Муниципальный объект","HoReCa","Музей или ОКН","Инсталляция или арт-объект","Другое"];
+  const sel = $("#f-type"), cur = sel.selectedIndex;
+  sel.innerHTML = `<option value="">${esc(t("f.choose"))}</option>` + types.map((o,i)=>`<option value="${i+1}">${esc(o)}</option>`).join("");
+  if(cur>0) sel.selectedIndex = cur;
+}
+
+/* ======================================================================
+   ЯЗЫК
+   ====================================================================== */
+function applyLang(){
+  document.documentElement.lang = LANG;
+  $$("[data-i18n]").forEach(el=>{ el.textContent = t(el.dataset.i18n); });
+  $$("[data-i18n-html]").forEach(el=>{ el.innerHTML = t(el.dataset.i18nHtml); });
+  $$("[data-i18n-ph]").forEach(el=>{ el.placeholder = t(el.dataset.i18nPh); });
+  $$("[data-i18n-alt]").forEach(el=>{ el.alt = t(el.dataset.i18nAlt); });
+  $$("[data-lang]").forEach(b=>b.setAttribute("aria-pressed", b.dataset.lang===LANG));
+  document.title = LANG==="en" ? "DOPPIO Architectural lighting studio" : "DOPPIO Студия архитектурного света";
+  $('meta[name="description"]').content = LANG==="en"
+    ? "DOPPIO is a family lighting design studio in Yekaterinburg: facade, landscape, street and interior lighting, from concept to commissioning."
+    : "DOPPIO, семейное бюро светодизайна из Екатеринбурга: архитектурная подсветка, ландшафтное, уличное и интерьерное освещение. Полный цикл от концепции до пусконаладки.";
+  $('meta[property="og:title"]').content = document.title;
+  $('meta[property="og:description"]').content = t("hero.title");
+  $("#burger").setAttribute("aria-label", t("menu.open"));
+  $("#projPrev").setAttribute("aria-label", t("prev")); $("#projNext").setAttribute("aria-label", t("next"));
+  $("#dirsPrev").setAttribute("aria-label", t("prev")); $("#dirsNext").setAttribute("aria-label", t("next"));
+  $("#lbPrev").setAttribute("aria-label", t("prev")); $("#lbNext").setAttribute("aria-label", t("next")); $("#lbClose").setAttribute("aria-label", t("close"));
+  renderLaps(); renderDirs(); renderServices(); renderMarquee(); renderProjects(); renderAbout(); renderContacts(); hydrateFrames();
+}
+$$("[data-lang]").forEach(b=>b.addEventListener("click",()=>{
+  LANG = b.dataset.lang; try{ localStorage.setItem("doppio-lang", LANG); }catch(e){}
+  applyLang();
+}));
+
+/* ======================================================================
+   РОУТИНГ: #home, #projects, #about (+ якоря внутри страниц)
+   ====================================================================== */
+const PAGES = ["home","projects","concepts","about","light","partners"];
+let currentPage = "home";
+function route(){
+  const h = decodeURIComponent(location.hash.slice(1)) || "home";
+  let page = currentPage, anchor = null;
+  if(PAGES.includes(h)) { page = h; }
+  else if(h.startsWith("projects-") || h.startsWith("p-")) { page = "projects"; anchor = h; }
+  else if(h==="services" || h==="dirs") { page = "home"; anchor = h; }
+  else { anchor = h; }
+  const changed = page !== currentPage || !document.body.dataset.ready;
+  currentPage = page;
+  $$(".page").forEach(p=> p.hidden = p.dataset.page !== page);
+  $$("#menu a[data-nav]").forEach(a=>{ if(a.dataset.nav===page) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  document.body.dataset.ready = "1";
+  const target = anchor && document.getElementById(anchor);
+  requestAnimationFrame(()=>{
+    layoutStacks();
+    if(target){ const y = naturalTop(target) - (target.id==="contacts"||target.id==="services"||target.id==="dirs" ? $("#header").offsetHeight : 0); window.scrollTo({top:Math.max(0,y), behavior:"instant"}); }
+    else if(changed) window.scrollTo({top:0, behavior:"instant"});
+  });
+  if(page==="home" && (changed || anchor==="dirs")) goDir(0,true);
+  if(page==="home") restartDirTimer();
+  if(page==="projects"){ const k = anchor && anchor.startsWith("projects-") ? anchor.slice(9) : null; const sl = anchor && anchor.startsWith("p-") ? anchor.slice(2) : null;
+    let i = 0; if(k){ i = Math.max(0, PROJ_ORDER.findIndex(p=>p.cat===k)); } else if(sl){ i = Math.max(0, PROJ_ORDER.findIndex(p=>p.slug===sl)); }
+    goProj(i,true); anchor = null; }
+  if(page==="light"){ restartLapTimer(); showLap(0); } else { clearInterval(lapTimer); }
+}
+window.addEventListener("hashchange", route);
+
+
+
+/* закрепление блоков: высокий блок прилипает нижним краем, низкий верхним */
+/* настоящее положение блока на странице (у закреплённых блоков getBoundingClientRect врёт) */
+function naturalTop(el){
+  const stuck = [el, ...$$("[data-stack]")].filter(x=>x.hasAttribute("data-stack"));
+  const saved = stuck.map(x=>[x, x.style.position]);
+  stuck.forEach(x=>x.style.position="static");
+  const y = el.getBoundingClientRect().top + window.scrollY;
+  saved.forEach(([x,v])=>x.style.position=v);
+  return y;
+}
+function layoutStacks(){
+  const groups = new Map();
+  $$("[data-stack]").forEach(el=>{
+    if(!el.offsetParent) return;
+    el.style.top = Math.min(0, window.innerHeight - el.offsetHeight) + "px";
+    const k = el.parentElement; const n = (groups.get(k)||0) + 1; groups.set(k,n);
+    el.style.zIndex = n;
+  });
+}
+window.addEventListener("resize", layoutStacks);
+window.addEventListener("load", layoutStacks);
+if(window.ResizeObserver){ const ro = new ResizeObserver(()=>layoutStacks()); $$("[data-stack]").forEach(el=>ro.observe(el)); }
+
+/* мобильное меню */
+function menu(open){
+  $("#menu").hidden = !open; $("#burger").setAttribute("aria-expanded", open);
+  $("#burger").setAttribute("aria-label", t(open ? "menu.close" : "menu.open"));
+  document.body.style.overflow = open ? "hidden" : "";
+  if(open) $("#menu .menu__list a").focus();
+}
+$("#burger").onclick=()=>menu($("#menu").hidden);
+$("#menuScrim").onclick=()=>menu(false);
+$$("#menu a").forEach(a=>a.addEventListener("click",()=>{ menu(false); if(a.hash===location.hash) route(); }));
+
+/* ======================================================================
+   ЛАЙТБОКС
+   ====================================================================== */
+let lbSet = [], lbI = 0, lbReturn = null;
+function setFor(key){
+  if(key.startsWith("c-")){ const c = CONCEPTS.find(x=>"c-"+x.slug===key); return {name:L(c.t), list:Array.from({length:c.n},(_,i)=>`projects/${c.slug}/0${i+1}.jpg`)}; }
+  const p = PROJECTS.find(x=>x.slug===key); return {name:L(p.n), list:[...p.imgs, ...(p.process||[])]};
+}
+const LB_MS = 5000; let lbTimer = null;
+function openLb(key, i){
+  const s = setFor(key); lbSet = s.list.filter(x=>IMG[x]); lbI = Math.min(i, lbSet.length-1);
+  if(!lbSet.length) return;
+  lbReturn = document.activeElement; $("#lb").dataset.name = s.name;
+  lbMs = key.startsWith("c-") ? 3000 : LB_MS; /* концепции листаются быстрее */
+  $("#lbStage").innerHTML = "";
+  $("#lb").hidden = false; document.body.style.overflow="hidden"; showLb(0); $("#lbClose").focus();
+  lbAuto();
+}
+/* автоперелистывание фото проекта справа налево */
+let lbMs = LB_MS;
+function lbAuto(){ clearInterval(lbTimer); if(reduceMotion) return; lbTimer = setInterval(()=>{ if(!$("#lb").hidden && !document.hidden){ lbI++; showLb(1); } }, lbMs); }
+function showLb(dir){
+  lbI = (lbI + lbSet.length) % lbSet.length;
+  const p = lbSet[lbI];
+  kbShow($("#lbStage"), "assets/"+p, `${$("#lb").dataset.name}, ${lbI+1}`, dir===undefined?1:dir, "fit");
+  preload("assets/"+lbSet[(lbI+1)%lbSet.length]);
+  $("#lbCount").textContent = `${String(lbI+1).padStart(2,"0")} / ${String(lbSet.length).padStart(2,"0")}`;
+  $("#lbCap").textContent = $("#lb").dataset.name;
+}
+function closeLb(){ clearInterval(lbTimer); $("#lb").hidden = true; document.body.style.overflow=""; if(lbReturn) lbReturn.focus(); }
+document.addEventListener("click", e=>{
+  const el = e.target.closest("[data-lb]"); if(!el) return;
+  openLb(el.dataset.lb, +el.dataset.i || 0);
+});
+document.addEventListener("keydown", e=>{
+  if(!$("#lb").hidden){
+    if(e.key==="Escape") closeLb();
+    if(e.key==="ArrowRight"){ lbI++; showLb(1); lbAuto(); }
+    if(e.key==="ArrowLeft"){ lbI--; showLb(-1); lbAuto(); }
+    if(e.key==="Tab"){ const f=$$("#lb button"); const i=f.indexOf(document.activeElement); if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus();} else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus();} }
+    return;
+  }
+  if(!$("#menu").hidden && e.key==="Escape") menu(false);
+  const fr = e.target.closest && e.target.closest('[role="button"][data-lb]');
+  if(fr && (e.key==="Enter"||e.key===" ")){ e.preventDefault(); openLb(fr.dataset.lb, +fr.dataset.i||0); }
+  if(currentPage==="projects" && !e.target.closest("input,textarea,select") && (e.key==="ArrowRight"||e.key==="ArrowLeft") && window.scrollY < window.innerHeight*0.5){ goProj(projIdx + (e.key==="ArrowRight"?1:-1)); }
+  if(currentPage==="light" && e.target.closest && e.target.closest("#laps")){
+    if(e.key==="ArrowRight") goLap(lapIdx+1,true);
+    if(e.key==="ArrowLeft") goLap(lapIdx-1,true);
+  }
+});
+$("#lbClose").onclick=closeLb;
+$("#lbPrev").onclick=()=>{lbI--;showLb(-1);lbAuto();};
+$("#lbNext").onclick=()=>{lbI++;showLb(1);lbAuto();};
+
+
+/* свайп для слайдеров и лайтбокса */
+function swipe(el, cb){
+  if(!el) return; let x0=null, y0=null;
+  el.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY;},{passive:true});
+  el.addEventListener("touchend",e=>{ if(x0===null) return; const dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0; if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)) cb(dx<0?1:-1); x0=null; },{passive:true});
+}
+swipe($("#lbStage"), d=>{lbI+=d;showLb(d);lbAuto();});
+
+/* таймлапсы: стрелки, пауза при наведении и уходе вкладки */
+$("#lapsPrev").onclick=()=>goLap(lapIdx-1,true);
+$("#dirsPrev").onclick=()=>goDir(dirIdx-1,true);
+$("#projPrev").onclick=()=>goProj(projIdx-1);
+$("#projNext").onclick=()=>goProj(projIdx+1);
+swipe($("#projSlider"), d=>goProj(projIdx+d));
+$("#dirsNext").onclick=()=>goDir(dirIdx+1,true);
+swipe($("#dirs"), d=>goDir(dirIdx+d,true));
+$("#lapsNext").onclick=()=>goLap(lapIdx+1,true);
+function showLapProgress(){ const pr=$("#lapsProg"); pr.classList.remove("run"); pr.getBoundingClientRect(); if(!reduceMotion) pr.classList.add("run"); }
+swipe($("#lapsStage"), d=>goLap(lapIdx+d,true));
+
+/* ======================================================================
+   ФОРМА
+   ====================================================================== */
+const phone = $("#f-phone");
+phone.addEventListener("input",()=>{
+  let d = phone.value.replace(/\D/g,"");
+  if(d.startsWith("8")) d = "7"+d.slice(1);
+  if(!d.startsWith("7")) d = "7"+d;
+  d = d.slice(0,11);
+  const p = d.slice(1);
+  let out = "+7";
+  if(p.length) out += " ("+p.slice(0,3);
+  if(p.length>=3) out += ")";
+  if(p.length>3) out += " "+p.slice(3,6);
+  if(p.length>6) out += "-"+p.slice(6,8);
+  if(p.length>8) out += "-"+p.slice(8,10);
+  phone.value = out;
+});
+function setErr(id, msg){
+  const f = $("#f-"+id).closest(".field") || $("#f-"+id).closest(".check");
+  $("#e-"+id).textContent = msg || "";
+  if(f) f.classList.toggle("has-error", !!msg);
+  $("#f-"+id).setAttribute("aria-invalid", !!msg);
+  if(msg) $("#f-"+id).setAttribute("aria-describedby","e-"+id);
+}
+$("#leadForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const name=$("#f-name").value.trim(), ph=phone.value.replace(/\D/g,""), em=$("#f-email").value.trim(), type=$("#f-type").value, agree=$("#f-agree").checked;
+  let first=null; const chk=(id,bad,key)=>{ setErr(id, bad?t(key):""); if(bad&&!first) first=id; };
+  chk("name", name.length<2, "e.name");
+  chk("phone", ph.length!==11, "e.phone");
+  chk("email", em && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em), "e.email");
+  chk("type", !type, "e.type");
+  chk("agree", !agree, "e.agree");
+  if(first){ $("#f-"+first).focus(); return; }
+  const btn=$("#f-submit"); btn.disabled=true; btn.textContent=t("f.sending");
+  try{
+    await submitLead({name, phone:phone.value, email:em, type:$("#f-type").selectedOptions[0].text, task:$("#f-task").value.trim(), lang:LANG});
+    $("#formOk").hidden=false; e.target.reset();
+  } finally { btn.disabled=false; btn.textContent=t("f.submit"); }
+});
+
+/* ======================================================================
+   СТАРТ
+   ====================================================================== */
+$("#year").textContent = new Date().getFullYear();
+applyLang();
+route();
+restartLapTimer();
+restartDirTimer();
+</script>
+</body>
+</html>

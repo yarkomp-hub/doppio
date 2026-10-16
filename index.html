@@ -178,6 +178,8 @@ p{margin:0}
 .hero__img{position:absolute;inset:0}
 .hero__img img{width:100%;height:100%;object-fit:cover;object-position:50% 60%}
 .hero__img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(29,16,13,0) 60%,rgba(29,16,13,.55) 100%)}
+.hero__cherry::after{content:"";position:absolute;inset:0;background:#070302;opacity:0}
+@keyframes nightfall{to{opacity:.92}}
 .hero__cherry{position:absolute;inset:-10%;pointer-events:none;
   /* сложный градиент из цветов шапки (#1D100D) и подвала (#2A1511) */
   background:
@@ -206,15 +208,15 @@ p{margin:0}
 @keyframes photoIn{from{opacity:0;transform:scale(1.06)}to{opacity:1;transform:none}}
 @keyframes fadeUp{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:no-preference){
-  .hero h1{animation:neonOn 2.8s .3s ease-in-out both,heroOut 2.2s 4.6s ease-in-out forwards}
-  .hero__sub{animation:heroIn 1.2s 1.4s var(--ease) both,heroOut 2s 4.6s ease-in-out forwards}
-  .hero__cta{animation:heroIn 1.2s 1.8s var(--ease) both,heroOut 2s 4.6s ease-in-out forwards}
-  .hero__cherry{animation:drift 9s ease-in-out infinite alternate,cherryOut 2.6s 4.8s ease-in-out forwards}
-  .hero__img img{animation:photoIn 3s 4.8s ease-in-out both}
-  .hero__side{animation:fadeUp 1.2s 7s var(--ease) both}
-  .hero__scroll svg{animation:nudge 1.8s 8s var(--ease) infinite}
+  .hero h1{animation:neonOn 2.8s .3s ease-in-out both,heroOut 2.4s 4.4s ease-in-out forwards}
+  .hero__sub{animation:heroIn 1.2s 1.4s var(--ease) both,heroOut 2.2s 4.4s ease-in-out forwards}
+  .hero__cherry{animation:drift 9s ease-in-out infinite alternate,cherryOut 2.6s 6.6s ease-in-out forwards}
+  .hero__cherry::after{animation:nightfall 2.6s 4.4s ease-in-out forwards}
+  .hero__img img{animation:photoIn 3s 6.6s ease-in-out both}
+  .hero__side{animation:fadeUp 1.2s 8.6s var(--ease) both}
+  .hero__scroll svg{animation:nudge 1.8s 9.6s var(--ease) infinite}
 }
-@media (prefers-reduced-motion:reduce){.hero__cherry{display:none}.hero h1,.hero__sub,.hero__cta{text-shadow:0 1px 14px rgba(0,0,0,.7)}}
+@media (prefers-reduced-motion:reduce){.hero__cherry{display:none}.hero h1,.hero__sub{text-shadow:0 1px 14px rgba(0,0,0,.7)}}
 
 /* --- миссия --- */
 .facts{grid-column:1 / -1;margin:clamp(36px,4.5vw,64px) 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gutter);border-top:1px solid var(--line-blue)}
@@ -408,6 +410,10 @@ p{margin:0}
 .footer nav a:hover{opacity:1;color:var(--glow)}
 .footer__c{grid-column:9 / span 4;display:grid;gap:var(--s2);font-size:var(--t-sm);align-content:start}
 .footer__c a{text-decoration:none}
+.footer__cl{display:grid;gap:var(--s2)}
+.footer__soc{margin-top:var(--s4)}
+.footer__soc a{border-color:var(--line-night);color:var(--night-text)}
+.footer__soc a:hover{background:var(--night-text);color:var(--cocoa)}
 .footer__bottom{grid-column:1 / -1;margin-top:var(--s8);padding-top:var(--s4);border-top:1px solid var(--line-night);display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s3);font-size:var(--t-xs);color:var(--night-muted)}
 
 /* --- страницы --- */
@@ -577,7 +583,6 @@ p{margin:0}
   .grid{row-gap:0}
   .hero h1{font-size:clamp(40px,12vw,56px)}
   .hero__sub{margin-top:var(--s4);font-size:16px}
-  .hero__cta{margin-top:var(--s5)}
   .hero__img img{object-position:58% 55%}
   .mission__body,.pullquote{margin-top:var(--s6)}
   .kelly__item{grid-template-columns:1fr;gap:var(--s2)}
@@ -587,7 +592,8 @@ p{margin:0}
   .laps__foot{padding-inline:0}
   .dirs{min-height:auto}
   .dirs__body{margin-top:var(--s7)}
-  .dirs__dots button{font-size:0;max-width:none}
+  .dirs__dots{display:none}
+  .contacts .clist,.contacts .socials{display:none}
   .dirs--proj{min-height:100vh;min-height:100svh;align-items:stretch}
   .dirs--proj .dirs__in{position:relative;display:flex;flex-direction:column;min-height:calc(100svh - var(--header-h));padding-block:20px 24px}
   .dirs--proj .dirs__head h1{font-size:40px}
@@ -690,10 +696,6 @@ p{margin:0}
     <div class="wrap hero__in grid">
       <h1 id="h-hero" data-i18n="hero.title">Создаем световой облик вашего пространства</h1>
       <p class="hero__sub" data-i18n="hero.sub">Мы делаем вечерний облик зданий и пространств выразительным, а свет осознанной частью архитектуры</p>
-      <div class="hero__cta">
-        <a class="btn" href="#contacts" data-i18n="hero.btn">Обсудить мой объект</a>
-        <p class="hero__promise" data-i18n="hero.promise">Ответим в течение дня. Первая консультация бесплатно</p>
-      </div>
       <div class="hero__side">
         <p class="caption" data-i18n="hero.cap">На фото: проект «Гольф 1»</p>
         <a class="hero__scroll" href="#h-mission" id="heroScroll"><span data-i18n="hero.scroll">Листайте</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16M6 14l6 6 6-6"/></svg></a>
@@ -988,7 +990,7 @@ p{margin:0}
       <a href="#partners" data-i18n="nav.partners">Партнёры</a>
       <a href="#contacts" data-i18n="nav.contacts">Контакты</a>
     </nav>
-    <div class="footer__c" id="footC"></div>
+    <div class="footer__c"><div id="footC" class="footer__cl"></div><div class="socials footer__soc" id="footSoc"></div></div>
     <div class="footer__bottom">
       <span>© <span id="year"></span> DOPPIO</span>
       <span id="req"></span>
@@ -1504,6 +1506,7 @@ function renderContacts(){
     <a href="${CONTACTS.telegram}" target="_blank" rel="noopener" aria-label="Telegram">${svg.tg}</a>
     <a href="${CONTACTS.whatsapp}" target="_blank" rel="noopener" aria-label="WhatsApp">${svg.wa}</a>
     <a href="${CONTACTS.vk}" target="_blank" rel="noopener" aria-label="VK">${svg.vk}</a>`;
+  $("#footSoc").innerHTML = $("#socials").innerHTML;
   $("#footC").innerHTML = `<a href="tel:${CONTACTS.phone.replace(/[^+\d]/g,"")}">${esc(CONTACTS.phone)}</a><a href="mailto:${esc(CONTACTS.email)}">${esc(CONTACTS.email)}</a><span>${esc(L(CONTACTS.city))}</span>`;
   $("#req").textContent = L(CONTACTS.requisites);
   const tel = CONTACTS.phone.replace(/[^+\d]/g,"");

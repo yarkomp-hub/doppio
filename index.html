@@ -124,7 +124,7 @@ p{margin:0}
 .hbtn{min-height:40px;padding:0 20px;font-size:var(--t-sm)}
 @media (max-width:640px){.hbtn{display:none}}
 .header__in{display:flex;align-items:center;gap:clamp(16px,2.4vw,40px);height:var(--header-h)}
-.header .logo{display:block;flex:none;width:clamp(140px,13vw,190px)}
+.header .logo{display:block;flex:none;width:clamp(124px,11vw,168px)}
 .header .logo img{width:100%;height:auto}
 .menubtn{margin-left:auto;display:flex;align-items:center;gap:var(--s3);min-height:44px;padding-inline:var(--s2);font-size:var(--t-sm);letter-spacing:.04em}
 .menubtn__ico{position:relative;width:28px;height:18px;display:block}
@@ -178,7 +178,16 @@ p{margin:0}
 .hero__img{position:absolute;inset:0}
 .hero__img img{width:100%;height:100%;object-fit:cover;object-position:50% 60%}
 .hero__img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(29,16,13,0) 60%,rgba(29,16,13,.55) 100%)}
-.hero__cherry{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,#6E1420 0%,#4A0B13 55%,#2C060B 100%);pointer-events:none}
+.hero__cherry{position:absolute;inset:-10%;pointer-events:none;
+  /* сложный градиент из цветов шапки (#1D100D) и подвала (#2A1511) */
+  background:
+    radial-gradient(60% 55% at 22% 30%,rgba(58,30,23,.95) 0%,rgba(42,21,17,0) 70%),
+    radial-gradient(50% 60% at 78% 70%,rgba(42,21,17,.95) 0%,rgba(42,21,17,0) 70%),
+    radial-gradient(45% 45% at 65% 22%,rgba(29,16,13,.9) 0%,rgba(29,16,13,0) 70%),
+    radial-gradient(70% 60% at 35% 85%,rgba(20,10,8,.9) 0%,rgba(20,10,8,0) 70%),
+    linear-gradient(135deg,#1D100D 0%,#2A1511 50%,#1D100D 100%);
+  background-size:140% 140%,140% 140%,160% 160%,150% 150%,100% 100%}
+@keyframes drift{0%{background-position:0% 0%,100% 100%,50% 0%,0% 100%,0 0}100%{background-position:30% 20%,70% 80%,20% 30%,30% 70%,0 0}}
 .hero__in{position:relative;width:100%;padding-block:calc(var(--header-h) + 24px) 96px;text-align:center}
 .hero h1{grid-column:1 / -1;font-size:clamp(44px,7vw,120px);font-weight:400;letter-spacing:.01em;line-height:.95;color:#EFFDFF;text-shadow:0 0 2px #fff,0 0 8px rgba(79,227,247,.95),0 0 18px rgba(79,227,247,.7),0 0 38px rgba(79,227,247,.45),0 0 70px rgba(79,227,247,.3)}
 .hero__sub{grid-column:1 / -1;margin:var(--s6) auto 0;font-size:clamp(17px,1rem + .3vw,20px);line-height:1.5;font-family:var(--f-text);font-weight:400;color:var(--night-text);max-width:560px}
@@ -190,20 +199,20 @@ p{margin:0}
 .hero__scroll{display:flex;flex-direction:column;align-items:center;gap:var(--s2);font-size:var(--t-sm);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--night-text);text-shadow:0 1px 12px rgba(0,0,0,.6)}
 .hero__scroll svg{width:18px;height:18px}
 @keyframes nudge{0%,100%{transform:none}50%{transform:translateY(5px)}}
-@keyframes neonOn{0%{opacity:0;text-shadow:none}8%{opacity:.85}11%{opacity:.15}16%{opacity:1}19%{opacity:.35}24%{opacity:1}31%{opacity:.6}36%,100%{opacity:1}}
+@keyframes neonOn{0%{opacity:0;text-shadow:0 0 0 rgba(79,227,247,0)}35%{opacity:.7;text-shadow:0 0 1px #fff,0 0 4px rgba(79,227,247,.4),0 0 10px rgba(79,227,247,.2)}100%{opacity:1}}
 @keyframes heroIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes heroOut{to{opacity:0;visibility:hidden}}
 @keyframes cherryOut{to{opacity:0;visibility:hidden}}
 @keyframes photoIn{from{opacity:0;transform:scale(1.06)}to{opacity:1;transform:none}}
 @keyframes fadeUp{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:no-preference){
-  .hero h1{animation:neonOn 1.8s .4s linear both,heroOut 1.4s 4.2s var(--ease) forwards}
-  .hero__sub{animation:heroIn .9s 1.3s var(--ease) both,heroOut 1.2s 4.2s var(--ease) forwards}
-  .hero__cta{animation:heroIn .9s 1.6s var(--ease) both,heroOut 1.2s 4.2s var(--ease) forwards}
-  .hero__cherry{animation:cherryOut 1.6s 3.6s var(--ease) forwards}
-  .hero__img img{animation:photoIn 2.4s 3.6s var(--ease) both}
-  .hero__side{animation:fadeUp 1s 5.2s var(--ease) both}
-  .hero__scroll svg{animation:nudge 1.8s 6s var(--ease) infinite}
+  .hero h1{animation:neonOn 2.8s .3s ease-in-out both,heroOut 2.2s 4.6s ease-in-out forwards}
+  .hero__sub{animation:heroIn 1.2s 1.4s var(--ease) both,heroOut 2s 4.6s ease-in-out forwards}
+  .hero__cta{animation:heroIn 1.2s 1.8s var(--ease) both,heroOut 2s 4.6s ease-in-out forwards}
+  .hero__cherry{animation:drift 9s ease-in-out infinite alternate,cherryOut 2.6s 4.8s ease-in-out forwards}
+  .hero__img img{animation:photoIn 3s 4.8s ease-in-out both}
+  .hero__side{animation:fadeUp 1.2s 7s var(--ease) both}
+  .hero__scroll svg{animation:nudge 1.8s 8s var(--ease) infinite}
 }
 @media (prefers-reduced-motion:reduce){.hero__cherry{display:none}.hero h1,.hero__sub,.hero__cta{text-shadow:0 1px 14px rgba(0,0,0,.7)}}
 
@@ -633,7 +642,7 @@ p{margin:0}
 <header class="header" id="header">
   <div class="wrap header__in">
     <a class="logo" href="#home" aria-label="DOPPIO, на главную">
-      <img src="logo/doppio-logo-light.png" alt="DOPPIO Студия архитектурного света" width="671" height="76">
+      <img src="doppio-logo-new.png" alt="DOPPIO Студия архитектурного света" width="700" height="216">
     </a>
         <button class="menubtn" type="button" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="menu">
       <span class="menubtn__ico" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -971,7 +980,7 @@ p{margin:0}
 <!-- ============ ПОДВАЛ ============ -->
 <footer class="footer">
   <div class="wrap grid">
-    <div class="footer__logo"><img src="logo/doppio-logo-light.png" alt="DOPPIO Студия архитектурного света" width="671" height="76"></div>
+    <div class="footer__logo"><img src="doppio-logo-new.png" alt="DOPPIO Студия архитектурного света" width="700" height="216"></div>
     <nav aria-label="Меню в подвале">
       <a href="#about" data-i18n="nav.about">О нас</a>
       <a href="#projects" data-i18n="nav.projects">Проекты</a>

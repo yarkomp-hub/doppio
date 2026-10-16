@@ -11,7 +11,7 @@
 <meta property="og:image" content="home/hero.jpg">
 <link rel="icon" href="logo/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/bebas-neue.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/caviar-dreams.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/daray.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* ==========================================================================
    DOPPIO · концепция вёрстки
@@ -45,7 +45,7 @@
 
   /* шрифты */
   --f-display:"Bebas Neue",sans-serif;
-  --f-text:"Caviar Dreams",sans-serif;
+  --f-text:"Daray",sans-serif;
 
   /* шкала 1.333 */
   --t-xs:.875rem;    /* 14 подписи */
@@ -74,7 +74,7 @@
 
 /* Шрифты сайта: только два, из папки fonts */
 @font-face{font-family:"Bebas Neue";src:url("fonts/bebas-neue.woff2") format("woff2"),url("fonts/bebas-neue.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"Caviar Dreams";src:url("fonts/caviar-dreams.woff2") format("woff2"),url("fonts/caviar-dreams.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Daray";size-adjust:118%;src:url("fonts/daray.woff2") format("woff2"),url("fonts/daray.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
 *,*::before,*::after{box-sizing:border-box}
 html{font-synthesis:none}
 input,select,textarea,button{font-family:inherit}
@@ -110,7 +110,8 @@ p{margin:0}
 
 /* кнопки и ссылки */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s3);min-height:48px;padding:0 var(--s5);background:var(--terracotta);color:var(--paper);font-family:var(--f-text);font-size:var(--t-sm);font-weight:400;letter-spacing:.02em;text-decoration:none;transition:background-color var(--dur) var(--ease)}
-.btn:hover{background:var(--terracotta-hover)}
+.btn{border:1px solid transparent;transition:background-color var(--dur) var(--ease),color var(--dur),box-shadow var(--dur),border-color var(--dur)}
+.btn:hover{background:var(--night);color:var(--night-text);border-color:var(--neon-core);box-shadow:var(--neon-glow),inset 0 0 8px rgba(79,227,247,.35)}
 .btn[disabled]{opacity:.6;cursor:progress}
 .btn--ghost{background:transparent;color:var(--cocoa);box-shadow:inset 0 0 0 1px var(--cocoa)}
 .btn--ghost:hover{background:var(--cocoa);color:var(--paper)}
@@ -170,54 +171,78 @@ p{margin:0}
 .ph-text{border:1px dashed rgba(42,21,17,.3);background:rgba(234,230,216,.5);display:grid;place-content:center;text-align:center;font-family:var(--f-display);font-size:var(--t-h4);color:var(--cocoa-muted);font-weight:400;letter-spacing:.04em}
 .night .ph-text{border-color:var(--line-night);background:rgba(255,255,255,.03);color:var(--night-muted)}
 
-/* --- обложка --- */
-.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;color:var(--night-text);background:var(--night);overflow:hidden}
+/* --- обложка ---
+   Интро: тексты на вишнёвом фоне, буквы оффера загораются неоном,
+   затем проявляется фото, тексты гаснут, остаётся «Листайте» */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;color:var(--night-text);background:var(--night);overflow:hidden}
 .hero__img{position:absolute;inset:0}
 .hero__img img{width:100%;height:100%;object-fit:cover;object-position:50% 60%}
-.hero__img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(29,16,13,0) 45%,rgba(29,16,13,.75) 100%),linear-gradient(90deg,rgba(29,16,13,.4) 0%,rgba(29,16,13,0) 55%)}
-.hero__in{position:relative;width:100%;padding-top:calc(var(--header-h) + 64px);padding-bottom:clamp(40px,6vw,88px)}
-.hero h1{grid-column:1 / span 9;font-size:clamp(48px,7vw,120px);font-weight:400;letter-spacing:.01em;line-height:.92;text-shadow:0 2px 24px rgba(0,0,0,.45)}
-.hero__sub{text-shadow:0 1px 12px rgba(0,0,0,.5);grid-column:1 / span 6;margin-top:var(--s6);font-size:clamp(17px,1rem + .3vw,20px);line-height:1.5;font-family:var(--f-text);font-weight:400;color:var(--night-text);max-width:520px}
-.hero__cta{grid-column:1 / span 6;margin-top:40px;display:flex;flex-direction:column;align-items:flex-start;gap:var(--s3)}
+.hero__img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(29,16,13,0) 60%,rgba(29,16,13,.55) 100%)}
+.hero__cherry{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,#6E1420 0%,#4A0B13 55%,#2C060B 100%);pointer-events:none}
+.hero__in{position:relative;width:100%;padding-block:calc(var(--header-h) + 24px) 96px;text-align:center}
+.hero h1{grid-column:1 / -1;font-size:clamp(44px,7vw,120px);font-weight:400;letter-spacing:.01em;line-height:.95;color:#EFFDFF;text-shadow:0 0 2px #fff,0 0 8px rgba(79,227,247,.95),0 0 18px rgba(79,227,247,.7),0 0 38px rgba(79,227,247,.45),0 0 70px rgba(79,227,247,.3)}
+.hero__sub{grid-column:1 / -1;margin:var(--s6) auto 0;font-size:clamp(17px,1rem + .3vw,20px);line-height:1.5;font-family:var(--f-text);font-weight:400;color:var(--night-text);max-width:560px}
+.hero__cta{grid-column:1 / -1;margin-top:40px;display:flex;flex-direction:column;align-items:center;gap:var(--s3)}
 .hero__cta .btn{min-height:56px;padding:0 32px;font-size:16px}
-.hero__promise{font-size:14px;color:var(--night-text);opacity:.75;margin:0;text-shadow:0 1px 10px rgba(0,0,0,.5)}
-.hero__side{grid-column:9 / span 4;align-self:end;justify-self:end;display:flex;flex-direction:column;align-items:flex-end;gap:var(--s4)}
-.hero__side .caption{text-align:right;color:var(--night-text);opacity:.75;margin:0}
-.hero__scroll{display:flex;align-items:center;gap:var(--s2);font-size:var(--t-xs);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--night-text);opacity:.85}
-.hero__scroll svg{width:16px;height:16px}
-@media (prefers-reduced-motion:no-preference){.hero__scroll svg{animation:nudge 1.8s var(--ease) infinite}}
-@keyframes nudge{0%,100%{transform:none}50%{transform:translateY(4px)}}
+.hero__promise{font-size:14px;color:var(--night-text);opacity:.75;margin:0}
+.hero__side{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 32px);display:flex;justify-content:center}
+.hero__side .caption{display:none}
+.hero__scroll{display:flex;flex-direction:column;align-items:center;gap:var(--s2);font-size:var(--t-sm);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--night-text);text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.hero__scroll svg{width:18px;height:18px}
+@keyframes nudge{0%,100%{transform:none}50%{transform:translateY(5px)}}
+@keyframes neonOn{0%{opacity:0;text-shadow:none}8%{opacity:.85}11%{opacity:.15}16%{opacity:1}19%{opacity:.35}24%{opacity:1}31%{opacity:.6}36%,100%{opacity:1}}
+@keyframes heroIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes heroOut{to{opacity:0;visibility:hidden}}
+@keyframes cherryOut{to{opacity:0;visibility:hidden}}
+@keyframes photoIn{from{opacity:0;transform:scale(1.06)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:no-preference){
-  .hero__img img{animation:heroImg 1600ms var(--ease) both}
-  .hero h1,.hero__sub,.hero__cta,.hero__side{animation:rise 900ms var(--ease) both}
-  .hero__sub{animation-delay:180ms}.hero__cta{animation-delay:320ms}.hero__side{animation-delay:480ms}
+  .hero h1{animation:neonOn 1.8s .4s linear both,heroOut 1.4s 4.2s var(--ease) forwards}
+  .hero__sub{animation:heroIn .9s 1.3s var(--ease) both,heroOut 1.2s 4.2s var(--ease) forwards}
+  .hero__cta{animation:heroIn .9s 1.6s var(--ease) both,heroOut 1.2s 4.2s var(--ease) forwards}
+  .hero__cherry{animation:cherryOut 1.6s 3.6s var(--ease) forwards}
+  .hero__img img{animation:photoIn 2.4s 3.6s var(--ease) both}
+  .hero__side{animation:fadeUp 1s 5.2s var(--ease) both}
+  .hero__scroll svg{animation:nudge 1.8s 6s var(--ease) infinite}
 }
-@keyframes heroImg{from{transform:scale(1.05)}to{transform:none}}
-@keyframes rise{from{transform:translateY(18px);opacity:.001}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.hero__cherry{display:none}.hero h1,.hero__sub,.hero__cta{text-shadow:0 1px 14px rgba(0,0,0,.7)}}
 
 /* --- миссия --- */
-.facts{grid-column:1 / -1;margin:clamp(64px,8vw,128px) 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gutter);border-top:1px solid var(--line-blue)}
-.facts>div{padding-top:var(--s6)}
-.facts dt{font-family:var(--f-display);font-size:clamp(64px,7vw,120px);line-height:.9;color:var(--terracotta);letter-spacing:.01em}
-.facts dt{display:flex;align-items:flex-end;height:clamp(58px,6.3vw,108px)}
-.facts>div:last-child dt{font-size:clamp(36px,4.4vw,72px);line-height:1}
-.facts dd{margin:var(--s3) 0 0;font-size:14px;line-height:1.5;color:var(--cocoa-muted);max-width:24ch}
+.facts{grid-column:1 / -1;margin:clamp(36px,4.5vw,64px) 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gutter);border-top:1px solid var(--line-blue)}
+.facts>div{padding-top:var(--s5)}
+.facts dt{font-family:var(--f-display);font-size:clamp(52px,5.4vw,92px);line-height:.9;color:var(--terracotta);letter-spacing:.01em;display:flex;align-items:flex-end;height:clamp(48px,4.9vw,84px)}
+.facts>div:last-child dt{font-size:clamp(32px,3.4vw,56px);line-height:1}
+.facts .neon{color:rgba(36,200,224,.18);text-shadow:none;transition:color .3s}
+.facts.lit .neon{color:#2FD6EC;text-shadow:0 0 2px #B9F6FF,0 0 8px rgba(79,227,247,.85),0 0 20px rgba(79,227,247,.55),0 0 44px rgba(79,227,247,.3)}
+@media (prefers-reduced-motion:no-preference){
+  .facts.lit .neon{animation:ignite 1.6s linear both}
+  .facts.lit>div:nth-child(2) .neon{animation-delay:.25s}
+  .facts.lit>div:nth-child(3) .neon{animation-delay:.5s}
+  .facts.lit .neon{animation-name:ignite,hum;animation-duration:1.6s,4s;animation-iteration-count:1,infinite;animation-timing-function:linear,ease-in-out}
+}
+@keyframes ignite{0%{opacity:.15}6%{opacity:.9}9%{opacity:.2}15%{opacity:1}18%{opacity:.4}25%{opacity:1}33%{opacity:.7}40%,100%{opacity:1}}
+@keyframes hum{0%,100%{filter:brightness(1)}50%{filter:brightness(1.18)}}
+.facts dd{margin:var(--s2) 0 0;font-size:14px;line-height:1.5;color:var(--cocoa-muted);max-width:24ch}
 @media (max-width:900px){.facts{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:var(--s6)}}
-.mission .lead-big{grid-column:2 / span 8;font-family:var(--f-text);font-weight:400;font-size:var(--t-h3);line-height:1.22}
+.mission{padding-block:clamp(56px,7vw,104px)}
+.mission .lead-big{grid-column:2 / span 8;font-family:var(--f-text);font-weight:400;font-size:clamp(20px,1.05rem + .7vw,28px);line-height:1.3}
 .mission .lead-big em{font-style:normal;color:var(--terracotta)}
-.mission__body{grid-column:7 / span 6;margin-top:clamp(64px,8vw,128px)}
-.pullquote{grid-column:1 / span 5;margin:clamp(64px,8vw,128px) 0 0;align-self:start}
-.pullquote blockquote{margin:0;font-family:var(--f-text);font-weight:400;font-style:normal;font-size:var(--t-quote);line-height:1.15;color:var(--terracotta)}
+.mission__body{grid-column:7 / span 6;margin-top:clamp(32px,4vw,56px)}
+.mission__body p{font-size:clamp(15px,.85rem + .25vw,17px);line-height:1.65}
+.mission__body.prose p+p{margin-top:1em}
+.pullquote{grid-column:1 / span 5;margin:clamp(32px,4vw,56px) 0 0;align-self:start}
+.pullquote blockquote{margin:0;font-family:var(--f-text);font-weight:400;font-style:normal;font-size:clamp(20px,1rem + .8vw,28px);line-height:1.25;color:var(--terracotta)}
 .pullquote figcaption{margin-top:var(--s4);font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--cocoa-muted)}
 .kelly{border-top:1px solid var(--line-blue)}
 .kelly__head{grid-column:1 / span 4}
-.kelly__head p{margin-top:var(--s4);color:var(--cocoa-muted);font-size:var(--t-sm);max-width:36ch}
+.kelly__head .kicker{font-family:var(--f-display);font-size:var(--t-h2);line-height:1;letter-spacing:.02em;text-transform:none;color:var(--cocoa)}
+.kelly__head p{margin-top:var(--s5);color:var(--cocoa-muted);font-size:var(--t-sm);max-width:36ch}
 .kelly__item{grid-column:span 8;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:var(--gutter);padding-block:var(--s7);border-bottom:1px solid var(--line-blue)}
 .kelly__item.k1{grid-column:5 / span 8}
 .kelly__item.k2{grid-column:6 / span 7}
 .kelly__item.k3{grid-column:7 / span 6}
 .kelly__item h3{font-size:var(--t-h2);font-weight:400;line-height:1}
-.kelly__item h3 span{display:block;font-size:var(--t-sm);margin-top:var(--s3)!important;font-family:var(--f-text);letter-spacing:.06em;text-transform:uppercase;color:var(--blue-ink);margin-top:var(--s2);text-shadow:var(--neon-glow-soft)}
+.kelly__item h3 span{display:block;font-size:var(--t-sm);margin-top:var(--s3)!important;font-family:var(--f-text);letter-spacing:.06em;text-transform:uppercase;color:var(--blue-ink);margin-top:var(--s2)}
 .kelly__item p{font-size:var(--t-base);line-height:1.75;align-self:center}
 
 /* --- ночной разворот: таймлапсы --- */
@@ -471,7 +496,7 @@ p{margin:0}
 /* реализуем для / экспертиза */
 .forlist{list-style:none;padding:0;margin:0;grid-column:5 / span 8;columns:2;column-gap:var(--gutter)}
 .forlist li{break-inside:avoid;padding-block:var(--s4);border-top:1px solid var(--line);font-family:var(--f-display);font-weight:400;font-size:var(--t-h4);line-height:1.2}
-.forlist li small{display:block;font-family:var(--f-text);font-size:var(--t-xs);color:var(--blue-ink);text-shadow:var(--neon-glow-soft);letter-spacing:.06em;text-transform:uppercase;margin-top:var(--s2)}
+.forlist li small{display:block;font-family:var(--f-text);font-size:var(--t-xs);color:var(--blue-ink);letter-spacing:.06em;text-transform:uppercase;margin-top:var(--s2)}
 .block-head{grid-column:1 / span 4}
 .block-head h2{font-size:var(--t-h3)}
 
@@ -492,7 +517,7 @@ p{margin:0}
 .person:nth-child(2){grid-column:8 / span 4}
 .person .frame{aspect-ratio:4/5}
 .person h3{font-size:var(--t-h3);margin-top:var(--s5)}
-.person .role{font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--blue-ink);text-shadow:var(--neon-glow-soft);margin-top:var(--s2)}
+.person .role{font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--blue-ink);margin-top:var(--s2)}
 .person p{margin-top:var(--s5);font-size:var(--t-sm);line-height:1.75;max-width:40ch}
 .academic .block-head{grid-column:1 / span 5}
 .academic .prose{grid-column:7 / span 6}
@@ -524,10 +549,6 @@ p{margin:0}
 
 /* --- адаптив --- */
 @media (max-width:1024px){
-  .hero h1{grid-column:1 / -1}
-  .hero__sub{grid-column:1 / span 8}
-  .hero__cta{grid-column:1 / span 7}
-  .hero__side{grid-column:8 / span 5}
   .mission .lead-big{grid-column:1 / span 11}
   .mission__body{grid-column:4 / span 9}
   .kelly__head{grid-column:1 / -1;margin-bottom:var(--s4)}
@@ -545,18 +566,10 @@ p{margin:0}
   :root{--header-h:60px;--margin:16px}
   .grid>*{grid-column:1 / -1!important}
   .grid{row-gap:0}
-  /* телефон: текст сверху на темном фоне, фото ниже */
-  .hero{flex-direction:column;align-items:stretch}
-  .hero__in{order:1;padding-top:calc(var(--header-h) + 28px);padding-bottom:28px;background:var(--night)}
   .hero h1{font-size:clamp(40px,12vw,56px)}
   .hero__sub{margin-top:var(--s4);font-size:16px}
   .hero__cta{margin-top:var(--s5)}
-  .hero__cta .btn{width:100%}
-  .hero__side{display:none}
-  .hero__img{position:relative;inset:auto;order:2;flex:1 1 auto;min-height:260px}
-  .hero__img img{position:absolute;inset:0;object-position:58% 55%}
-  .hero__img::after{background:linear-gradient(180deg,var(--night) 0%,rgba(29,16,13,0) 30%)}
-  .hero h1,.hero__sub{text-shadow:none}
+  .hero__img img{object-position:58% 55%}
   .mission__body,.pullquote{margin-top:var(--s6)}
   .kelly__item{grid-template-columns:1fr;gap:var(--s2)}
   .laps__main{grid-template-columns:minmax(0,1fr)}
@@ -664,6 +677,7 @@ p{margin:0}
   <!-- 4.1 Обложка -->
   <section class="hero" aria-labelledby="h-hero">
     <div class="hero__img"><img src="home/hero.jpg" alt="" data-i18n-alt="hero.alt" width="2400" height="1600" fetchpriority="high"></div>
+    <div class="hero__cherry" aria-hidden="true"></div>
     <div class="wrap hero__in grid">
       <h1 id="h-hero" data-i18n="hero.title">Создаем световой облик вашего пространства</h1>
       <p class="hero__sub" data-i18n="hero.sub">Мы делаем вечерний облик зданий и пространств выразительным, а свет осознанной частью архитектуры</p>
@@ -692,9 +706,9 @@ p{margin:0}
         <p data-i18n="mission.p2">Мы работаем на стыке архитектуры, инженерии и искусства. Свет для нас материал: его можно формировать, направлять и делать видимым ровно там, где он нужен. Тогда вечерний облик здания становится его продолжением, а не дополнением.</p>
       </div>
       <dl class="facts">
-        <div><dt>20+</dt><dd data-i18n="facts.1">лет работы со светом</dd></div>
-        <div><dt>4</dt><dd data-i18n="facts.2">направления: архитектура, интерьер, ландшафт, город</dd></div>
-        <div><dt>5</dt><dd data-i18n="facts.3">этапов работы: от концепции до монтажа</dd></div>
+        <div><dt class="neon"><span data-to="20">20</span>+</dt><dd data-i18n="facts.1">лет работы со светом</dd></div>
+        <div><dt class="neon"><span data-to="4">4</span></dt><dd data-i18n="facts.2">направления: архитектура, интерьер, ландшафт, город</dd></div>
+        <div><dt class="neon"><span data-to="5">5</span></dt><dd data-i18n="facts.3">этапов работы: от концепции до монтажа</dd></div>
         <div><dt>LineaLight</dt><dd data-i18n="facts.4">дилеры, прямые поставки из Италии</dd></div>
       </dl>
 
@@ -1021,7 +1035,7 @@ ru:{
   "run.home":"Главная","run.projects":"Проекты","run.about":"О бюро",
   "hero.title":"Свет, который делает архитектуру вечерней",
   "hero.sub":"Проектируем архитектурное, ландшафтное и интерьерное освещение. От идеи и скетча до настройки сценариев на объекте",
-  "hero.btn":"Обсудить мой объект","hero.promise":"Ответим в течение дня. Первая консультация бесплатно","hero.scroll":"Листайте","hbtn":"Обсудить проект",
+  "hero.btn":"Обсудить мой объект","hero.promise":"Ответим в течение дня. Консультация бесплатно","hero.scroll":"Листайте","hbtn":"Обсудить проект",
   "facts.1":"лет работы со светом","facts.2":"направления: архитектура, интерьер, ландшафт, город","facts.3":"этапов работы: от концепции до монтажа","facts.4":"дилеры, прямые поставки из Италии",
   "hero.cap":"На фото: проект «Гольф 1»",
   "hero.alt":"Частный дом в сосновом лесу с архитектурной и ландшафтной подсветкой вечером",
@@ -1088,7 +1102,7 @@ en:{
   "run.home":"Home","run.projects":"Projects","run.about":"About the studio",
   "hero.title":"Light that brings architecture to life after dark",
   "hero.sub":"We design architectural, landscape and interior lighting, from the first idea and sketch to setting up lighting scenes on site",
-  "hero.btn":"Discuss my project","hero.promise":"We reply within a day. The first consultation is free","hero.scroll":"Scroll","hbtn":"Discuss a project",
+  "hero.btn":"Discuss my project","hero.promise":"We reply within a day. The consultation is free","hero.scroll":"Scroll","hbtn":"Discuss a project",
   "facts.1":"years of working with light","facts.2":"fields: architecture, interiors, landscape, city","facts.3":"stages: from concept to installation","facts.4":"dealers, direct supply from Italy",
   "hero.cap":"Pictured: Golf 1 project",
   "hero.alt":"Private house in a pine forest with architectural and landscape lighting at dusk",
@@ -1711,11 +1725,25 @@ function alignForm(){
   f.style.marginTop="";
   if(innerWidth<=1024 || $("#contacts").offsetParent===null) return;
   const pr=ph.getBoundingClientRect(), fr=f.getBoundingClientRect();
-  const shift=Math.round((pr.top + pr.height/2) - (fr.top + fr.height/2));
+  const btn=$("#f-submit").getBoundingClientRect();
+  const shift=Math.round(pr.bottom - btn.bottom);
   if(shift>0) f.style.marginTop=shift+"px";
 }
 addEventListener("resize", alignForm); addEventListener("load", alignForm);
 new ResizeObserver(alignForm).observe($(".contacts__head"));
+(function facts(){
+  const box=$(".facts"); if(!box) return;
+  const run=()=>{
+    box.classList.add("lit");
+    if(reduceMotion) return;
+    $$(".facts [data-to]").forEach(el=>{ const to=+el.dataset.to, t0=performance.now(), d=1400;
+      const step=t=>{ const k=Math.min(1,(t-t0)/d); el.textContent=Math.round(to*(1-Math.pow(1-k,3))); if(k<1) requestAnimationFrame(step); };
+      el.textContent="0"; requestAnimationFrame(step); });
+  };
+  if(!("IntersectionObserver" in window)){ run(); return; }
+  const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ run(); io.disconnect(); } },{threshold:.4});
+  io.observe(box);
+})();
 function headerState(){
   const clear = currentPage==="home" && window.scrollY < 80 && $("#menu").hidden;
   $("#header").classList.toggle("is-clear", clear);

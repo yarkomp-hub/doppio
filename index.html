@@ -8,10 +8,10 @@
 <meta name="description" content="DOPPIO, семейное бюро светодизайна из Екатеринбурга: архитектурная подсветка, ландшафтное, уличное и интерьерное освещение. Полный цикл от концепции до пусконаладки.">
 <meta property="og:title" content="DOPPIO Студия архитектурного света">
 <meta property="og:description" content="Создаем световой облик вашего пространства">
-<meta property="og:image" content="assets/home/hero.jpg">
-<link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="assets/fonts/bebas-neue.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/caviar-dreams.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:image" content="home/hero.jpg">
+<link rel="icon" href="logo/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/bebas-neue.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/caviar-dreams.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* ==========================================================================
    DOPPIO · концепция вёрстки
@@ -68,9 +68,9 @@
   color-scheme:light;
 }
 
-/* Шрифты сайта: только два, из папки assets/fonts */
-@font-face{font-family:"Bebas Neue";src:url("assets/fonts/bebas-neue.woff2") format("woff2"),url("assets/fonts/bebas-neue.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"Caviar Dreams";src:url("assets/fonts/caviar-dreams.woff2") format("woff2"),url("assets/fonts/caviar-dreams.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+/* Шрифты сайта: только два, из папки fonts */
+@font-face{font-family:"Bebas Neue";src:url("fonts/bebas-neue.woff2") format("woff2"),url("fonts/bebas-neue.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Caviar Dreams";src:url("fonts/caviar-dreams.woff2") format("woff2"),url("fonts/caviar-dreams.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
 *,*::before,*::after{box-sizing:border-box}
 html{font-synthesis:none}
 input,select,textarea,button{font-family:inherit}
@@ -563,7 +563,7 @@ p{margin:0}
 <header class="header" id="header">
   <div class="wrap header__in">
     <a class="logo" href="#home" aria-label="DOPPIO, на главную">
-      <img src="assets/logo/doppio-logo-light.png" alt="DOPPIO Студия архитектурного света" width="671" height="76">
+      <img src="logo/doppio-logo-light.png" alt="DOPPIO Студия архитектурного света" width="671" height="76">
     </a>
     <div class="hcontacts" id="hcontacts"></div>
     <button class="menubtn" type="button" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="menu">
@@ -606,7 +606,7 @@ p{margin:0}
 
   <!-- 4.1 Обложка -->
   <section class="hero" aria-labelledby="h-hero">
-    <div class="hero__img"><img src="assets/home/hero.jpg" alt="" data-i18n-alt="hero.alt" width="2400" height="1600" fetchpriority="high"></div>
+    <div class="hero__img"><img src="home/hero.jpg" alt="" data-i18n-alt="hero.alt" width="2400" height="1600" fetchpriority="high"></div>
     <div class="wrap hero__in grid">
       <h1 id="h-hero" data-i18n="hero.title">Создаем световой облик вашего пространства</h1>
       <p class="hero__sub" data-i18n="hero.sub">Мы делаем вечерний облик зданий и пространств выразительным, а свет осознанной частью архитектуры</p>
@@ -746,7 +746,7 @@ p{margin:0}
     <p class="kicker" style="grid-column:1 / -1;margin-bottom:var(--s5)" data-i18n="about.kicker">О бюро</p>
     <h1 data-i18n="about.h">Doppio значит дуэт</h1>
     <p class="lead" data-i18n="about.lead">Два светодизайнера, одна семья и больше двадцати лет работы со светом</p>
-    <!-- ЗАМЕНИТЬ: общее фото команды assets/about/team.jpg -->
+    <!-- ЗАМЕНИТЬ: общее фото команды about/team.jpg -->
     <figure class="fig p-wide"><div class="frame" data-img="about/team.jpg" data-ph-ru="Общее фото команды" data-ph-en="Team photo"></div></figure>
   </header></div>
 
@@ -907,7 +907,7 @@ p{margin:0}
 <!-- ============ ПОДВАЛ ============ -->
 <footer class="footer">
   <div class="wrap grid">
-    <div class="footer__logo"><img src="assets/logo/doppio-logo-light.png" alt="DOPPIO Студия архитектурного света" width="671" height="76"></div>
+    <div class="footer__logo"><img src="logo/doppio-logo-light.png" alt="DOPPIO Студия архитектурного света" width="671" height="76"></div>
     <nav aria-label="Меню в подвале">
       <a href="#about" data-i18n="nav.about">О нас</a>
       <a href="#projects" data-i18n="nav.projects">Проекты</a>
@@ -1183,13 +1183,13 @@ const EXP = [
   {ru:"Интерьерное освещение",en:"Interior lighting", s:{ru:"квартиры, дома, HoReCa, музеи",en:"apartments, houses, hospitality, museums"}},
   {ru:"Световые инсталляции и арт-объекты",en:"Light installations and art objects", s:{ru:"МАФ (малые архитектурные формы), перманентные инсталляции",en:"street furniture, permanent installations"}, isNew:true}
 ];
-const CLIENTS = ["УГМК","РМК","Forum Group","Администрация Екатеринбурга"]; /* ЗАМЕНИТЬ: логотипы в assets/clients/ */
+const CLIENTS = ["УГМК","РМК","Forum Group","Администрация Екатеринбурга"]; /* ЗАМЕНИТЬ: логотипы в clients/ */
 const PARTNER_PH = [
   {ru:"Завод LineaLight, Италия",en:"LineaLight factory, Italy"},
   {ru:"Выставка, Германия",en:"Trade show, Germany"},
   {ru:"Производство, Китай",en:"Factory, China"},
   {ru:"Выставка, Италия",en:"Trade show, Italy"}
-]; /* ЗАМЕНИТЬ: фото assets/about/partners/01.jpg … 04.jpg */
+]; /* ЗАМЕНИТЬ: фото about/partners/01.jpg … 04.jpg */
 
 /* ======================================================================
    УТИЛИТЫ
@@ -1209,12 +1209,12 @@ const ICON = {
 
 /* Картинка с заглушкой: если файла нет, показывается плашка с путём */
 function phHTML(path, label){
-  return `<div class="ph"><b>${esc(label||"Фото")}</b><code>assets/${esc(path)}</code></div>`;
+  return `<div class="ph"><b>${esc(label||"Фото")}</b><code>${esc(path)}</code></div>`;
 }
 function imgHTML(path, alt="", {lazy=true, label}={}){
   const d = IMG[path];
   if(!d) return phHTML(path, label||alt);
-  return `<img src="assets/${path}" alt="${esc(alt)}" width="${d[0]}" height="${d[1]}" ${lazy?'loading="lazy" decoding="async"':''} onerror="this.outerHTML=phHTML('${path}','${esc(label||alt).replace(/'/g,"")}')">`;
+  return `<img src="${path}" alt="${esc(alt)}" width="${d[0]}" height="${d[1]}" ${lazy?'loading="lazy" decoding="async"':''} onerror="this.outerHTML=phHTML('${path}','${esc(label||alt).replace(/'/g,"")}')">`;
 }
 function hydrateFrames(root=document){
   $$("[data-img]",root).forEach(el=>{
@@ -1257,8 +1257,8 @@ function renderLaps(){
 function showLap(dir){
   if(!LAPS.length) return;
   const l = LAPS[lapIdx];
-  kbShow($("#lapsStage"), "assets/"+l.img, `${L(l.p.n)}, ${L(l.cat.n)}`, dir);
-  preload("assets/"+LAPS[(lapIdx+1)%LAPS.length].img);
+  kbShow($("#lapsStage"), ""+l.img, `${L(l.p.n)}, ${L(l.cat.n)}`, dir);
+  preload(""+LAPS[(lapIdx+1)%LAPS.length].img);
   $("#lapsCap").innerHTML = `${esc(L(l.p.n))}<span>${esc(L(l.cat.n))}</span>`;
   $("#lapsCount").innerHTML = `${String(lapIdx+1).padStart(2,"0")} <span>/ ${String(LAPS.length).padStart(2,"0")}</span>`;
   const pr = $("#lapsProg"); pr.classList.remove("run"); pr.getBoundingClientRect(); if(!reduceMotion && !lapPaused) pr.classList.add("run");
@@ -1278,7 +1278,7 @@ function restartLapTimer(){
 
 let dirIdx = 0, dirTimer = null;
 function renderDirs(){
-  $("#dirsBg").innerHTML = DIRS.map((d,i)=>`<img src="assets/${d.img}" alt="" ${i?'loading="lazy"':''} class="${i===dirIdx?'is-active':''}">`).join("");
+  $("#dirsBg").innerHTML = DIRS.map((d,i)=>`<img src="${d.img}" alt="" ${i?'loading="lazy"':''} class="${i===dirIdx?'is-active':''}">`).join("");
   $("#dirsSlides").innerHTML = DIRS.map((d,i)=>`
     <article class="dirs__slide${i===dirIdx?' is-active':''}" role="group" aria-roledescription="slide" aria-label="${i+1} / ${DIRS.length}" ${i===dirIdx?'':'aria-hidden="true"'}>
       <p class="kicker">${esc(L(d.d))}</p>
@@ -1353,7 +1353,7 @@ function projHTML(p, idx){
         <button class="btn btn--ghost" type="button" data-lb="${p.slug}" data-i="0">${esc(t("proj.all"))} (${all.length + (p.process?.length||0)})</button>
       </div>
       ${p.process?`<div class="process" style="margin-top:var(--s6)"><p class="kicker">${esc(t("proj.process"))}</p><div class="row">${p.process.map((r,k)=>`<figure class="fig fig--zoom"><div class="frame" data-lb="${p.slug}" data-i="${all.length+k}" tabindex="0" role="button" aria-label="${esc(t("proj.process"))}, ${k+1}">${imgHTML(r, t("proj.process"))}</div></figure>`).join("")}</div></div>`:""}
-      ${p.video?`<div class="process" style="margin-top:var(--s6)"><p class="kicker">${esc(t("proj.video"))}</p><div class="row"><figure class="fig" style="width:min(320px,100%)"><video controls playsinline preload="none" poster="assets/${p.video}.jpg" width="480" height="480"><source src="assets/${p.video}.mp4" type="video/mp4"></video></figure></div></div>`:""}
+      ${p.video?`<div class="process" style="margin-top:var(--s6)"><p class="kicker">${esc(t("proj.video"))}</p><div class="row"><figure class="fig" style="width:min(320px,100%)"><video controls playsinline preload="none" poster="${p.video}.jpg" width="480" height="480"><source src="${p.video}.mp4" type="video/mp4"></video></figure></div></div>`:""}
     </div>`;
   const body = `
     <div class="proj__title">
@@ -1372,7 +1372,7 @@ function projHTML(p, idx){
 let projIdx = 0;
 const PROJ_ORDER = CATS.flatMap(c=>PROJECTS.filter(p=>p.cat===c.k));
 function renderProjects(){
-  $("#projBg").innerHTML = PROJ_ORDER.map((p,i)=>`<img src="assets/${p.imgs[0]}" alt="" ${i?'loading="lazy"':''} class="${i===projIdx?'is-active':''}">`).join("");
+  $("#projBg").innerHTML = PROJ_ORDER.map((p,i)=>`<img src="${p.imgs[0]}" alt="" ${i?'loading="lazy"':''} class="${i===projIdx?'is-active':''}">`).join("");
   $("#projSlides").innerHTML = PROJ_ORDER.map((p,i)=>{
     const cat = CATS.find(c=>c.k===p.cat);
     const all = [...p.imgs, ...(p.process||[])];
@@ -1562,8 +1562,8 @@ function lbAuto(){ clearInterval(lbTimer); if(reduceMotion) return; lbTimer = se
 function showLb(dir){
   lbI = (lbI + lbSet.length) % lbSet.length;
   const p = lbSet[lbI];
-  kbShow($("#lbStage"), "assets/"+p, `${$("#lb").dataset.name}, ${lbI+1}`, dir===undefined?1:dir, "fit");
-  preload("assets/"+lbSet[(lbI+1)%lbSet.length]);
+  kbShow($("#lbStage"), ""+p, `${$("#lb").dataset.name}, ${lbI+1}`, dir===undefined?1:dir, "fit");
+  preload(""+lbSet[(lbI+1)%lbSet.length]);
   $("#lbCount").textContent = `${String(lbI+1).padStart(2,"0")} / ${String(lbSet.length).padStart(2,"0")}`;
   $("#lbCap").textContent = $("#lb").dataset.name;
 }

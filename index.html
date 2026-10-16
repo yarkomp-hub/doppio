@@ -30,7 +30,7 @@
   --terracotta:#8C2A12;   /* главный акцент */
   --terracotta-hover:#6F200C;
   --blue:#4FE3F7;         /* второй акцент: неоновый голубой */
-  --blue-ink:#0E9DB6;     /* неоновый голубой для текста на светлом */
+  --blue-ink:#0E9DB6;     /* тот же оттенок, чуть глубже: текст на светлом фоне */
   --neon-core:#D9FBFF;    /* светлая сердцевина неоновой трубки */
   --neon-glow:0 0 2px rgba(79,227,247,.95),0 0 8px rgba(79,227,247,.75),0 0 18px rgba(79,227,247,.45),0 0 36px rgba(79,227,247,.25);
   --neon-glow-soft:0 0 4px rgba(79,227,247,.55),0 0 12px rgba(79,227,247,.3);
@@ -222,9 +222,13 @@ p{margin:0}
 
 /* --- ночной разворот: таймлапсы --- */
 .night{background:var(--night);color:var(--night-text)}
-.laps{position:relative}
+.laps{position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto;height:calc(100vh - var(--header-h));height:calc(100svh - var(--header-h));padding:0 max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));row-gap:var(--s3)}
+.laps__top{display:grid;grid-template-columns:80px minmax(0,1fr) 80px;align-items:center;min-height:72px;gap:var(--s4)}
+.laps__main{min-height:0;display:grid;grid-template-columns:56px minmax(0,1fr) 56px;align-items:center;gap:var(--s4)}
+.laps__side{border-radius:50%;width:56px;height:56px;color:var(--night-text);border-color:var(--night-text)}
+.laps__foot{padding:var(--s2) 72px 4px}
 .page.night{padding-top:var(--header-h)}
-.laps__stage{position:relative;height:calc(100vh - var(--header-h) - 96px);min-height:360px;width:100%;overflow:hidden;background:#000}
+.laps__stage{position:relative;height:100%;min-height:240px;width:100%;overflow:hidden;cursor:pointer}
 /* слайды с медленным движением (Ken Burns) и сменой справа налево */
 .kbs{position:absolute;inset:0;overflow:hidden;transform:translateX(0);transition:transform 1100ms cubic-bezier(.65,0,.35,1);will-change:transform}
 .kbs.from-r{transform:translateX(100%)}.kbs.from-l{transform:translateX(-100%)}
@@ -232,15 +236,15 @@ p{margin:0}
 .kbs.leaving{z-index:0}.kbs:not(.leaving){z-index:1}
 .kbs img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.03)}
 .kbs img.fit{object-fit:contain}
-.laps .kbs{background:#000}
+.laps .kbs{background:var(--night)}
 .lb .kbs{background:#120907}
 @media (prefers-reduced-motion:no-preference){.kbs img{animation:kb 9s linear both}}
-.laps__cap{font-size:var(--t-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--night-text);min-width:0;line-height:1.5}
-.laps__cap span{display:block;color:var(--night-muted);text-transform:none;letter-spacing:0}
+.laps__cap{margin:0;text-align:center;font-family:var(--f-display);font-weight:400;font-size:clamp(28px,2.4vw,40px);letter-spacing:.03em;line-height:1;color:var(--night-text);min-width:0}
+.laps__cap span{display:block;margin-top:6px;font-family:var(--f-text);font-size:var(--t-xs);color:var(--night-muted);letter-spacing:.06em;text-transform:uppercase}
 .laps__bar{display:flex;align-items:center;gap:var(--s5);min-height:96px}
 .laps__count{font-family:var(--f-display);font-size:var(--t-h4);font-variant-numeric:tabular-nums;font-weight:400;white-space:nowrap}
 .laps__count span{color:var(--night-muted)}
-.laps__progress{flex:1;height:2px;background:var(--line-night);position:relative;overflow:visible;min-width:60px}
+.laps__progress{height:2px;background:var(--line-night);position:relative;overflow:visible;min-width:60px}
 .laps__progress i{position:absolute;inset:0;background:var(--neon-core);box-shadow:var(--neon-glow);transform-origin:0 50%;transform:scaleX(0)}
 .laps__progress i.run{animation:prog var(--dur-slide,4500ms) linear both}
 @keyframes prog{to{transform:scaleX(1)}}
@@ -263,8 +267,8 @@ p{margin:0}
 .dirs__body{grid-column:6 / span 6}
 .dirs__nav{display:flex;align-items:center;gap:var(--s5)}
 .dirs__count{font-family:var(--f-display);font-weight:400;font-size:var(--t-h2);line-height:1;font-variant-numeric:tabular-nums;color:var(--neon-core);text-shadow:var(--neon-glow)}
-.dirs__count span{font-size:.5em;color:var(--night-muted)}
-.dirs .arrow{border-radius:50%;border-color:rgba(239,233,220,.7)}
+.dirs__count span{font-size:.5em;color:var(--night-text);text-shadow:none}
+.dirs .arrow{border-radius:50%;border-color:var(--night-text);color:var(--night-text);box-shadow:none;text-shadow:none}
 .dirs .arrow:hover{background:var(--night-text);color:var(--night)}
 .dirs__slides{display:grid;margin-top:var(--s7)}
 .dirs__slide{grid-area:1/1;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity 220ms ease,transform 220ms ease,visibility 0s 220ms}
@@ -272,15 +276,15 @@ p{margin:0}
 .dirs__slide .kicker{color:var(--glow)}
 .dirs__slide h3{font-size:var(--t-h2);font-weight:400;margin-top:var(--s3)}
 .dirs__slide p.desc{margin-top:var(--s5);max-width:46ch;line-height:1.75;color:var(--night-text);opacity:.9}
-.dirs__slide .btn{margin-top:var(--s7);background:transparent;color:var(--night-text);border:1px solid var(--blue);box-shadow:var(--neon-glow),inset 0 0 8px rgba(79,227,247,.35);transition:box-shadow var(--dur),background-color var(--dur)}
+.dirs__slide .btn{margin-top:var(--s7);background:transparent;color:var(--night-text);border:1px solid var(--neon-core);box-shadow:var(--neon-glow),inset 0 0 8px rgba(79,227,247,.35);transition:box-shadow var(--dur),background-color var(--dur)}
 .dirs__slide .btn:hover{background:rgba(79,227,247,.12);box-shadow:var(--neon-glow),0 0 48px rgba(79,227,247,.35),inset 0 0 12px rgba(79,227,247,.5)}
 .dirs__dots{display:flex;gap:var(--s2);margin-top:var(--s8)}
 .dirs__dots button{flex:1;max-width:120px;min-height:44px;text-align:left;font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase;color:var(--night-muted);border-top:2px solid var(--line-night);padding-top:var(--s3);transition:color var(--dur),border-color var(--dur)}
-.dirs__dots button[aria-current="true"]{color:var(--night-text);border-top-color:var(--blue);box-shadow:0 -4px 10px -4px rgba(79,227,247,.9)}
+.dirs__dots button[aria-current="true"]{color:var(--night-text);border-top-color:var(--neon-core);box-shadow:0 -4px 10px -4px rgba(79,227,247,.9)}
 .dirs--proj{min-height:100vh;padding-top:var(--header-h)}
 .dirs__slide .ph-text{display:none} /* скрыто, пока нет описаний проектов */
 .dirs__thumbs{display:flex;gap:var(--s4);margin-top:clamp(80px,17vh,190px);flex-wrap:wrap;padding:6px}
-.dirs__thumbs button{width:96px;height:66px;overflow:hidden;border:1px solid var(--blue);box-shadow:var(--neon-glow-soft),inset 0 0 6px rgba(79,227,247,.35);opacity:.9;transition:opacity var(--dur),box-shadow var(--dur),transform var(--dur) var(--ease);outline-offset:4px;cursor:zoom-in}
+.dirs__thumbs button{width:96px;height:66px;overflow:hidden;border:1px solid var(--neon-core);box-shadow:var(--neon-glow-soft),inset 0 0 6px rgba(79,227,247,.35);opacity:.9;transition:opacity var(--dur),box-shadow var(--dur),transform var(--dur) var(--ease);outline-offset:4px;cursor:zoom-in}
 .dirs__thumbs button:hover,.dirs__thumbs button:focus-visible{opacity:1;box-shadow:var(--neon-glow),inset 0 0 8px rgba(79,227,247,.5);transform:translateY(-2px)}
 .dirs__thumbs img{width:100%;height:100%;object-fit:cover}
 .dirs__slide .btns{display:flex;flex-wrap:wrap;gap:var(--s3);margin-top:var(--s6)}
@@ -296,7 +300,8 @@ p{margin:0}
 .acc__btn{width:100%;display:grid;grid-template-columns:3.2em minmax(0,1fr) 48px;align-items:center;gap:var(--s4);text-align:left;min-height:88px;padding-block:var(--s4)}
 .acc__num{font-family:var(--f-display);font-weight:400;font-size:var(--t-h4);color:var(--cocoa-muted);font-variant-numeric:tabular-nums}
 .acc__title{font-family:var(--f-display);font-weight:400;font-size:var(--t-h3);line-height:1.1;transition:color var(--dur)}
-.acc__ico{width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--line);transition:transform var(--dur) var(--ease),background-color var(--dur),color var(--dur)}
+.acc__ico{width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--blue);color:var(--blue-ink);box-shadow:var(--neon-glow-soft),inset 0 0 6px rgba(79,227,247,.35);transition:transform var(--dur) var(--ease),background-color var(--dur),color var(--dur),box-shadow var(--dur)}
+.acc__btn:hover .acc__ico{box-shadow:var(--neon-glow),inset 0 0 8px rgba(79,227,247,.5)}
 .acc__ico svg{width:18px;height:18px}
 .acc__item.is-open .acc__ico{transform:rotate(180deg);background:var(--terracotta);color:var(--paper);border-color:var(--terracotta)}
 .acc__item.is-open .acc__title,.acc__btn:hover .acc__title{color:var(--terracotta)}
@@ -336,7 +341,7 @@ p{margin:0}
 .people .fig{width:min(140px,40%)}
 .people .frame{aspect-ratio:4/5}
 .people--one .fig{width:100%;max-width:480px}
-.people--one .frame{aspect-ratio:3/2}
+.people--one .frame{aspect-ratio:1585/985}
 .clist{list-style:none;padding:0;margin:var(--s6) 0 0;display:grid;gap:var(--s3)}
 .clist li{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:var(--s3);font-size:var(--t-sm);align-items:baseline}
 .clist span{color:var(--cocoa-muted);font-size:var(--t-xs);letter-spacing:.06em;text-transform:uppercase}
@@ -554,9 +559,10 @@ p{margin:0}
   .hero h1,.hero__sub{text-shadow:none}
   .mission__body,.pullquote{margin-top:var(--s6)}
   .kelly__item{grid-template-columns:1fr;gap:var(--s2)}
-  .laps__stage{height:calc(100vh - var(--header-h) - 150px)}
-  .laps__bar{flex-wrap:wrap}
-  .laps__progress{order:3;flex-basis:100%}
+  .laps__main{grid-template-columns:minmax(0,1fr)}
+  .laps__side{display:none}
+  .laps__top{grid-template-columns:56px minmax(0,1fr) 24px}
+  .laps__foot{padding-inline:0}
   .dirs{min-height:auto}
   .dirs__body{margin-top:var(--s7)}
   .dirs__dots button{font-size:0;max-width:none}
@@ -864,18 +870,17 @@ p{margin:0}
   <!-- 4.3 Слайдшоу таймлапсов, ночной разворот -->
   <section class="night laps" aria-roledescription="carousel" aria-labelledby="h-laps" id="laps">
     <h2 id="h-laps" class="visually-hidden" data-i18n="laps.h">Объекты в вечернем свете</h2>
-    <div class="laps__stage" id="lapsStage"></div>
-    <div class="wrap">
-      <div class="laps__bar">
-        <div class="laps__count" aria-live="polite" id="lapsCount">01 <span>/ 05</span></div>
-        <p class="laps__cap" id="lapsCap"></p>
-        <div class="laps__progress" aria-hidden="true"><i id="lapsProg"></i></div>
-        <div class="arrows">
-          <button class="arrow" type="button" id="lapsPrev" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg></button>
-          <button class="arrow" type="button" id="lapsNext" aria-label="Следующее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg></button>
-        </div>
-      </div>
+    <div class="laps__top">
+      <div class="laps__count" aria-live="polite" id="lapsCount">01 <span>/ 05</span></div>
+      <p class="laps__cap" id="lapsCap"></p>
+      <span aria-hidden="true"></span>
     </div>
+    <div class="laps__main">
+      <button class="arrow laps__side" type="button" id="lapsPrev" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="laps__stage" id="lapsStage" title="Следующее фото"></div>
+      <button class="arrow laps__side" type="button" id="lapsNext" aria-label="Следующее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <div class="laps__foot"><div class="laps__progress" aria-hidden="true"><i id="lapsProg"></i></div></div>
   </section>
 </article>
 
@@ -917,9 +922,9 @@ p{margin:0}
       <h2 id="h-cont" data-i18n="cont.h">Обсудим ваш объект</h2>
       <p class="lead" data-i18n="cont.lead">Расскажите о задаче, и мы предложим, с чего начать.</p>
       <div class="people people--one">
-        <figure class="fig"><div class="frame" data-img="projects/golf1/04.jpg" data-alt="Терраса частного дома вечером, проект Гольф 1"></div></figure>
+        <figure class="fig"><div class="frame" data-img="projects/golf2/01.jpg" data-alt="Частный дом вечером, проект Гольф 2"></div></figure>
       </div>
-      <p class="caption" data-i18n="cont.people">На фото: проект «Гольф 1»</p>
+      <p class="caption" data-i18n="cont.people">На фото: проект «Гольф 2»</p>
       <ul class="clist" id="clist"></ul>
       <div class="socials" id="socials"></div>
     </div>
@@ -1064,7 +1069,7 @@ ru:{
   "partn.p":"Мы дилеры премиальной марки LineaLight с поставками с заводов в Италии и Китае и работаем с производителями по прямым договорам, без посредников. Регулярно бываем на производствах и профильных выставках, чтобы знать оборудование вживую.",
   "exp.h":"Где применима наша экспертиза","exp.new":"Новое направление",
   "cont.h":"Обсудим ваш объект","cont.lead":"Расскажите о задаче, и мы предложим, с чего начать.",
-  "cont.people":"На фото: проект «Гольф 1»",
+  "cont.people":"На фото: проект «Гольф 2»",
   "c.phone":"Телефон","c.email":"Почта","c.city":"Адрес",
   "f.name":"Имя *","f.phone":"Телефон, WhatsApp или Telegram *","f.task":"Расскажите об объекте",
   "f.taskph":"Например: подсветка фасада частного дома, есть проект архитектора",
@@ -1131,7 +1136,7 @@ en:{
   "partn.p":"We are dealers for the premium brand LineaLight, supplied from factories in Italy and China, and we work with manufacturers under direct contracts without intermediaries. We regularly visit factories and trade shows to know the equipment first-hand.",
   "exp.h":"Where our expertise applies","exp.new":"New direction",
   "cont.h":"Let’s talk about your project","cont.lead":"Tell us about the task and we’ll suggest where to start.",
-  "cont.people":"Pictured: Golf 1 project",
+  "cont.people":"Pictured: Golf 2 project",
   "c.phone":"Phone","c.email":"Email","c.city":"Address",
   "f.name":"Name *","f.phone":"Phone, WhatsApp or Telegram *","f.task":"Tell us about your project",
   "f.taskph":"For example: facade lighting for a private house, we have the architect’s drawings",
@@ -1304,7 +1309,7 @@ function renderLaps(){
 function showLap(dir){
   if(!LAPS.length) return;
   const l = LAPS[lapIdx];
-  kbShow($("#lapsStage"), ""+l.img, `${L(l.p.n)}, ${L(l.cat.n)}`, dir);
+  kbShow($("#lapsStage"), ""+l.img, `${L(l.p.n)}, ${L(l.cat.n)}`, dir, "fit");
   preload(""+LAPS[(lapIdx+1)%LAPS.length].img);
   $("#lapsCap").innerHTML = `${esc(L(l.p.n))}<span>${esc(L(l.cat.n))}</span>`;
   $("#lapsCount").innerHTML = `${String(lapIdx+1).padStart(2,"0")} <span>/ ${String(LAPS.length).padStart(2,"0")}</span>`;
@@ -1655,6 +1660,7 @@ swipe($("#dirs"), d=>goDir(dirIdx+d,true));
 $("#lapsNext").onclick=()=>goLap(lapIdx+1,true);
 function showLapProgress(){ const pr=$("#lapsProg"); pr.classList.remove("run"); pr.getBoundingClientRect(); if(!reduceMotion) pr.classList.add("run"); }
 swipe($("#lapsStage"), d=>goLap(lapIdx+d,true));
+$("#lapsStage").addEventListener("click", ()=>goLap(lapIdx+1,true));
 
 /* ======================================================================
    ФОРМА
@@ -1699,6 +1705,17 @@ $("#leadForm").addEventListener("submit", async e=>{
    СТАРТ
    ====================================================================== */
 $("#heroScroll").addEventListener("click", e=>{ e.preventDefault(); window.scrollTo({top:$(".hero").offsetHeight, behavior:"smooth"}); });
+/* форма заявки выравнивается по центру фото слева (только на широком экране) */
+function alignForm(){
+  const f=$("#leadForm"), ph=$(".people--one .frame"); if(!f||!ph) return;
+  f.style.marginTop="";
+  if(innerWidth<=1024 || $("#contacts").offsetParent===null) return;
+  const pr=ph.getBoundingClientRect(), fr=f.getBoundingClientRect();
+  const shift=Math.round((pr.top + pr.height/2) - (fr.top + fr.height/2));
+  if(shift>0) f.style.marginTop=shift+"px";
+}
+addEventListener("resize", alignForm); addEventListener("load", alignForm);
+new ResizeObserver(alignForm).observe($(".contacts__head"));
 function headerState(){
   const clear = currentPage==="home" && window.scrollY < 80 && $("#menu").hidden;
   $("#header").classList.toggle("is-clear", clear);

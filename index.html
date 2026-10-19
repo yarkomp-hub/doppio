@@ -8,11 +8,11 @@
 <meta name="description" content="DOPPIO, семейное бюро светодизайна из Екатеринбурга: архитектурная подсветка, ландшафтное, уличное и интерьерное освещение. Полный цикл от концепции до пусконаладки.">
 <meta property="og:title" content="DOPPIO Студия архитектурного света">
 <meta property="og:description" content="Создаем световой облик вашего пространства">
-<meta property="og:image" content="assets/home/hero.jpg">
-<link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="assets/fonts/bebas-neue.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:image" content="home/hero.jpg">
+<link rel="icon" href="logo/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/bebas-neue.woff2" as="font" type="font/woff2" crossorigin>
 <script>try{if(sessionStorage.getItem("doppioIntro"))document.documentElement.classList.add("no-intro");sessionStorage.setItem("doppioIntro","1")}catch(e){}</script>
-<link rel="preload" href="assets/fonts/europe.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="europe.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* ==========================================================================
    DOPPIO · концепция вёрстки
@@ -74,8 +74,8 @@
 }
 
 /* Шрифты сайта: только два, из папки fonts */
-@font-face{font-family:"Bebas Neue";src:url("assets/fonts/bebas-neue.woff2") format("woff2"),url("assets/fonts/bebas-neue.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"Europe";src:url("assets/fonts/europe.woff2") format("woff2"),url("assets/fonts/europe.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Bebas Neue";src:url("fonts/bebas-neue.woff2") format("woff2"),url("fonts/bebas-neue.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Europe";src:url("europe.woff2") format("woff2"),url("europe.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
 *,*::before,*::after{box-sizing:border-box}
 html{font-synthesis:none}
 input,select,textarea,button{font-family:inherit}
@@ -670,7 +670,7 @@ p{margin:0}
 <header class="header" id="header">
   <div class="wrap header__in">
     <a class="logo" href="#home" aria-label="DOPPIO, на главную">
-      <picture><source media="(max-width:640px)" srcset="assets/logo/doppio-mark.png"><img src="assets/logo/doppio-logo-new.png" alt="DOPPIO Студия архитектурного света" width="700" height="216"></picture>
+      <picture><source media="(max-width:640px)" srcset="doppio-mark.png"><img src="doppio-logo-new.png" alt="DOPPIO Студия архитектурного света" width="700" height="216"></picture>
     </a>
         <button class="menubtn" type="button" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="menu">
       <span class="menubtn__ico" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -713,7 +713,7 @@ p{margin:0}
 
   <!-- 4.1 Обложка -->
   <section class="hero" aria-labelledby="h-hero">
-    <div class="hero__img"><img src="assets/home/hero.jpg" alt="" data-i18n-alt="hero.alt" width="2400" height="1600" fetchpriority="high"></div>
+    <div class="hero__img"><img src="home/hero.jpg" alt="" data-i18n-alt="hero.alt" width="2400" height="1600" fetchpriority="high"></div>
     <div class="hero__cherry" aria-hidden="true"></div>
     <div class="wrap hero__in grid">
       <h1 id="h-hero" data-i18n="hero.title">Создаем световой облик вашего пространства</h1>
@@ -1005,7 +1005,7 @@ p{margin:0}
 <!-- ============ ПОДВАЛ ============ -->
 <footer class="footer">
   <div class="wrap grid">
-    <div class="footer__logo"><img src="assets/logo/doppio-logo-new.png" alt="DOPPIO Студия архитектурного света" width="700" height="216"></div>
+    <div class="footer__logo"><img src="doppio-logo-new.png" alt="DOPPIO Студия архитектурного света" width="700" height="216"></div>
     <nav aria-label="Меню в подвале">
       <a href="#about" data-i18n="nav.about">О нас</a>
       <a href="#projects" data-i18n="nav.projects">Проекты</a>
@@ -1037,7 +1037,7 @@ p{margin:0}
 /* ======================================================================
    ЗАМЕНИТЬ: контакты. Все данные для связи правятся только здесь.
    ====================================================================== */
-const ASSET = "assets/"; /* префикс папки с файлами: пусто для GitHub, assets/ для локальной версии */
+const ASSET = ""; /* префикс папки с файлами: пусто для GitHub, assets/ для локальной версии */
 const CONTACTS = {
   phone: "+7 (000) 000-00-00",          // ЗАМЕНИТЬ
   email: "hello@doppio.com.ru",          // ЗАМЕНИТЬ
@@ -1057,7 +1057,7 @@ async function submitLead(data){
 }
 
 /* Размеры фото (подставлены при сборке), нужны для аккуратной загрузки без скачков */
-const IMG = {"assets/home/hero.jpg":[2400,1600],"directions/architecture/01.jpg":[1800,1200],"directions/architecture/02.jpg":[1800,1200],"directions/architecture/03.jpg":[1800,1350],"directions/architecture/04.jpg":[1280,790],"directions/interior/01.jpg":[1773,1182],"directions/interior/02.jpg":[1350,1800],"directions/interior/03.jpg":[1773,1182],"directions/interior/04.jpg":[960,1280],"directions/landscape/01.jpg":[1800,1200],"directions/landscape/02.jpg":[1800,1200],"directions/landscape/03.jpg":[1800,1200],"directions/landscape/04.jpg":[1200,1800],"directions/street/01.jpg":[1800,1013],"directions/street/02.jpg":[1800,1013],"directions/street/03.jpg":[1800,1200],"directions/street/04.jpg":[1200,1800],"about/person-1.jpg":[900,1200],"about/person-2.jpg":[640,640],"projects/golf1/01.jpg":[1800,1200],"projects/golf1/02.jpg":[1800,1200],"projects/golf1/03.jpg":[1800,1200],"projects/golf1/04.jpg":[1800,1200],"projects/golf1/05.jpg":[1800,1200],"projects/golf1/06.jpg":[1200,1800],"projects/golf1/process/01.jpg":[1800,1350],"projects/golf1/process/02.jpg":[1200,1600],"projects/golf2/01.jpg":[1585,985],"projects/golf2/02.jpg":[1627,1016],"projects/golf2/03.jpg":[1641,1251],"projects/golf2/04.jpg":[1681,1177],"projects/golf2/05.jpg":[1641,1219],"projects/sevastyanov/01.jpg":[1800,1200],"projects/sevastyanov/02.jpg":[1800,1200],"projects/sevastyanov/03.jpg":[1800,1200],"projects/sevastyanov/04.jpg":[1800,1013],"projects/tyuz/01.jpg":[1800,1200],"projects/tyuz/02.jpg":[1800,1013],"projects/tyuz/03.jpg":[1800,1200],"projects/tyuz/04.jpg":[1350,1800],"projects/tyuz/05.jpg":[1350,1800],"projects/kursk/01.jpg":[1800,1350],"projects/kursk/02.jpg":[1800,1350],"projects/kursk/03.jpg":[1350,1800],"projects/kursk/04.jpg":[1800,1350],"projects/kursk/05.jpg":[1350,1800],"projects/kursk/process/01.jpg":[1800,1012],"projects/kursk/process/02.jpg":[1800,1012],"projects/atrium/01.jpg":[1800,1200],"projects/atrium/02.jpg":[1800,1200],"projects/atrium/03.jpg":[1800,1350],"projects/atrium/04.jpg":[1350,1800],"projects/rmk/01.jpg":[1800,1200],"projects/rmk/02.jpg":[1800,1200],"projects/rmk/03.jpg":[1800,1200],"projects/rmk/04.jpg":[1800,1200],"projects/rmk/05.jpg":[1800,1200],"projects/mashuk/01.jpg":[1350,1800],"projects/mashuk/02.jpg":[1350,1800],"projects/mashuk/03.jpg":[1350,1800],"projects/mashuk/04.jpg":[1350,1800],"projects/mashuk/05.jpg":[1350,1800],"projects/boulevard/01.jpg":[1800,1013],"projects/boulevard/02.jpg":[1800,1013],"projects/boulevard/03.jpg":[1800,1013],"projects/boulevard/04.jpg":[1800,1013],"projects/boulevard/05.jpg":[1800,1200],"projects/boulevard/06.jpg":[1200,1800],"projects/boulevard/07.jpg":[1800,1200],"projects/divs/01.jpg":[1280,960],"projects/divs/02.jpg":[1280,720],"projects/divs/03.jpg":[1280,960],"projects/kinkyhair/01.jpg":[1773,1182],"projects/kinkyhair/02.jpg":[1773,1182],"projects/kinkyhair/03.jpg":[1800,1207],"projects/kinkyhair/04.jpg":[1773,1182],"projects/kinkyhair/05.jpg":[1182,1773],"projects/kinkyhair/06.jpg":[1773,1182],"projects/kinkyhair/07.jpg":[1772,1182],"projects/nekrasova/01.jpg":[960,1280],"projects/nekrasova/02.jpg":[960,1280],"projects/nekrasova/03.jpg":[959,1280],"projects/nekrasova/04.jpg":[960,1280],"projects/nekrasova/05.jpg":[960,1280],"projects/nekrasova/06.jpg":[960,1280],"projects/veer/01.jpg":[1800,876],"projects/veer/02.jpg":[1183,661],"projects/veer/03.jpg":[1181,600],"projects/veer/04.jpg":[1181,600],"projects/veer/05.jpg":[1183,663],"projects/veer/06.jpg":[960,1280],"projects/kursk-sketch/01.jpg":[1280,804],"projects/kursk-sketch/02.jpg":[1280,782],"projects/kursk-sketch/03.jpg":[1280,926],"projects/mrsk/01.jpg":[1020,772],"projects/mrsk/02.jpg":[1037,765],"projects/riviera/01.jpg":[1070,745],"projects/riviera/02.jpg":[1062,740],"projects/riviera/03.jpg":[1800,1200],"projects/rostov/01.jpg":[1800,859],"projects/rostov/02.jpg":[1235,580],"projects/rostov/03.jpg":[1142,582],"projects/sochi/01.jpg":[1280,790],"projects/sochi/02.jpg":[1280,790],"projects/sochi/03.jpg":[1280,790]};
+const IMG = {"home/hero.jpg":[2400,1600],"directions/architecture/01.jpg":[1800,1200],"directions/architecture/02.jpg":[1800,1200],"directions/architecture/03.jpg":[1800,1350],"directions/architecture/04.jpg":[1280,790],"directions/interior/01.jpg":[1773,1182],"directions/interior/02.jpg":[1350,1800],"directions/interior/03.jpg":[1773,1182],"directions/interior/04.jpg":[960,1280],"directions/landscape/01.jpg":[1800,1200],"directions/landscape/02.jpg":[1800,1200],"directions/landscape/03.jpg":[1800,1200],"directions/landscape/04.jpg":[1200,1800],"directions/street/01.jpg":[1800,1013],"directions/street/02.jpg":[1800,1013],"directions/street/03.jpg":[1800,1200],"directions/street/04.jpg":[1200,1800],"about/person-1.jpg":[900,1200],"about/person-2.jpg":[640,640],"projects/golf1/01.jpg":[1800,1200],"projects/golf1/02.jpg":[1800,1200],"projects/golf1/03.jpg":[1800,1200],"projects/golf1/04.jpg":[1800,1200],"projects/golf1/05.jpg":[1800,1200],"projects/golf1/06.jpg":[1200,1800],"projects/golf1/process/01.jpg":[1800,1350],"projects/golf1/process/02.jpg":[1200,1600],"projects/golf2/01.jpg":[1585,985],"projects/golf2/02.jpg":[1627,1016],"projects/golf2/03.jpg":[1641,1251],"projects/golf2/04.jpg":[1681,1177],"projects/golf2/05.jpg":[1641,1219],"projects/sevastyanov/01.jpg":[1800,1200],"projects/sevastyanov/02.jpg":[1800,1200],"projects/sevastyanov/03.jpg":[1800,1200],"projects/sevastyanov/04.jpg":[1800,1013],"projects/tyuz/01.jpg":[1800,1200],"projects/tyuz/02.jpg":[1800,1013],"projects/tyuz/03.jpg":[1800,1200],"projects/tyuz/04.jpg":[1350,1800],"projects/tyuz/05.jpg":[1350,1800],"projects/kursk/01.jpg":[1800,1350],"projects/kursk/02.jpg":[1800,1350],"projects/kursk/03.jpg":[1350,1800],"projects/kursk/04.jpg":[1800,1350],"projects/kursk/05.jpg":[1350,1800],"projects/kursk/process/01.jpg":[1800,1012],"projects/kursk/process/02.jpg":[1800,1012],"projects/atrium/01.jpg":[1800,1200],"projects/atrium/02.jpg":[1800,1200],"projects/atrium/03.jpg":[1800,1350],"projects/atrium/04.jpg":[1350,1800],"projects/rmk/01.jpg":[1800,1200],"projects/rmk/02.jpg":[1800,1200],"projects/rmk/03.jpg":[1800,1200],"projects/rmk/04.jpg":[1800,1200],"projects/rmk/05.jpg":[1800,1200],"projects/mashuk/01.jpg":[1350,1800],"projects/mashuk/02.jpg":[1350,1800],"projects/mashuk/03.jpg":[1350,1800],"projects/mashuk/04.jpg":[1350,1800],"projects/mashuk/05.jpg":[1350,1800],"projects/boulevard/01.jpg":[1800,1013],"projects/boulevard/02.jpg":[1800,1013],"projects/boulevard/03.jpg":[1800,1013],"projects/boulevard/04.jpg":[1800,1013],"projects/boulevard/05.jpg":[1800,1200],"projects/boulevard/06.jpg":[1200,1800],"projects/boulevard/07.jpg":[1800,1200],"projects/divs/01.jpg":[1280,960],"projects/divs/02.jpg":[1280,720],"projects/divs/03.jpg":[1280,960],"projects/kinkyhair/01.jpg":[1773,1182],"projects/kinkyhair/02.jpg":[1773,1182],"projects/kinkyhair/03.jpg":[1800,1207],"projects/kinkyhair/04.jpg":[1773,1182],"projects/kinkyhair/05.jpg":[1182,1773],"projects/kinkyhair/06.jpg":[1773,1182],"projects/kinkyhair/07.jpg":[1772,1182],"projects/nekrasova/01.jpg":[960,1280],"projects/nekrasova/02.jpg":[960,1280],"projects/nekrasova/03.jpg":[959,1280],"projects/nekrasova/04.jpg":[960,1280],"projects/nekrasova/05.jpg":[960,1280],"projects/nekrasova/06.jpg":[960,1280],"projects/veer/01.jpg":[1800,876],"projects/veer/02.jpg":[1183,661],"projects/veer/03.jpg":[1181,600],"projects/veer/04.jpg":[1181,600],"projects/veer/05.jpg":[1183,663],"projects/veer/06.jpg":[960,1280],"projects/kursk-sketch/01.jpg":[1280,804],"projects/kursk-sketch/02.jpg":[1280,782],"projects/kursk-sketch/03.jpg":[1280,926],"projects/mrsk/01.jpg":[1020,772],"projects/mrsk/02.jpg":[1037,765],"projects/riviera/01.jpg":[1070,745],"projects/riviera/02.jpg":[1062,740],"projects/riviera/03.jpg":[1800,1200],"projects/rostov/01.jpg":[1800,859],"projects/rostov/02.jpg":[1235,580],"projects/rostov/03.jpg":[1142,582],"projects/sochi/01.jpg":[1280,790],"projects/sochi/02.jpg":[1280,790],"projects/sochi/03.jpg":[1280,790]};
 
 /* ======================================================================
    ТЕКСТЫ RU / EN
